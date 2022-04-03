@@ -180,6 +180,7 @@
     <Compile Include="Models\BildModell.cs" />
     <Compile Include="Models\FargModell.cs" />
     <Compile Include="Models\Hatt.cs" />
+    <Compile Include="Models\HattContext.cs" />
     <Compile Include="Models\HattModeller.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\KundModell.cs" />

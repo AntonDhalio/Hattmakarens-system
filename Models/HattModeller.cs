@@ -15,5 +15,6 @@ namespace Hattmakarens_system.Models
         public double Price { get; set; }
         public virtual ICollection<Hatt> Hattar { get; set; }
         public virtual ICollection<BildModell> Bilder { get; set; }
+        public virtual ICollection<MaterialModell> Material { get; set; }
     }
 }

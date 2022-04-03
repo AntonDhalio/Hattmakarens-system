@@ -18,8 +18,11 @@ namespace Hattmakarens_system.Models
         public string Comment { get; set; }
         [ForeignKey("AnvandareModell")]
         public string UserId { get; set; }
+        public virtual AnvandareModell User { get; set; }
         [ForeignKey("HattModeller")]
         public int ModelID { get; set; }
+        public virtual HattModeller Modeller { get; set; }
+        public virtual ICollection<BildModell> Bilder { get; set; }
 
 
     }
