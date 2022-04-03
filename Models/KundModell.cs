@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Hattmakarens_system.Models
 {
-    public class KundModel
+    public class KundModell
     {
         [Key]
         public int Id { get; set; }

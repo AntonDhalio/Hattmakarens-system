@@ -182,7 +182,7 @@
     <Compile Include="Models\Hatt.cs" />
     <Compile Include="Models\HattModeller.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\KundModel.cs" />
+    <Compile Include="Models\KundModell.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
