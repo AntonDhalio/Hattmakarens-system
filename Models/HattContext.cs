@@ -17,7 +17,7 @@ namespace Hattmakarens_system.Models
         public DbSet<MaterialModell> Material;
         public DbSet<FargModell> Color;
 
-        public HattContext() : base()
+        public HattContext() : base("DefaultConnection")
         {
 
         }
