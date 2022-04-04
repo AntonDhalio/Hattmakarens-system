@@ -192,6 +192,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MaterialModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\Costumer.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
