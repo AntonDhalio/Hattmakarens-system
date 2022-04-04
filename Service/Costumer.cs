@@ -7,5 +7,6 @@ namespace Hattmakarens_system.Service
 {
     public class Costumer
     {
+
     }
 }
