@@ -14,7 +14,7 @@ namespace Hattmakarens_system.Models
         public DateTime Datum { get; set; }
         public bool Priority { get; set; }
         public string Status { get; set; }
-        public int Moms { get; set; }
+        public double Moms { get; set; }
         public double TotalSum { get; set; }
         public string Comment { get; set; }
         [ForeignKey("AnvandareModell")]

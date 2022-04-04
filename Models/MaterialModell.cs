@@ -11,8 +11,9 @@ namespace Hattmakarens_system.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Comment { get; set; }
+        public string Description { get; set; }
         public string Name { get; set; }
+        public string Type { get; set; }
         [ForeignKey("FargModell")]
         public int FargId { get; set; }
         public virtual FargModell Farg { get; set; }
