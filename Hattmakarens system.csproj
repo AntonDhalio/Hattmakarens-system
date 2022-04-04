@@ -196,6 +196,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MaterialModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\Costumer.cs" />
     <Compile Include="Repositories\ColorRepository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ColorViewModel.cs" />
