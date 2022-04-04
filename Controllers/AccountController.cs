@@ -75,7 +75,7 @@ namespace Hattmakarens_system.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -86,7 +86,7 @@ namespace Hattmakarens_system.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Felaktigt användarnamn eller lösenord.");
                     return View(model);
             }
         }
@@ -151,7 +151,7 @@ namespace Hattmakarens_system.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -163,6 +163,7 @@ namespace Hattmakarens_system.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
+                    //REDIRECT TO HOMEPAGE
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
@@ -392,7 +393,7 @@ namespace Hattmakarens_system.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
@@ -449,6 +450,8 @@ namespace Hattmakarens_system.Controllers
             {
                 return Redirect(returnUrl);
             }
+
+            //ÄNDRA TILL NYA "HOMEPAGE"
             return RedirectToAction("Index", "Home");
         }
 
