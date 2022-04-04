@@ -12,6 +12,5 @@ namespace Hattmakarens_system.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public virtual ICollection<MaterialModels> Material { get; set; }
-
     }
 }
