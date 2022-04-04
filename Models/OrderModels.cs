@@ -7,23 +7,23 @@ using System.Web;
 
 namespace Hattmakarens_system.Models
 {
-    public class BestallningModell
+    public class OrderModels
     {
         [Key]
         public int Id { get; set; }
-        public DateTime Datum { get; set; }
+        public DateTime Date { get; set; }
         public bool Priority { get; set; }
         public string Status { get; set; }
         public double Moms { get; set; }
         public double TotalSum { get; set; }
         public string Comment { get; set; }
-        [ForeignKey("AnvandareModell")]
+        [ForeignKey("UserModels")]
         public string UserId { get; set; }
-        public virtual AnvandareModell User { get; set; }
-        [ForeignKey("KundModell")]
+        public virtual UserModels User { get; set; }
+        [ForeignKey("CustomerModels")]
         public int CustomerId { get; set; }
-        public virtual KundModell Customer { get; set; }
-        public virtual ICollection<Hatt> Hattar { get; set; }
+        public virtual CustomerModels Customer { get; set; }
+        public virtual ICollection<Hats> Hats { get; set; }
         
 
     }

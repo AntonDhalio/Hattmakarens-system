@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Hattmakarens_system.Models
 {
-    public class Hatt
+    public class Hats
     {
         [Key]
         public int Id { get; set; }
@@ -16,13 +16,13 @@ namespace Hattmakarens_system.Models
         public double Price { get; set; }
         public string Status { get; set; }
         public string Comment { get; set; }
-        [ForeignKey("AnvandareModell")]
+        [ForeignKey("UserModels")]
         public string UserId { get; set; }
-        public virtual AnvandareModell User { get; set; }
-        [ForeignKey("HattModeller")]
+        public virtual UserModels User { get; set; }
+        [ForeignKey("HatModels")]
         public int ModelID { get; set; }
-        public virtual HattModeller Modeller { get; set; }
-        public virtual ICollection<BildModell> Bilder { get; set; }
+        public virtual HatModels Models { get; set; }
+        public virtual ICollection<ImageModels> Images { get; set; }
 
 
     }

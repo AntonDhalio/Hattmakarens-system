@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Hattmakarens_system.Models
 {
-    public class KundModell
+    public class CustomerModels
     {
         [Key]
         public int Id { get; set; }
@@ -15,7 +15,7 @@ namespace Hattmakarens_system.Models
         public string Email { get; set; }
         public string Adress { get; set; }
         public string Comment { get; set; }
-        public virtual ICollection<BestallningModell> Bestallningar { get; set; }
+        public virtual ICollection<OrderModels> Orders { get; set; }
 
     }
 }

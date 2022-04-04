@@ -6,12 +6,13 @@ using System.Web;
 
 namespace Hattmakarens_system.Models
 {
-    public class FargModell
+    public class ImageModels
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public virtual ICollection<MaterialModell> Material { get; set; }
+        public string Path { get; set; }
+        public virtual ICollection<HatModels> HatModels { get; set; }
+        public virtual ICollection<Hats> Hats { get; set; }
 
     }
 }

@@ -7,17 +7,17 @@ using System.Web;
 
 namespace Hattmakarens_system.Models
 {
-    public class MaterialModell
+    public class MaterialModels
     {
         [Key]
         public int Id { get; set; }
         public string Description { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-        [ForeignKey("FargModell")]
-        public int FargId { get; set; }
-        public virtual FargModell Farg { get; set; }
-        public virtual ICollection<Hatt> Hattar { get; set; }
-        public virtual ICollection<HattModeller> HattModeller { get; set; }
+        [ForeignKey("ColorModels")]
+        public int ColorId { get; set; }
+        public virtual ColorModels Color { get; set; }
+        public virtual ICollection<Hats> Hats { get; set; }
+        public virtual ICollection<HatModels> HatModels { get; set; }
     }
 }

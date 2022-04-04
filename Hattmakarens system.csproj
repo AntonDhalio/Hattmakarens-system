@@ -175,17 +175,17 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AnvandareModell.cs" />
-    <Compile Include="Models\BestallningModell.cs" />
-    <Compile Include="Models\BildModell.cs" />
-    <Compile Include="Models\FargModell.cs" />
-    <Compile Include="Models\Hatt.cs" />
-    <Compile Include="Models\HattContext.cs" />
-    <Compile Include="Models\HattModeller.cs" />
+    <Compile Include="Models\UserModels.cs" />
+    <Compile Include="Models\OrderModels.cs" />
+    <Compile Include="Models\ImageModels.cs" />
+    <Compile Include="Models\ColorModels.cs" />
+    <Compile Include="Models\Hats.cs" />
+    <Compile Include="Models\HatContext.cs" />
+    <Compile Include="Models\HatModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\KundModell.cs" />
+    <Compile Include="Models\CustomerModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\MaterialModell.cs" />
+    <Compile Include="Models\MaterialModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
