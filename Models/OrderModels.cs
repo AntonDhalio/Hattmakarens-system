@@ -17,10 +17,10 @@ namespace Hattmakarens_system.Models
         public double Moms { get; set; }
         public double TotalSum { get; set; }
         public string Comment { get; set; }
-        [ForeignKey("UserModels")]
+        [ForeignKey("User")]
         public string UserId { get; set; }
         public virtual UserModels User { get; set; }
-        [ForeignKey("CustomerModels")]
+        [ForeignKey("Customer")]
         public int CustomerId { get; set; }
         public virtual CustomerModels Customer { get; set; }
         public virtual ICollection<Hats> Hats { get; set; }

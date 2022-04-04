@@ -16,10 +16,10 @@ namespace Hattmakarens_system.Models
         public double Price { get; set; }
         public string Status { get; set; }
         public string Comment { get; set; }
-        [ForeignKey("UserModels")]
+        [ForeignKey("User")]
         public string UserId { get; set; }
         public virtual UserModels User { get; set; }
-        [ForeignKey("HatModels")]
+        [ForeignKey("Models")]
         public int ModelID { get; set; }
         public virtual HatModels Models { get; set; }
         public virtual ICollection<ImageModels> Images { get; set; }

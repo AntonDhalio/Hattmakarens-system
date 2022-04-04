@@ -24,6 +24,14 @@ namespace Hattmakarens_system.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+        public DbSet<UserModels> User { get; set; }
+        public DbSet<OrderModels> Order { get; set; }
+        public DbSet<CustomerModels> Customer { get; set; }
+        public DbSet<Hats> Hats { get; set; }
+        public DbSet<HatModels> HatModels { get; set; }
+        public DbSet<ImageModels> Pictures { get; set; }
+        public DbSet<MaterialModels> Material { get; set; }
+        public DbSet<ColorModels> Color { get; set; }
 
         public static ApplicationDbContext Create()
         {
