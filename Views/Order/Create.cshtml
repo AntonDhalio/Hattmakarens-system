@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Skapa beställning</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>OrderViewModel</h4>
+    @*<h4>OrderViewModel</h4>*@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @*<div class="form-group">
@@ -23,32 +23,16 @@
             </div>
         </div>*@
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
 
-            @*@{ var imagepath = "/UploadedImages/" + @Model.Path; }
-                <img src="@imagepath" class="imgSize" alt="Lägg till bild" />
-                <br />*@
-            @Html.ValidationMessageFor(model => model.Path, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <br />
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="file" name="Image" value="Välj bild" accept="image/*" />
-        </div>
-    </div>
 
     <br />
 
     @*<div>
-        @Html.Partial("_Material")
-    </div>*@
-    <p> Färg </p>
+            @Html.Partial("_Material")
+        </div>*@
+
     <div>
-        @Html.Partial("~/Views/Color/_Color.cshtml")
+        @Html.Partial("_HatCreate")
     </div>
 
     @*<div class="col-md-4">
@@ -59,15 +43,15 @@
             }
         </div>*@
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.Size)
-                @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Size)
+                    @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-    </div>
+        </div>*@
 
     <div class="form-group">
         @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -88,10 +72,18 @@
         </div>
     </div>
 
+    <p> Kund</p>
+    @Html.DropDownList("Name", new SelectList(ViewBag.Customers, "Id", "Name"))
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Registrera ny kund" class="btn btn-default" />
+        </div>
+    </div>
+
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Skapa beställning" class="btn btn-default" />
         </div>
     </div>
 </div>

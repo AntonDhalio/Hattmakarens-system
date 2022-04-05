@@ -1,4 +1,6 @@
-﻿using Hattmakarens_system.Repositories;
+﻿using Hattmakarens_system.Models;
+using Hattmakarens_system.Repositories;
+using Hattmakarens_system.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,9 @@ namespace Hattmakarens_system.Controllers
 {
     public class OrderController : Controller
     {
-        ColorRepository repository = new ColorRepository();
+        ColorRepository customerRepository = new ColorRepository();
+        OrderRepository orderRepository = new OrderRepository();
+        HatRepository hatRepository = new HatRepository();
 
         // GET: Order
         public ActionResult Index()
@@ -26,10 +30,10 @@ namespace Hattmakarens_system.Controllers
         // GET: Order/Create
         public ActionResult Create()
         {
-            var colors = repository.GetAllColors().ToList();
-            if (colors != null)
+            var customers = customerRepository.GetAllColors().ToList();
+            if (customers != null)
             {
-                ViewBag.Colors = colors;
+                ViewBag.Customers = customers;
             }
 
             return View();
@@ -38,11 +42,12 @@ namespace Hattmakarens_system.Controllers
 
         // POST: Order/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(OrderViewModel orderModel, HatViewModel hatModel )
         {
             try
             {
-                // TODO: Add insert logic here
+                orderRepository.CreateOrder(orderModel);
+                hatRepository.CreateHat(hatModel);
 
                 return RedirectToAction("Index");
             }

@@ -12,12 +12,11 @@ namespace Hattmakarens_system.ViewModels
     public class OrderViewModel
     {
         public int Id { get; set; }
-        [DisplayName("Bild")]
-        public string Path { get; set; }
+
         [DisplayName("Datum")]
         //[DataType(DataType.Date)]
         public DateTime Date { get; set; }
-        [DisplayName("Expresstillverkning")]
+        [DisplayName("Expresstillverkning på beställning")]
         public bool Priority { get; set; }
         //[DisplayName("Status")]
         //public string Status { get; set; }
@@ -26,9 +25,9 @@ namespace Hattmakarens_system.ViewModels
         //[DisplayName("Totalsumma")]
         //public double TotalSum { get; set; }
         //[DisplayName("Kommentar")]
-        [DisplayName("Storlek")]
-        public double Size { get; set; }
-        [DisplayName("Kommentar")]
+        //[DisplayName("Storlek")]
+        //public double Size { get; set; }
+        [DisplayName("Kommentar på beställning")]
         public string Comment { get; set; }
         //public string UserId { get; set; }
         //public virtual UserModels User { get; set; }
