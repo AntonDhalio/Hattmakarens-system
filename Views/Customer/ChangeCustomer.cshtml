@@ -11,25 +11,30 @@
     <hr />
     <ul class="list-group">
         <li class="list-group-item">
-            Namn
+            KundId: @Html.DisplayFor(model => model.Id)
         </li>
         <li class="list-group-item">
-            KundId
+            Namn: @Html.DisplayFor(model => model.Name)
         </li>
         <li class="list-group-item">
-            Adress
+            Adress: @Html.DisplayFor(model => model.Adress)
         </li>
         <li class="list-group-item">
-            Telefon
+            Telefon: @Html.DisplayFor(model => model.Phone)
         </li>
         <li class="list-group-item">
-            E-post
+            E-post: @Html.DisplayFor(model => model.Email)
         </li>
         <li class="list-group-item">
-            Kommentarer
+            Kommentarer: @Html.DisplayFor(model => model.Comment)
         </li>
         <li class="list-group-item active">
-            länk till orderlista
+            @{var antalOrders = 0; }
+            @foreach (var item in Model.Orders)
+            {
+                antalOrders++;
+            }
+            @antalOrders.ToString()
         </li>
     </ul>
 </div>
