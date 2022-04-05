@@ -44,6 +44,11 @@ namespace Hattmakarens_system.Controllers
             var showCustomerInfo = new Service.Costumer().GetCustomerInfo(id);
             return View(showCustomerInfo);
         }
+        [HttpPost]
+        //public ActionResult ChangeCustomer()
+        //{
+
+        //}
         
         public ActionResult DisplayCustomer()
         {

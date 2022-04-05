@@ -4,7 +4,7 @@
     ViewBag.Title = "DisplayCustomer";
 }
 
-<h2>ChangeCustomer</h2>
+<h2>DisplayCustomer</h2>
 
 <div>
     <h4>Costumer name</h4>
@@ -41,7 +41,7 @@
 
 <div>
     <button type="button" class="btn btn-primary">
-        Ändra
+        @Html.ActionLink("Ändra", "ChangeCustomer", "Customer")
     </button>
     <button type="button" class="btn btn-danger">
         Ta bort

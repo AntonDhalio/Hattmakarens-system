@@ -6,51 +6,64 @@
 
 <h2>ChangeCustomer</h2>
 
-<div>
-    <h4>Costumer name</h4>
-    <hr />
-    <ul class="list-group">
-        <li class="list-group-item">
-            KundId: @Html.DisplayFor(model => model.Id)
-        </li>
-        <li class="list-group-item">
-            Namn: @Html.DisplayFor(model => model.Name)
-        </li>
-        <li class="list-group-item">
-            Adress: @Html.DisplayFor(model => model.Adress)
-        </li>
-        <li class="list-group-item">
-            Telefon: @Html.DisplayFor(model => model.Phone)
-        </li>
-        <li class="list-group-item">
-            E-post: @Html.DisplayFor(model => model.Email)
-        </li>
-        <li class="list-group-item">
-            Kommentarer: @Html.DisplayFor(model => model.Comment)
-        </li>
-        <li class="list-group-item active">
-            @{var antalOrders = 0; }
-            @foreach (var item in Model.Orders)
-            {
-                antalOrders++;
-            }
-            @antalOrders.ToString()
-        </li>
-    </ul>
-</div>
+@using (Html.BeginForm())
+{
 
-<div>
-    <button type="button" class="btn btn-primary">
-        Ändra
-    </button>
-    <button type="button" class="btn btn-danger">
-        Ta bort
-    </button>
-</div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
 
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Adress, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Adress, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Adress, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
+    <div>
+        <button type="button" class="btn btn-primary">
+            Spara
+        </button>
+        <button type="button" class="btn btn-danger">
+            @Html.ActionLink("Avbryt", "DisplayCustomer", "Customer")
+        </button>
+    </div>
+
+}
 
 @*<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>*@
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@
