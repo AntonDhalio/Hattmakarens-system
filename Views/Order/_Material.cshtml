@@ -20,8 +20,8 @@
         <th></th>
     </tr>
  
-    @if(Model != null) { 
-    foreach (var item in Model)
+    @*@if(Model != null) {*@ 
+    @*foreach (var item in Model)
     {
 <tr>
     <td>
@@ -33,20 +33,20 @@
     <td>
         @Html.DisplayFor(modelItem => item.Type)
     </td>
-    @*<td>
-            @Html.DisplayFor(modelItem => item.ColorId)
-        </td>*@
     <td>
-        @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
+            @Html.DisplayFor(modelItem => item.ColorId)
+        </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
         @Html.ActionLink("Delete", "Delete", new { id = item.Id })
     </td>
 </tr>
     }
-    }
+    }*@
 
 </table>
 
 <div>
-    @Html.DropDownList("selectedMaterialId", (SelectList)ViewBag.Materials, "Välj material")
+    @*@Html.DropDownList("selectedMaterialId", (SelectList)ViewBag.Materials, "Välj material")*@
 </div>

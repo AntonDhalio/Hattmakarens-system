@@ -7,36 +7,31 @@ using System.Web.Mvc;
 
 namespace Hattmakarens_system.Controllers
 {
-    public class OrderController : Controller
+    public class ColorController : Controller
     {
-        ColorRepository repository = new ColorRepository();
+        //ColorRepository repository = new ColorRepository();
 
-        // GET: Order
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //// GET: Color
+        //public ActionResult _Color()
+        //{
 
-        // GET: Order/Details/5
+        //    ViewBag.Colors = new SelectList(repository.GetAllColors(), "Id", "Name");
+        //    return View();
+        //}
+
+        // GET: Color/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Order/Create
+        // GET: Color/Create
         public ActionResult Create()
         {
-            var colors = repository.GetAllColors().ToList();
-            if(colors != null)
-            {
-                ViewBag.Colors = colors;
-            }
-           
             return View();
-           
         }
 
-        // POST: Order/Create
+        // POST: Color/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -52,13 +47,13 @@ namespace Hattmakarens_system.Controllers
             }
         }
 
-        // GET: Order/Edit/5
+        // GET: Color/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Order/Edit/5
+        // POST: Color/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -74,13 +69,13 @@ namespace Hattmakarens_system.Controllers
             }
         }
 
-        // GET: Order/Delete/5
+        // GET: Color/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Order/Delete/5
+        // POST: Color/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
