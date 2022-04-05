@@ -38,24 +38,25 @@ namespace Hattmakarens_system.Controllers
                 return View("Error");
             }
         }
-        public ActionResult ChangeCustomer(int id)
+        public ActionResult ChangeCustomer()
         {
+            int id = 1;
             var showCustomerInfo = new Service.Costumer().GetCustomerInfo(id);
             return View(showCustomerInfo);
         }
-        public ActionResult ChangeCustomer(CostumerViewModel customerViewModel)
-        {
-            try
-            {
+        //public ActionResult ChangeCustomer(CostumerViewModel customerViewModel)
+        //{
+        //    try
+        //    {
                 
-                //Ta emot id från in-länk om kund
-                //Hämta informationen om kund från IDt
-            }
-            catch
-            {
+        //        //Ta emot id från in-länk om kund
+        //        //Hämta informationen om kund från IDt
+        //    }
+        //    catch
+        //    {
 
-            }
-            return View();
-        }
+        //    }
+        //    return View();
+        //}
     }
 }
