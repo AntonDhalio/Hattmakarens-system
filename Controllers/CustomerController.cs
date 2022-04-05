@@ -38,5 +38,9 @@ namespace Hattmakarens_system.Controllers
                 return View("Error");
             }
         }
+        public ActionResult ChangeCustomer()
+        {
+            return View();
+        }
     }
 }

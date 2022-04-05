@@ -1,0 +1,51 @@
+﻿@model Hattmakarens_system.Models.CustomerModels
+
+@{
+    ViewBag.Title = "ChangeCustomer";
+}
+
+<h2>ChangeCustomer</h2>
+
+<div>
+    <h4>Costumer name</h4>
+    <hr />
+    <ul class="list-group">
+        <li class="list-group-item">
+            Namn
+        </li>
+        <li class="list-group-item">
+            KundId
+        </li>
+        <li class="list-group-item">
+            Adress
+        </li>
+        <li class="list-group-item">
+            Telefon
+        </li>
+        <li class="list-group-item">
+            E-post
+        </li>
+        <li class="list-group-item">
+            Kommentarer
+        </li>
+        <li class="list-group-item active">
+            länk till orderlista
+        </li>
+    </ul>
+</div>
+
+<div>
+    <button type="button" class="btn btn-primary">
+        Ändra
+    </button>
+    <button type="button" class="btn btn-danger">
+        Ta bort
+    </button>
+</div>
+
+
+
+@*<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@
