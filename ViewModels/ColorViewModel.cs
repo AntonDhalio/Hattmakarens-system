@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
+using Hattmakarens_system.Models;
 
-namespace Hattmakarens_system.Models
+namespace Hattmakarens_system.ViewModels
 {
-    public class ColorModels
+    public class ColorViewModel
     {
-        [Key]
         public int Id { get; set; }
+        [DisplayName("Färgnamn")]
         public string Name { get; set; }
         public virtual ICollection<MaterialModels> Material { get; set; }
     }

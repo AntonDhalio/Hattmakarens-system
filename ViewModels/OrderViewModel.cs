@@ -1,30 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
+using Hattmakarens_system.Models;
 
-namespace Hattmakarens_system.Models
+namespace Hattmakarens_system.ViewModels
 {
-    public class OrderModels
+    public class OrderViewModel
     {
-        [Key]
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public bool Priority { get; set; }
+        [DisplayName("Status")]
         public string Status { get; set; }
+        [DisplayName("Moms")]
         public double Moms { get; set; }
+        [DisplayName("Totalsumma")]
         public double TotalSum { get; set; }
+        [DisplayName("Kommentar")]
         public string Comment { get; set; }
-        [ForeignKey("User")]
         public string UserId { get; set; }
         public virtual UserModels User { get; set; }
-        [ForeignKey("Customer")]
         public int CustomerId { get; set; }
         public virtual CustomerModels Customer { get; set; }
         public virtual ICollection<Hats> Hats { get; set; }
-        
-
     }
 }
