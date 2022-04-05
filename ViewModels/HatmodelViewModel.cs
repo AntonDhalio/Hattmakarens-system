@@ -20,5 +20,6 @@ namespace Hattmakarens_system.ViewModels
         public virtual ICollection<Hats> Hats { get; set; }
         public virtual ICollection<ImageModels> Images { get; set; }
         public virtual ICollection<MaterialModels> Material { get; set; }
+        public List<MaterialModels> MaterialsToPickFrom { get; set; }
     }
 }
