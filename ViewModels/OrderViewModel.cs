@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace Hattmakarens_system.ViewModels
         [DisplayName("Bild")]
         public string Path { get; set; }
         [DisplayName("Datum")]
+        //[DataType(DataType.Date)]
         public DateTime Date { get; set; }
         [DisplayName("Expresstillverkning")]
         public bool Priority { get; set; }
@@ -25,7 +27,7 @@ namespace Hattmakarens_system.ViewModels
         //public double TotalSum { get; set; }
         //[DisplayName("Kommentar")]
         [DisplayName("Storlek")]
-        public double Size { get; set; }    
+        public double Size { get; set; }
         [DisplayName("Kommentar")]
         public string Comment { get; set; }
         //public string UserId { get; set; }
