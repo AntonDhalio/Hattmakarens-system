@@ -1,6 +1,6 @@
 ﻿@model Hattmakarens_system.ViewModels.CostumerViewModel
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -11,6 +11,7 @@
     <title>Lägg till ny kund</title>
 </head>
 <body>
+    <h1>Lägg till kund</h1>
     <div>
         @using (Html.BeginForm("AddCustomer", "Customer", FormMethod.Post))
         {
@@ -40,7 +41,7 @@
             <div class="form-group">
                 @Html.LabelFor(c => c.Comment, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
-                    @Html.TextBoxFor(c => c.Comment, new { @class = "form-control" })
+                    @Html.TextAreaFor(c => c.Comment, new { @class = "form-control" })
                 </div>
             </div>
             <div class="form-group">

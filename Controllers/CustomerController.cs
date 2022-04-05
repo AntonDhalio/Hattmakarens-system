@@ -19,17 +19,24 @@ namespace Hattmakarens_system.Controllers
         [HttpPost]
          public ActionResult AddCustomer(CostumerViewModel customerViewModel)
         {
-
-            var cusRepo = new CustomerRepository();
-            var customer = new CustomerModels {
-                Adress = customerViewModel.Adress,
-                Name = customerViewModel.Name,
-                Email = customerViewModel.Email,
-                Comment = customerViewModel.Comment,
-                Phone = customerViewModel.Phone
-            };
-            cusRepo.SaveCostumer(customer);
-            return View();
+            try
+            {
+                var cusRepo = new CustomerRepository();
+                var customer = new CustomerModels
+                {
+                    Adress = customerViewModel.Adress,
+                    Name = customerViewModel.Name,
+                    Email = customerViewModel.Email,
+                    Comment = customerViewModel.Comment,
+                    Phone = customerViewModel.Phone
+                };
+                cusRepo.SaveCostumer(customer);
+                return View();
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
     }
 }
