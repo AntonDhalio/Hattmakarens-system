@@ -178,6 +178,7 @@
     <Compile Include="Controllers\HatmodelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -275,6 +276,7 @@
     <Content Include="Views\ManageCustomer\ChangeCustomer.cshtml" />
     <Content Include="Views\Hatmodel\Hatmodel.cshtml" />
     <Content Include="Views\Color\AddColor.cshtml" />
+    <Content Include="Views\Material\AddMaterial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

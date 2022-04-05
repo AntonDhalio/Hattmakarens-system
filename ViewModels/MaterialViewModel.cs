@@ -21,5 +21,7 @@ namespace Hattmakarens_system.ViewModels
         public virtual ColorModels Color { get; set; }
         public virtual ICollection<Hats> Hats { get; set; }
         public virtual ICollection<HatModels> HatModels { get; set; }
+        public List<ColorModels> ColorsToPickFrom { get; set; }
+
     }
 }
