@@ -20,7 +20,7 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.Material.ToList();
+                return hatCon.Material.Include(m => m.HatModels).ToList();
             }
         }
         public MaterialModels SaveMaterial(MaterialModels material)
