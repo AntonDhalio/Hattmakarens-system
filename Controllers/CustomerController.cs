@@ -44,19 +44,12 @@ namespace Hattmakarens_system.Controllers
             var showCustomerInfo = new Service.Costumer().GetCustomerInfo(id);
             return View(showCustomerInfo);
         }
-        //public ActionResult ChangeCustomer(CostumerViewModel customerViewModel)
-        //{
-        //    try
-        //    {
-                
-        //        //Ta emot id från in-länk om kund
-        //        //Hämta informationen om kund från IDt
-        //    }
-        //    catch
-        //    {
-
-        //    }
-        //    return View();
-        //}
+        
+        public ActionResult DisplayCustomer()
+        {
+            int id = 1;
+            var showCustomerInfo = new Service.Costumer().GetCustomerInfo(id);
+            return View(showCustomerInfo);
+        }
     }
 }
