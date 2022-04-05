@@ -27,11 +27,11 @@ namespace Hattmakarens_system.Controllers
         public ActionResult Create()
         {
             var colors = repository.GetAllColors().ToList();
-            if(colors != null)
+            if (colors != null)
             {
                 ViewBag.Colors = colors;
             }
-           
+
             return View();
            
         }

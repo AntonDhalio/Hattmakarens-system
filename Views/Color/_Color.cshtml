@@ -1,9 +1,3 @@
 ﻿
-@model IEnumerable<Hattmakarens_system.ViewModels.ColorViewModel>
 
-@*@foreach (var item in Model)
-{*@
-<div>
-    @Html.DropDownList("Id", new SelectList(ViewBag.Colors, "Id", "Name" ))
-</div>
-@*}*@
+@Html.DropDownList("Name", new SelectList(ViewBag.Colors, "Id", "Name"))

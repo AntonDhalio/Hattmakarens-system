@@ -9,15 +9,9 @@ namespace Hattmakarens_system.Controllers
 {
     public class ColorController : Controller
     {
-        //ColorRepository repository = new ColorRepository();
+        ColorRepository repository = new ColorRepository();
 
-        //// GET: Color
-        //public ActionResult _Color()
-        //{
-
-        //    ViewBag.Colors = new SelectList(repository.GetAllColors(), "Id", "Name");
-        //    return View();
-        //}
+        // GET: Color
 
         // GET: Color/Details/5
         public ActionResult Details(int id)

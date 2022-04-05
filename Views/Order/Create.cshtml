@@ -48,7 +48,7 @@
     </div>*@
     <p> Färg </p>
     <div>
-        @Html.DropDownList("Name", new SelectList(ViewBag.Colors, "Id", "Name"))
+        @Html.Partial("~/Views/Color/_Color.cshtml")
     </div>
 
     @*<div class="col-md-4">
