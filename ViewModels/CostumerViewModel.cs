@@ -11,7 +11,7 @@ namespace Hattmakarens_system.ViewModels
     public class CostumerViewModel
     {
         public int Id { get; set; }
-        [DisplayName("Förnamn och Efternamn")]
+        [DisplayName("Namn")]
         public string Name { get; set; }
         [DisplayName("Telefonnummer")]
         public int Phone { get; set; }
