@@ -272,6 +272,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Customer\AddCustomer.cshtml" />
+    <Content Include="Views\ManageCustomer\ChangeCustomer.cshtml" />
     <Content Include="Views\Hatmodel\Hatmodel.cshtml" />
     <Content Include="Views\Color\AddColor.cshtml" />
   </ItemGroup>
