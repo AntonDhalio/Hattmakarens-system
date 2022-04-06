@@ -34,13 +34,24 @@ namespace Hattmakarens_system.Controllers
             //try
             //{
                 var matRepo = new MaterialRepository();
+                var colorRepo = new ColorRepository();
+                var id = 0;
+            foreach (var color in colorRepo.GetAllColors())
+            { 
+                if(color.Name.Equals(Request.Form["PickedColor"]))
+                {
+                    id = color.Id;
+                }
+            }
                 var material = new MaterialModels
                 {
                     Name = materialViewModel.Name,
                     Description = materialViewModel.Description,
                     Type = materialViewModel.Type,
-                    ColorId = int.Parse(materialViewModel.PickedColor.Value)
+                    ColorId = id
                 };
+            Console.WriteLine(id);
+            Console.ReadLine();
                 matRepo.SaveMaterial(material);
                 return View();
             //}
