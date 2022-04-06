@@ -1,0 +1,22 @@
+﻿@model Hattmakarens_system.ViewModels.ColorViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Lägg till färg</h1>
+
+<div>
+    @using (Html.BeginForm("AddColor", "Color", FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.LabelFor(c => c.Name, new { @class = "col-md-2 control-label" })
+        </div>
+        <div class="col-md-10">
+            @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Lägg till färg" />
+            </div>
+        </div>}
+</div>
