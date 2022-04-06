@@ -23,6 +23,22 @@ namespace Hattmakarens_system.Repositories
                 return hatCon.Customer.ToList();
             }
         }
+        public List<OrderModels> GetAllCustomerOrders(int id)
+        {
+            var customerOrders = new List<OrderModels>();
+            using (var hatCon = new ApplicationDbContext())
+            {
+                var orders = new Repositories.OrderRepository().GetAllOrders();
+                foreach (var item in orders)
+                {
+                    if(item.CustomerId == id)
+                    {
+                        customerOrders.Add(item);
+                    }
+                }
+            }
+            return customerOrders;
+        }
         public CustomerModels SaveCostumer(CustomerModels costumer)
         {
                 using (var hatCon = new ApplicationDbContext())
