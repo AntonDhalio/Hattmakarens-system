@@ -40,19 +40,30 @@ namespace Hattmakarens_system.Controllers
         }
         public ActionResult ChangeCustomer()
         {
-            int id = 1;
+            int id = 2;
             var showCustomerInfo = new Service.Costumer().GetCustomerInfo(id);
             return View(showCustomerInfo);
         }
         [HttpPost]
-        //public ActionResult ChangeCustomer()
-        //{
+        public ActionResult ChangeCustomer(CostumerViewModel model)
+        {
+            
+            var status = new Service.Costumer().EditCustomerInfo(model);
+            if(status == true)
+            {
+                return RedirectToAction("DisplayCustomer");
+            }
+            else
+            {
+                return View();
+            }
 
-        //}
-        
+                
+        }
+
         public ActionResult DisplayCustomer()
         {
-            int id = 1;
+            int id = 2;
             var showCustomerInfo = new Service.Costumer().GetCustomerInfo(id);
             return View(showCustomerInfo);
         }

@@ -1,4 +1,6 @@
 ﻿using Hattmakarens_system.Models;
+using Hattmakarens_system.Repositories;
+using Hattmakarens_system.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,12 +11,13 @@ namespace Hattmakarens_system.Service
 {
     public class Costumer
     {
+        private CustomerRepository customerRepository = new CustomerRepository();
         public CustomerModels GetCustomerInfo(int id)
         {
             try
             {
-                var customer = new Repositories.CustomerRepository().GetCustomer(id);
-                var orders = new Repositories.CustomerRepository().GetAllCustomerOrders(id);
+                var customer = customerRepository.GetCustomer(id);
+                var orders = customerRepository.GetAllCustomerOrders(id);
                 var showCustomerInfo = new CustomerModels
                 {
                     Id = customer.Id,
@@ -32,6 +35,29 @@ namespace Hattmakarens_system.Service
                 return null;
             }
             
+        }
+
+        public bool EditCustomerInfo(CostumerViewModel model)
+        {
+            try
+            {
+                var updatedCustomer = new CustomerModels()
+                {
+                    Id = model.Id,
+                    Name = model.Name,
+                    Adress = model.Adress,
+                    Phone = model.Phone,
+                    Email = model.Email,
+                    Comment = model.Comment
+                };
+                customerRepository.SaveCostumer(updatedCustomer);
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
         }
 
     }
