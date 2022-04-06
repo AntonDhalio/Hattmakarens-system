@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using Hattmakarens_system.Models;
 
 namespace Hattmakarens_system.ViewModels
@@ -17,11 +18,13 @@ namespace Hattmakarens_system.ViewModels
         public string Name { get; set; }
         [DisplayName("Materialtyp")]
         public string Type { get; set; }
+        [DisplayName("Färg")]
         public int ColorId { get; set; }
         public virtual ColorModels Color { get; set; }
         public virtual ICollection<Hats> Hats { get; set; }
         public virtual ICollection<HatModels> HatModels { get; set; }
-        public List<ColorModels> ColorsToPickFrom { get; set; }
+        public virtual List<SelectListItem> ColorsToPickFrom { get; set; }
+        public SelectListItem PickedColor { get; set; }
 
     }
 }

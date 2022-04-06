@@ -22,6 +22,7 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
+                hatCon.Configuration.LazyLoadingEnabled = false;
                 return hatCon.Color.ToList();
             }
         }

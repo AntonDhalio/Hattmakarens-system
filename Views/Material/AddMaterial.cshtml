@@ -1,4 +1,5 @@
 ﻿@model Hattmakarens_system.ViewModels.MaterialViewModel
+    @using Hattmakarens_system.Models
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -15,17 +16,18 @@
                     @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
                 </div>
             </div>
-
+            <br />
             <div class="form-group">
-                @Html.LabelFor(m => m.Color, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.DropDownListFor(m => m.Color, new SelectList(Model.ColorsToPickFrom, "Name"))
+                @Html.LabelFor(m => m.PickedColor, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10"> 
+                    @Html.DropDownListFor(m => m.PickedColor, Model.ColorsToPickFrom, new {@class = "form-control"})
                 </div>
-            </div>
+            </div><br />
             <div class="form-group">
                 @Html.LabelFor(m => m.Type, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(m => m.Type, new SelectList(new List<SelectListItem>
+                    
+                    @Html.DropDownListFor(m => m.Type, new List<SelectListItem>
                 {
                    new SelectListItem { Value = "0", Text = "Tyg" },
                    new SelectListItem { Value = "1", Text = "Dekoration" },
