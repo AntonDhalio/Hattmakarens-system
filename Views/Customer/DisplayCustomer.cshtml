@@ -4,11 +4,9 @@
     ViewBag.Title = "DisplayCustomer";
 }
 
-<h2>DisplayCustomer</h2>
+<h2>Kundinformation</h2>
 
 <div>
-    <h4>Costumer name</h4>
-    <hr />
     <ul class="list-group">
         <li class="list-group-item">
             KundId: @Html.DisplayFor(model => model.Id)
@@ -28,7 +26,8 @@
         <li class="list-group-item">
             Kommentarer: @Html.DisplayFor(model => model.Comment)
         </li>
-        <li class="list-group-item active">
+        <li class="list-group-item">
+            Antal skapade ordrar: 
             @{var antalOrders = 0; }
             @foreach (var item in Model.Orders)
             {
@@ -40,12 +39,15 @@
 </div>
 
 <div>
-    <button type="button" class="btn btn-primary">
-        @Html.ActionLink("Ändra", "ChangeCustomer", "Customer")
-    </button>
-    <button type="button" class="btn btn-danger">
-        Ta bort
-    </button>
+    <div class="form-group">
+        <div>
+            <input type="button" value="Ändra" class="btn btn-primary" onclick="location.href = '@Url.Action("ChangeCustomer", "Customer", new { id = Model.Id }, null)'" />
+            <button type="button" class="btn btn-danger">
+                @Html.ActionLink("Ta bort", "DeleteCustomer", "Customer", new { id = Model.Id },
+                    new { onclick = "return confirm('Är du säker på att du vill ta bort den här kunden? Detta går ej att ångra.');" })
+            </button>
+        </div>
+    </div>
 </div>
 
 
