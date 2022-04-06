@@ -29,29 +29,27 @@ namespace Hattmakarens_system.Controllers
             return View(model);
         }
         [HttpPost]
-        public ActionResult AddMaterial(MaterialViewModel materialViewModel)
+        public ActionResult AddMaterial(MaterialViewModel materialViewModel, FormCollection forms)
         {
             //try
             //{
                 var matRepo = new MaterialRepository();
-                var colorRepo = new ColorRepository();
-                var id = 0;
-            foreach (var color in colorRepo.GetAllColors())
-            { 
-                if(color.Name.Equals(Request.Form["PickedColor"]))
-                {
-                    id = color.Id;
-                }
-            }
+            //    var colorRepo = new ColorRepository();
+            //    var id = 0;
+            //foreach (var color in colorRepo.GetAllColors())
+            //{ 
+            //    if(color.Name.Equals(forms["PickedColor"].ToString()))
+            //    {
+            //        id = color.Id;
+            //    }
+            //}
                 var material = new MaterialModels
                 {
                     Name = materialViewModel.Name,
                     Description = materialViewModel.Description,
-                    Type = materialViewModel.Type,
-                    ColorId = id
+                    Type = Request.Form["Type"].ToString(),
+                    ColorId = 2
                 };
-            Console.WriteLine(id);
-            Console.ReadLine();
                 matRepo.SaveMaterial(material);
                 return View();
             //}
