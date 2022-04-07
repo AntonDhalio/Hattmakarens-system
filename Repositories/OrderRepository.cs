@@ -14,14 +14,14 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.Order.FirstOrDefault(o => o.Id == id);
+                return hatCon.Order.Include(o => o.Hats).FirstOrDefault(o => o.Id == id);
             }
         }
         public List<OrderModels> GetAllOrders()
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.Order.ToList();
+                return hatCon.Order.Include(o => o.Hats).ToList();
             }
         }
         //public OrderModels SaveOrder(OrderModels order)
