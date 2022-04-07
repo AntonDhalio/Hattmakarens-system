@@ -11,6 +11,8 @@ namespace Hattmakarens_system.ViewModels
         public int CustomerId { get; set; }
         [DisplayName("Namn")]
         public string CustomerName { get; set; }
+        public int CustomerPhone { get; set; }
+        public string CustomerEmail { get; set; }
         public int OrderId { get; set; }
         public string OrderStatus { get; set; }
         public DateTime OrderDate { get; set; }

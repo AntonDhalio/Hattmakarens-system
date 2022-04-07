@@ -1,0 +1,45 @@
+﻿@model Hattmakarens_system.ViewModels.SearchViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Sök</h2>
+
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <input type="button" value="Beställningar" class="btn btn-primary" />
+        <input type="button" value="Kunder" class="btn btn-outline-primary" onclick="location.href = '@Url.Action("CustomerSearch", "Search")'" />
+</div>
+
+<div class="input-group col-md-10">
+    <br />
+    <div class="input-group-prepend">
+        <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+    </div>
+    <button class="btn btn-outline-secondary" type="button">Sök</button>
+</div>
+
+
+<div class="btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-outline-secondary">
+        <input type="checkbox" checked autocomplete="off"> Material
+    </label>
+    <label class="btn btn-outline-secondary">
+        <input type="checkbox" checked autocomplete="off"> Model
+    </label>
+    <label class="btn btn-outline-primary">
+        <input type="checkbox" checked autocomplete="off"> Kund
+    </label>
+</div>
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Dropdown button
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">Alla</a><br />
+        <a class="dropdown-item" href="#">Activa</a><br />
+        <a class="dropdown-item" href="#">Inaktiva</a><br />
+    </div>
+</div>
+
+
+

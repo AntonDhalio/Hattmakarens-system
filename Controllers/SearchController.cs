@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hattmakarens_system.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,11 +10,16 @@ namespace Hattmakarens_system.Controllers
     public class SearchController : Controller
     {
         // GET: Search
-        public ActionResult Index()
+        public ActionResult OrderSearch()
         {
             return View();
         }
 
+        // GET: Search
+        public ActionResult CustomerSearch()
+        {
+            return View();
+        }
         // GET: Search/Details/5
         public ActionResult Details(int id)
         {
@@ -84,6 +90,35 @@ namespace Hattmakarens_system.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult CustomerSearch(string searchString)
+        {
+            var customerList = new Repositories.CustomerRepository().GetAllCostumers();
+            var searchList = new List<CustomerModels>();
+            foreach (var customer in customerList)
+            {
+                if (customer.Name.Contains(searchString))
+                {
+                    searchList.Add(customer);
+                }
+            }
+            foreach (var customer in customerList)
+            {
+                if (customer.Email.Contains(searchString))
+                {
+                    foreach(var item in searchList)
+                    {
+                        if(item.Id != customer.Id)
+                        {
+                            searchList.Add(customer);
+                        } 
+                    }
+                }
+            }
+            ViewBag.ViewBagList = searchList;
+            return View();
         }
     }
 }
