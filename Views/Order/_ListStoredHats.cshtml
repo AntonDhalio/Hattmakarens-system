@@ -1,17 +1,24 @@
 ﻿@model Hattmakarens_system.ViewModels.OrderViewModel
 
 <table class="table">
-    @foreach (var item in Model.Hats)
+    @if (Model != null)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.ActionLink("Ändra", "Edit", "Competence", new { id = item.Id }, null) |
-                @Html.ActionLink("Ta bort", "Delete", "Competence", new { id = item.Id }, null)
-            </td>
-        </tr>
+        if (Model.Hats != null)
+        {
+            foreach (var item in Model.Hats)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Ändra", "Edit", "Competence", new { id = item.Id }, null) |
+                    @Html.ActionLink("Ta bort", "Delete", "Competence", new { id = item.Id }, null)
+                </td>
+            </tr>
+            }
+        }
     }
+
 </table>
 

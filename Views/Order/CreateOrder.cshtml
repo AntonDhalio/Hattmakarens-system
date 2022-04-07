@@ -9,14 +9,21 @@
 
 <div class="row">
     <div class="col-md-4">
-        @Html.ActionLink("Registrera ny kund", "AddCustomer", "Customer")
-        @Html.ActionLink("Hitta registrerad kund", "SearchCustomer", "Customer")
+        @Html.ActionLink("Välj kund för beställningen", "SearchCustomer", "Customer")
         @*<p>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name) </p>
             <p>@Html.DisplayNameFor(model => model.Address): @Html.DisplayFor(model => model.Address)</p>
             <p>@Html.DisplayNameFor(model => model.Private): @Html.DisplayFor(model => model.Private)</p>
             <p>@Html.ActionLink("Uppdatera information", "EditInfo", new { @Model.Id })</p>*@
     </div>
 </div>
+
+@if (Model != null)
+{
+    if (Model.CustomerName != null)
+    {
+                @Html.DisplayFor(model => model.CustomerName);
+    }
+}
 
 <br />
 
@@ -37,7 +44,7 @@
     @Html.ActionLink("Lägg till lagerförd hatt", "CreateStored", "Hat")
 </p>
 <div>
-    @Html.Partial("_ListStoredHat")
+    @Html.Partial("_ListStoredHats")
 </div>
 
 <br />

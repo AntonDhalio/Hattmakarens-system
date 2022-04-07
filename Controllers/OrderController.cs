@@ -11,7 +11,7 @@ namespace Hattmakarens_system.Controllers
 {
     public class OrderController : Controller
     {
-        ColorRepository customerRepository = new ColorRepository();
+        CustomerRepository customerRepository = new CustomerRepository();
         OrderRepository orderRepository = new OrderRepository();
         HatRepository hatRepository = new HatRepository();
 
@@ -28,21 +28,23 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Order/Create
-        public ActionResult Create()
+        public ActionResult CreateOrder(string email)
         {
-            //var customers = customerRepository.GetAllColors().ToList();
-            //if (customers != null)
-            //{
-            //    ViewBag.Customers = customers;
-            //}
-
-            return View();
+            if (email == null)
+            {
+                return View();
+            }
+            else
+            {
+                OrderViewModel order = SelectedCustomerEmail(email);
+                return View(order);
+            }
            
         }
 
         // POST: Order/Create
         [HttpPost]
-        public ActionResult Create(int id/*OrderViewModel orderModel, HatViewModel hatModel */)
+        public ActionResult CreateOrder(int id/*OrderViewModel orderModel, HatViewModel hatModel */)
         {
             try 
             {
@@ -99,6 +101,17 @@ namespace Hattmakarens_system.Controllers
             {
                 return View();
             }
+        }
+
+        public OrderViewModel SelectedCustomerEmail(string email)
+        {
+            CustomerModels customer = customerRepository.GetCustomerByEmail(email);
+            var model = new OrderViewModel()
+            {
+                CustomerId = customer.Id,
+                CustomerName = customer.Name
+            };
+            return model;
         }
     }
 }

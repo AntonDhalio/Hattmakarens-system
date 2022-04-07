@@ -67,5 +67,22 @@ namespace Hattmakarens_system.Repositories
                 }
             }
         }
+
+        public List<CustomerModels> GetAllCustomersByName(string name)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                return (hatCon.Customer.Where(r => r.Name.Contains(name)).ToList());
+            }
+        }
+
+        public CustomerModels GetCustomerByEmail(string email)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                return hatCon.Customer.FirstOrDefault(c => c.Email == email);
+            }
+
+        }
     }
 }
