@@ -186,6 +186,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
+    <Compile Include="Controllers\PdfController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -208,6 +209,7 @@
     <Compile Include="Models\MaterialModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\PdfService.cs" />
+    <Compile Include="Services\PdfTemplates.cs" />
     <Compile Include="Service\Calculate.cs" />
     <Compile Include="Service\Costumer.cs" />
     <Compile Include="Repositories\ColorRepository.cs" />
@@ -226,6 +228,7 @@
     <Compile Include="ViewModels\ImageViewModel.cs" />
     <Compile Include="ViewModels\MaterialViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
+    <Compile Include="ViewModels\PdfViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -290,6 +293,8 @@
     <Content Include="Views\Customer\ChangeCustomer.cshtml" />
     <Content Include="Views\Customer\DisplayCustomer.cshtml" />
     <Content Include="Views\Material\AddMaterial.cshtml" />
+    <Content Include="Views\Pdf\Invoice.cshtml" />
+    <Content Include="Views\Pdf\Shipping.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
