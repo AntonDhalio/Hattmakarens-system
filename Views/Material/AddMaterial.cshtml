@@ -1,0 +1,51 @@
+﻿@model Hattmakarens_system.ViewModels.MaterialViewModel
+    @using Hattmakarens_system.Models
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "ColorsToPickFrom";
+}
+
+<h1>Lägg till Material</h1>
+
+    <div>
+        @using (Html.BeginForm("AddMaterial", "Material", FormMethod.Post))
+        {
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(m => m.ColorId, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.DropDownList("ColorId", new SelectList(ViewBag.ColorsToPickFrom, "Value", "Text"), "Välj färg", new { @class = "form-control" })
+                </div>
+            </div><br />
+            <div class="form-group">
+                @Html.LabelFor(m => m.Type, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    
+                    @Html.DropDownListFor(m => m.Type, new List<SelectListItem>
+                {
+                   new SelectListItem { Value = "Tyg", Text = "Tyg" },
+                   new SelectListItem { Value = "Dekoration", Text = "Dekoration" },
+                   new SelectListItem { Value = "Tråd", Text = "Tråd" }
+
+                }, "Välj materialtyp", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Lägg till material" />
+                </div>
+            </div>}
+    </div>
