@@ -3,6 +3,7 @@ using Hattmakarens_system.Repositories;
 using Hattmakarens_system.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,48 +16,41 @@ namespace Hattmakarens_system.Controllers
         public ActionResult AddMaterial()
         {
             var colorRepo = new ColorRepository();
-            var model = new MaterialViewModel();
-            model.ColorsToPickFrom = new List<SelectListItem>();
-            foreach (var color in colorRepo.GetAllColors())
+            List<SelectListItem> colors = new List<SelectListItem>();
+            
+                foreach(var color in colorRepo.GetAllColors())
             {
                 var listitem = new SelectListItem
                 {
-                    Text = color.Name,
-                    Value = color.Id.ToString()
+                    Value = color.Id.ToString(),
+                    Text = color.Name
                 };
-                model.ColorsToPickFrom.Add(listitem);
+                colors.Add(listitem);
             }
-            return View(model);
+
+            ViewBag.ColorsToPickFrom = colors;
+            return View();
         }
         [HttpPost]
         public ActionResult AddMaterial(MaterialViewModel materialViewModel, FormCollection forms)
         {
-            //try
-            //{
+            try
+            {
                 var matRepo = new MaterialRepository();
-            //    var colorRepo = new ColorRepository();
-            //    var id = 0;
-            //foreach (var color in colorRepo.GetAllColors())
-            //{ 
-            //    if(color.Name.Equals(forms["PickedColor"].ToString()))
-            //    {
-            //        id = color.Id;
-            //    }
-            //}
                 var material = new MaterialModels
                 {
                     Name = materialViewModel.Name,
                     Description = materialViewModel.Description,
                     Type = Request.Form["Type"].ToString(),
-                    ColorId = 2
+                    ColorId = int.Parse(Request.Form["ColorId"])
                 };
                 matRepo.SaveMaterial(material);
-                return View();
-            //}
-            //catch
-            //{
-              //  return View("Error");
-            //}
+                return RedirectToAction("AddMaterial", "Material");
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
     }
 }
