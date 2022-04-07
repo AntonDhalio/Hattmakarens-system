@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -37,6 +38,49 @@ namespace Hattmakarens_system.Controllers
             {
                 return View("Error");
             }
+        }
+        public ActionResult ChangeCustomer(int id)
+        {
+            var showCustomerInfo = new Service.Costumer().GetCustomerInfo(id);
+            return View(showCustomerInfo);
+        }
+        [HttpPost]
+        public ActionResult ChangeCustomer(CostumerViewModel model)
+        {
+            
+            var status = new Service.Costumer().EditCustomerInfo(model);
+            if(status == true)
+            {
+                return RedirectToAction("DisplayCustomer");
+            }
+            else
+            {
+                return View();
+            }
+
+                
+        }
+
+        public ActionResult DisplayCustomer()
+        {
+            int id = 1;
+            var showCustomerInfo = new Service.Costumer().GetCustomerInfo(id);
+            return View(showCustomerInfo);
+        }
+
+        public ActionResult DeleteCustomer(int id)
+        {
+            if(id != 0)
+            {
+                new CustomerRepository().DeleteCostumer(id);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                Debug.WriteLine("Något har gått fel med id´t");
+                return View();
+            }
+            
         }
     }
 }

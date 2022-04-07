@@ -11,15 +11,17 @@ namespace Hattmakarens_system.ViewModels
     public class HatViewModel
     {
         public int Id { get; set; }
-        [DisplayName("Namn")]
+        [DisplayName("Namn på hatt")]
         public string Name { get; set; }
-        [DisplayName("Storlek")]
+        [DisplayName("Hattstorlek")]
         public string Size { get; set; }
-        [DisplayName("Pris")]
+        [DisplayName("Bild")]
+        public string Path { get; set; }
+        [DisplayName("Pris på hatt")]
         public double Price { get; set; }
         [DisplayName("Status")]
         public string Status { get; set; }
-        [DisplayName("Kommentar")]
+        [DisplayName("Kommentar på hatt")]
         public string Comment { get; set; }
         public string UserId { get; set; }
         public virtual UserModels User { get; set; }
