@@ -36,19 +36,23 @@ namespace Hattmakarens_system.Services
             50, 150);
             gfx.DrawString("07455684992", miniFont, XBrushes.Black,
             50, 160);
+            gfx.DrawString("organisationsnummer: 5591433437", miniFont, XBrushes.Black,
+            50, 170);
 
-            // Create rectangle.
-            XRect rect = new XRect(30, 200, 300, 150);
-
+            //Skapa Rektangel
+            XRect rect = new XRect(30, 200, 300, 180);
             gfx.DrawRectangle(XBrushes.LightGray, rect);
+
             gfx.DrawString("Kundnamn: " , contentFont, XBrushes.Black,
             50, 230);
             gfx.DrawString("Adress: " , contentFont, XBrushes.Black,
             50, 260);
             gfx.DrawString("OCR: " , contentFont, XBrushes.Black,
             50, 290);
-            gfx.DrawString("Totalsumma:  kr", contentFont, XBrushes.Black,
+            gfx.DrawString("Totalsumma: ", contentFont, XBrushes.Black,
             50, 320);
+            gfx.DrawString("Förfallodatum: ", contentFont, XBrushes.Black,
+            50, 350);
 
             string path = HttpContext.Current.Server.MapPath("~/App_Data/");
             string filename = document.Guid.ToString() + "faktura.pdf";
@@ -172,34 +176,29 @@ namespace Hattmakarens_system.Services
             XFont miniFont = new XFont("Verdana", 8, XFontStyle.Italic);
 
             //Skapa rektangel (bakgrund) 1
-            XRect rect = new XRect(150, 120, 300, 150);
+            XRect rect = new XRect(150, 120, 300, 140);
             gfx.DrawRectangle(XBrushes.LightGray, rect);
 
             //Header
-            gfx.DrawString("BESTÄLLNING", headerFont, XBrushes.Black,
+            gfx.DrawString("BESTÄLLNING NR 8942", headerFont, XBrushes.Black,
                 new XRect(0, 50, page.Width, page.Height), XStringFormats.TopCenter);
 
             //Datum
             gfx.DrawString("Datum: " + DateTime.Now.Date.ToShortDateString(), miniFont, XBrushes.Black,
             180, 100, XStringFormats.Center);
 
-            //Beställningsinfo
-            gfx.DrawString("Nummer", contentFontBold, XBrushes.Black,
-            180, 170);
-            gfx.DrawString("8593859", contentFont, XBrushes.Black,
-            300, 170);
             //Kundnamn
             gfx.DrawString("Kund", contentFontBold, XBrushes.Black,
-            180, 190);
+            180, 170);
             gfx.DrawString("Gretis gris", contentFont, XBrushes.Black,
-            240, 190);
+            240, 170);
             //Adress
             gfx.DrawString("Adress", contentFontBold, XBrushes.Black,
-            180, 210);
+            180, 190);
             gfx.DrawString("Gatans gata3239", contentFont, XBrushes.Black,
-            240, 210);
+            240, 190);
             gfx.DrawString("9420 Öbro", contentFont, XBrushes.Black,
-            240, 230);
+            240, 210);
 
             //HATTINFO KOD HÄR!!!!!!!!!//
 
