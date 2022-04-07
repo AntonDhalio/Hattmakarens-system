@@ -15,34 +15,42 @@ namespace Hattmakarens_system.Controllers
         public ActionResult Hatmodel()
         {
             var materialRepo = new MaterialRepository();
-            var model = new HatmodelViewModel
+            var materials = new List<SelectListItem>();
+            foreach(var material in materialRepo.GetAllMaterials())
             {
-                MaterialsToPickFrom = materialRepo.GetAllMaterials()
-            };
-            return View(model);
+                var listitem = new SelectListItem
+                {
+                    Value = material.Id.ToString(),
+                    Text = material.Name
+                };
+                materials.Add(listitem);
+            }
+            ViewBag.MaterialsToPickFrom = materials;
+            return View();
         }
         [HttpPost]
-        public ActionResult Hatmodel(HatmodelViewModel hatmodel) 
+        public ActionResult Hatmodel(HatmodelViewModel hatmodel, IEnumerable<string> PickedMaterials) 
         {
             var newHatmodel = new HatModels
             {
                 Name = hatmodel.Name,
                 Description = hatmodel.Description,
                 Price = hatmodel.Price,
-                Material = hatmodel.Material
+                Material = new List<MaterialModels>()
             };
-
-            var hatRepo = new HatmodelRepository();
-            hatRepo.SaveHatmodel(newHatmodel);
-            var materialRepo = new MaterialRepository();
-            foreach(var material in newHatmodel.Material)
+            using (var context = new ApplicationDbContext())
             {
-                materialRepo.GetMaterial(material.Id);
-                material.HatModels.Add(newHatmodel);
-                materialRepo.SaveMaterial(material);
+                foreach (var material in PickedMaterials)
+                {
+                    var id = int.Parse(material);
+                    var aMaterial = context.Material.ToList().FirstOrDefault(m => m.Id == id);
+                    newHatmodel.Material.Add(aMaterial);
+                }
+                context.HatModels.Add(newHatmodel);
+                context.SaveChanges();
             }
-            
-            return View();
+
+            return RedirectToAction("Hatmodel", "Hatmodel");
 
         }
     }

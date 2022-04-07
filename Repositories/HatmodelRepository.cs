@@ -13,14 +13,14 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.HatModels.FirstOrDefault(h => h.Id == id);
+                return hatCon.HatModels.Include(h => h.Material).FirstOrDefault(h => h.Id == id);
             }
         }
         public List<HatModels> GetAllHatmodels()
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.HatModels.Include(h => h.Material).ToList();
+                return hatCon.HatModels.Include(h => h.Material).Include(h => h.Hats).ToList();
             }
         }
         public HatModels SaveHatmodel(HatModels hatmodel)
