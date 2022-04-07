@@ -21,6 +21,12 @@
                 @*TA BORT NÄR VI HAR DATA*@
                 @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
             </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @*<li>@Html.ActionLink("Customer", "DisplayCustomer", "Customer")</li>*@
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
         </div>
     </div>
     <div class="container body-content">

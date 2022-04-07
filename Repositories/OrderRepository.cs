@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using Hattmakarens_system.Models;
+using Hattmakarens_system.ViewModels;
 
 namespace Hattmakarens_system.Repositories
 {
@@ -23,20 +24,36 @@ namespace Hattmakarens_system.Repositories
                 return hatCon.Order.ToList();
             }
         }
-        public OrderModels SaveOrder(OrderModels order)
+        //public OrderModels SaveOrder(OrderModels order)
+        //{
+        //    using (var hatCon = new ApplicationDbContext())
+        //    {
+        //        if (order.Id != 0)
+        //        {
+        //            hatCon.Entry(order).State = EntityState.Modified;
+        //        }
+        //        else
+        //        {
+        //            hatCon.Order.Add(order);
+        //        }
+        //        hatCon.SaveChanges();
+        //        return order;
+        //    }
+        //}
+
+        public void CreateOrder(OrderViewModel order)
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                if (order.Id != 0)
+                OrderModels newOrdermodel = new OrderModels()
                 {
-                    hatCon.Entry(order).State = EntityState.Modified;
-                }
-                else
-                {
-                    hatCon.Order.Add(order);
-                }
+                    Date = DateTime.Now,
+                    Priority = order.Priority,
+                    Status = "Under behandling",
+                    Comment = order.Comment
+                };
+                hatCon.Order.Add(newOrdermodel);
                 hatCon.SaveChanges();
-                return order;
             }
         }
         public void DeleteOrder(int id)

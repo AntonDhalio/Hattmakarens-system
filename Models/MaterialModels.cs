@@ -16,6 +16,7 @@ namespace Hattmakarens_system.Models
         public string Type { get; set; }
         [ForeignKey("Color")]
         public int ColorId { get; set; }
+        
         public virtual ColorModels Color { get; set; }
         public virtual ICollection<Hats> Hats { get; set; }
         public virtual ICollection<HatModels> HatModels { get; set; }
