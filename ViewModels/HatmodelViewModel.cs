@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using Hattmakarens_system.Models;
 
 namespace Hattmakarens_system.ViewModels
@@ -20,6 +21,6 @@ namespace Hattmakarens_system.ViewModels
         public virtual ICollection<Hats> Hats { get; set; }
         public virtual ICollection<ImageModels> Images { get; set; }
         public virtual ICollection<MaterialModels> Material { get; set; }
-        public List<MaterialModels> MaterialsToPickFrom { get; set; }
+        public List<SelectListItem> MaterialsToPickFrom { get; set; }
     }
 }

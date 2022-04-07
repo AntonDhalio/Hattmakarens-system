@@ -15,11 +15,22 @@ namespace Hattmakarens_system.Controllers
         public ActionResult Hatmodel()
         {
             var materialRepo = new MaterialRepository();
-            var model = new HatmodelViewModel
+            //var model = new HatmodelViewModel
+            //{
+            //    MaterialsToPickFrom = new List<SelectListItem>()
+            //};
+            var materials = new List<SelectListItem>();
+            foreach(var material in materialRepo.GetAllMaterials())
             {
-                MaterialsToPickFrom = materialRepo.GetAllMaterials()
-            };
-            return View(model);
+                var listitem = new SelectListItem
+                {
+                    Value = material.Id.ToString(),
+                    Text = material.Name
+                };
+                materials.Add(listitem);
+            }
+            ViewBag.MaterialsToPickFrom = materials;
+            return View();
         }
         [HttpPost]
         public ActionResult Hatmodel(HatmodelViewModel hatmodel) 
@@ -29,20 +40,27 @@ namespace Hattmakarens_system.Controllers
                 Name = hatmodel.Name,
                 Description = hatmodel.Description,
                 Price = hatmodel.Price,
-                Material = hatmodel.Material
+                Material = new List<MaterialModels>()
             };
-
             var hatRepo = new HatmodelRepository();
             hatRepo.SaveHatmodel(newHatmodel);
+            var lastHatmodel = hatRepo.GetHatmodel(hatRepo.GetAllHatmodels().LastOrDefault().Id);
             var materialRepo = new MaterialRepository();
-            foreach(var material in newHatmodel.Material)
+            //foreach (var material in Request.Form["Material"])
+            //{
+                var aMaterial = materialRepo.GetMaterial(int.Parse(Request.Form["Material"]));
+                lastHatmodel.Material.Add(aMaterial);
+            //}
+            hatRepo.SaveHatmodel(lastHatmodel);
+            var theHat = hatRepo.GetHatmodel(lastHatmodel.Id);
+            foreach (var material in theHat.Material)
             {
-                materialRepo.GetMaterial(material.Id);
-                material.HatModels.Add(newHatmodel);
-                materialRepo.SaveMaterial(material);
+                var mat = materialRepo.GetMaterial(material.Id);
+                mat.HatModels.Add(theHat);
+                materialRepo.SaveMaterial(mat);
             }
-            
-            return View();
+
+            return RedirectToAction("Hatmodel", "Hatmodel");
 
         }
     }
