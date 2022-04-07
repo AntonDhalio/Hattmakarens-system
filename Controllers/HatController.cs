@@ -1,7 +1,4 @@
-﻿using Hattmakarens_system.Models;
-using Hattmakarens_system.Repositories;
-using Hattmakarens_system.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,45 +6,54 @@ using System.Web.Mvc;
 
 namespace Hattmakarens_system.Controllers
 {
-    public class OrderController : Controller
+    public class HatController : Controller
     {
-        ColorRepository customerRepository = new ColorRepository();
-        OrderRepository orderRepository = new OrderRepository();
-        HatRepository hatRepository = new HatRepository();
-
-        // GET: Order
+        // GET: Hat
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Order/Details/5
+        // GET: Hat/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Order/Create
-        public ActionResult Create()
+        // GET: Hat/Create
+        public ActionResult CreateSpec()
         {
-            //var customers = customerRepository.GetAllColors().ToList();
-            //if (customers != null)
-            //{
-            //    ViewBag.Customers = customers;
-            //}
-
             return View();
-           
         }
 
-        // POST: Order/Create
+        // POST: Hat/Create
         [HttpPost]
-        public ActionResult Create(int id/*OrderViewModel orderModel, HatViewModel hatModel */)
+        public ActionResult CreateSpec(FormCollection collection)
         {
-            try 
+            try
             {
-            //    orderRepository.CreateOrder(orderModel);
-            //    hatRepository.CreateHat(hatModel);
+                // TODO: Add insert logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        // GET: Hat/Create
+        public ActionResult CreateStored()
+        {
+            return View();
+        }
+
+        // POST: Hat/Create
+        [HttpPost]
+        public ActionResult CreateStored(FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add insert logic here
 
                 return RedirectToAction("Index");
             }
@@ -57,13 +63,13 @@ namespace Hattmakarens_system.Controllers
             }
         }
 
-        // GET: Order/Edit/5
+        // GET: Hat/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Order/Edit/5
+        // POST: Hat/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -79,13 +85,13 @@ namespace Hattmakarens_system.Controllers
             }
         }
 
-        // GET: Order/Delete/5
+        // GET: Hat/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Order/Delete/5
+        // POST: Hat/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

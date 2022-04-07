@@ -1,0 +1,70 @@
+﻿@model Hattmakarens_system.ViewModels.OrderViewModel
+
+@{
+    ViewBag.Title = "CreateOrder";
+}
+
+
+<h2>Registrera beställning</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        @Html.ActionLink("Registrera ny kund", "AddCustomer", "Customer")
+        @Html.ActionLink("Hitta registrerad kund", "SearchCustomer", "Customer")
+        @*<p>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name) </p>
+            <p>@Html.DisplayNameFor(model => model.Address): @Html.DisplayFor(model => model.Address)</p>
+            <p>@Html.DisplayNameFor(model => model.Private): @Html.DisplayFor(model => model.Private)</p>
+            <p>@Html.ActionLink("Uppdatera information", "EditInfo", new { @Model.Id })</p>*@
+    </div>
+</div>
+
+<br />
+
+<h2>Specialtillverkade hattar</h2>
+
+<p>
+    @Html.ActionLink("Lägg till specialtillverkad hatt", "CreateSpec", "Hat")
+</p>
+<div>
+    @Html.Partial("_ListSpecHats")
+</div>
+
+<br />
+
+<h2>Lagerförda hattar</h2>
+
+<p>
+    @Html.ActionLink("Lägg till lagerförd hatt", "CreateStored", "Hat")
+</p>
+<div>
+    @Html.Partial("_ListStoredHat")
+</div>
+
+<br />
+<div class="form-group">
+    @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <div class="checkbox">
+            @Html.EditorFor(model => model.Priority)
+            @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*Lägg till totalsumma*@
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Skapa beställning" class="btn btn-default" />
+    </div>
+</div>
+

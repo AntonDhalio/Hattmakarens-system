@@ -31,8 +31,10 @@ namespace Hattmakarens_system.ViewModels
         public string Comment { get; set; }
         //public string UserId { get; set; }
         //public virtual UserModels User { get; set; }
-        //public int CustomerId { get; set; }
+        public string CustomerName { get; set; }
+        public int CustomerId { get; set; }
         //public virtual CustomerModels Customer { get; set; }
-        //public virtual ICollection<Hats> Hats { get; set; }
+        public virtual ICollection<Hats> Hats { get; set; }
+      
     }
 }
