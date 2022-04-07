@@ -27,7 +27,7 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                if (String.IsNullOrEmpty(user.Id))
+                if (!String.IsNullOrEmpty(user.Id))
                 {
                     hatCon.Entry(user).State = EntityState.Modified;
                 }
