@@ -6,20 +6,31 @@
 <h2>Sök</h2>
 
 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <input type="button" value="Beställningar" class="btn btn-primary" />
-        <input type="button" value="Kunder" class="btn btn-outline-primary" onclick="location.href = '@Url.Action("CustomerSearch", "Search")'" />
+    <input type="button" value="Beställningar" class="btn btn-primary" />
+    <input type="button" value="Kunder" class="btn btn-outline-primary" onclick="location.href = '@Url.Action("CustomerSearch", "Search")'" />
 </div>
 
-<div class="input-group col-md-10">
-    <br />
-    <div class="input-group-prepend">
-        <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-    </div>
-    <button class="btn btn-outline-secondary" type="button">Sök</button>
+@using (Html.BeginForm())
+    {
+    <div class="input-group col-md-10">
+        <br />
+        <div class="input-group-prepend">
+            @Html.TextBox("searchString")
+            <button class="btn btn-outline-primary" type="submit">Sök</button>
+        </div>
+        <input type="radio" name="searchOption" value="material" /> Material
+        <input type="radio" name="searchOption" value="model" /> Modell
+        <input type="radio" name="searchOption" value="customer" /> Kund
+        <br />
+        Filtrera på status @Html.DropDownList("statusOption", new List<SelectListItem>
+            { new SelectListItem { Value = "all", Text = "Alla"},
+             new SelectListItem { Value = "active", Text = "Aktiva"},
+             new SelectListItem { Value = "inactive", Text = "Inaktiva"}})
 </div>
+}
 
 
-<div class="btn-group-toggle" data-toggle="buttons">
+@*<div class="btn-group-toggle" data-toggle="buttons">
     <label class="btn btn-outline-secondary">
         <input type="checkbox" checked autocomplete="off"> Material
     </label>
@@ -39,7 +50,47 @@
         <a class="dropdown-item" href="#">Activa</a><br />
         <a class="dropdown-item" href="#">Inaktiva</a><br />
     </div>
-</div>
+</div>*@
 
 
+@if (ViewBag.ViewBagList != null)
+{
+    if (ViewBag.ViewBagList.Count > 0)
+    {
+        <table class="table">
+            <tr>
+                <th>Ordernummer</th>
+                <th>Kund</th>
+                <th>Orderdatum</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in ViewBag.ViewBagList)
+            {
+                <tr>
+                    <td>
+                        @item.Id
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Date
+                    </td>
+                    <td>
+                        @item.Status
+                    </td>
+                    @*<td>
+                        @Html.ActionLink("Se orderinfo", "DisplayOrder", "Customer", new { item.Id }, null)
+                    </td>*@
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <p class="text-danger">Det finns inga sökresultat!</p>
+    }
+}
 

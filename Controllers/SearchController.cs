@@ -120,5 +120,42 @@ namespace Hattmakarens_system.Controllers
             ViewBag.ViewBagList = searchList;
             return View();
         }
+        [HttpPost]
+        public ActionResult OrderSearch(string searchString, string searchOption, string statusOption)
+        {
+            var orderList = new Repositories.OrderRepository().GetAllOrders();
+            var searchList = new List<OrderModels>();
+
+            if(searchOption is null)
+            {
+                searchList = orderList;
+            }
+            if (searchOption.Equals("material"))
+            {
+                //hämta alla ordrar på angivet material
+                //addera alla ordrar till söklistan
+            }
+            if (searchOption.Equals("model"))
+            {
+                //hämta alla ordrar på angivet modell
+                //addera alla ordrar till söklistan
+            }
+            if (searchOption.Equals("customer"))
+            {
+                //hämta alla ordrar på angivet kundnamn
+                //addera alla ordrar till söklistan
+            }
+            if (statusOption.Equals("active"))
+            {
+                //söklistan ska filtreras på aktiva ordrar
+            }
+            if(statusOption.Equals("inactive"))
+            {
+                //Söklistan ska filtreras på inaktiva ordrar
+            }
+
+            ViewBag.ViewBagList = searchList;
+            return View();
+        }
     }
 }
