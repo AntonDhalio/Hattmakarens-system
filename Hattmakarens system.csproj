@@ -186,6 +186,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
+    <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -226,6 +227,7 @@
     <Compile Include="ViewModels\ImageViewModel.cs" />
     <Compile Include="ViewModels\MaterialViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
+    <Compile Include="ViewModels\StatisticViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -290,6 +292,7 @@
     <Content Include="Views\Customer\ChangeCustomer.cshtml" />
     <Content Include="Views\Customer\DisplayCustomer.cshtml" />
     <Content Include="Views\Material\AddMaterial.cshtml" />
+    <Content Include="Views\Statistic\GetStatistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
