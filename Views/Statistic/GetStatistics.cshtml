@@ -3,5 +3,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Se statistik</h1>
+<!DOCTYPE html>
 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GetStatistics</title>
+</head>
+<body>
+    <div>
+        <h1>Se statistik</h1>
+        @using (Html.BeginForm("GetStatistics", "Statistic", FormMethod.Post))
+        {
+            @Html.Label("Välj tid")<br />
+            @Html.RadioButton("year", "År")
+            @Html.RadioButton("quarter", "Kvartal")
+            @Html.RadioButton("month", "Månad")
+
+        }
+    </div>
+</body>
+</html>
