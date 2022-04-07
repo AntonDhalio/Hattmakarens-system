@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hattmakarens_system.Repositories;
+using Hattmakarens_system.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +10,7 @@ namespace Hattmakarens_system.Controllers
 {
     public class HatController : Controller
     {
+        HatRepository hatRepository = new HatRepository();
         // GET: Hat
         public ActionResult Index()
         {
@@ -21,20 +24,24 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Hat/Create
-        public ActionResult CreateSpec()
+        public ActionResult CreateSpec(int orderId)
         {
-            return View();
+            HatViewModel model = new HatViewModel()
+            {
+                OrderId = orderId
+            };
+            return View(model);
         }
 
         // POST: Hat/Create
         [HttpPost]
-        public ActionResult CreateSpec(FormCollection collection)
+        public ActionResult CreateSpec(HatViewModel model)
         {
             try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+            {              
+                hatRepository.CreateHat(model);
+                //OrderRepository.AddSpecHat(model);
+                return RedirectToAction("CreateOrder", "Order", new {orderId = model.OrderId});
             }
             catch
             {

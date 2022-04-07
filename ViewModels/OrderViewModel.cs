@@ -35,6 +35,7 @@ namespace Hattmakarens_system.ViewModels
         public int CustomerId { get; set; }
         //public virtual CustomerModels Customer { get; set; }
         public virtual ICollection<Hats> Hats { get; set; }
-      
+        //public virtual ICollection<Hats> StoredHats { get; set; }
+
     }
 }

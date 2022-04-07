@@ -21,7 +21,8 @@
 {
     if (Model.CustomerName != null)
     {
-                @Html.DisplayFor(model => model.CustomerName);
+        <p>Vald kund:</p>
+        @Html.DisplayFor(model => model.CustomerName);
     }
 }
 
@@ -30,7 +31,8 @@
 <h2>Specialtillverkade hattar</h2>
 
 <p>
-    @Html.ActionLink("Lägg till specialtillverkad hatt", "CreateSpec", "Hat")
+    @*@Html.ActionLink("Lägg till specialtillverkad hatt", "CreateSpec", "Hat", new (orderId = Model.Id), null)*@
+    <input type="button" class="btn" value="Lägg till specialtillverkad hatt" onclick="location.href = '@Url.Action("CreateSpec", "Hat", new { orderId = Model.Id })'" />
 </p>
 <div>
     @Html.Partial("_ListSpecHats")

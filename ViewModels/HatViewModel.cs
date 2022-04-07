@@ -24,6 +24,7 @@ namespace Hattmakarens_system.ViewModels
         [DisplayName("Kommentar på hatt")]
         public string Comment { get; set; }
         public string UserId { get; set; }
+        public int OrderId { get; set; }
         public virtual UserModels User { get; set; }
         public int ModelID { get; set; }
         public virtual HatModels Models { get; set; }

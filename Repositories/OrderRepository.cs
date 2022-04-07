@@ -10,13 +10,14 @@ namespace Hattmakarens_system.Repositories
 {
     public class OrderRepository
     {
-        public OrderModels GetOrder(int id)
+        public OrderModels GetOrder(int? id)
         {
             using (var hatCon = new ApplicationDbContext())
             {
                 return hatCon.Order.FirstOrDefault(o => o.Id == id);
             }
         }
+
         public List<OrderModels> GetAllOrders()
         {
             using (var hatCon = new ApplicationDbContext())
@@ -56,6 +57,18 @@ namespace Hattmakarens_system.Repositories
                 hatCon.SaveChanges();
             }
         }
+
+        public int CreateEmptyOrder()
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                OrderModels newOrderModel = new OrderModels();
+                newOrderModel.Date = DateTime.Now;
+                hatCon.Order.Add(newOrderModel);
+                hatCon.SaveChanges();
+                return newOrderModel.Id;
+            }
+        }
         public void DeleteOrder(int id)
         {
             using (var hatCon = new ApplicationDbContext())
@@ -68,5 +81,11 @@ namespace Hattmakarens_system.Repositories
                 }
             }
         }
+
+        //public void AddSpecHat(HatViewModel specHat)
+        //{
+        //    GetOrder(specHat.OrderId);
+
+        //}
     }
 }
