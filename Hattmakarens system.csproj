@@ -189,7 +189,7 @@
     <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\PdfController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
-
+    <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -237,6 +237,7 @@
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\PdfViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
+    <Compile Include="ViewModels\StatisticViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -311,6 +312,9 @@
     <Content Include="Views\Order\_ListSpecHats.cshtml" />
     <Content Include="Views\Order\_ListStoredHats.cshtml" />
     <Content Include="Views\Customer\SearchCustomer.cshtml" />
+    <Content Include="Views\Statistic\GetStatistics.cshtml" />
+    <Content Include="Views\Statistic\_GetStatistics.cshtml" />
+    <Content Include="Views\Statistic\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
