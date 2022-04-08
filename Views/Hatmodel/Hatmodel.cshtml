@@ -1,6 +1,7 @@
 ﻿@model Hattmakarens_system.ViewModels.HatmodelViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "MaterialsToPickFrom";
 }
 
 <!DOCTYPE html>
@@ -32,9 +33,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(h => h.Material, new { @class = "col-md-2 control-label" })
+                    @Html.LabelFor(h => h.PickedMaterials, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.DropDownListFor(h => h.Material, new SelectList(Model.MaterialsToPickFrom, "Name"))
+                        @Html.ListBoxFor(h => h.PickedMaterials, new MultiSelectList(ViewBag.MaterialsToPickFrom, "Value", "Text"), new { @class = "form-control" })
                     </div>
                 </div>
                 <div class="form-group">

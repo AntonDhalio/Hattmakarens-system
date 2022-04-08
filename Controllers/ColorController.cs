@@ -25,6 +25,7 @@ namespace Hattmakarens_system.Controllers
                 var color = new ColorModels
                 {
                     Name = colorViewModel.Name
+                    
                 };
                 colorReop.SaveColor(color);
                 return View();
