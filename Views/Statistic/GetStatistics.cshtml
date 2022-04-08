@@ -1,6 +1,7 @@
 ﻿@model Hattmakarens_system.ViewModels.StatisticViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Statistic/_GetStatistics.cshtml";
 }
 
 <!DOCTYPE html>
@@ -12,15 +13,20 @@
 </head>
 <body>
     <div>
-        <h1>Se statistik</h1>
-        @using (Html.BeginForm("GetStatistics", "Statistic", FormMethod.Post))
-        {
-            @Html.Label("Välj tid")<br />
-            @Html.RadioButton("year", "År")
-            @Html.RadioButton("quarter", "Kvartal")
-            @Html.RadioButton("month", "Månad")
-
-        }
+        <table>
+            <thead><tr><td>Beställning</td><td>Antal hattar</td><td>Beställningsdatum</td><td>Summa</td></tr></thead>
+            <tbody>
+                   @foreach(var order in Model.orders)
+            {
+                    <tr>
+                        <td>@order.Customer</td><td>@order.Hats.Count</td><td>@order.Date</td><td>@order.TotalSum</td>
+                    </tr>
+            }
+            </tbody>
+            <tfoot><tr>
+                <td></td><td>Totalt antal beställingar: @Model.totalOrdersCount</td><td>Totalt antal hattar: @Model.totalHatsCount</td><td>Total summa: @Model.totalSum</td>
+                </tr></tfoot>
+        </table>
     </div>
 </body>
 </html>

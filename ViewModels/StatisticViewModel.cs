@@ -9,6 +9,10 @@ namespace Hattmakarens_system.ViewModels
     public class StatisticViewModel
     {
         public List<OrderModels> orders { get; set; }
+        public String time { get; set; }
+        public double totalSum { get; set; }
+        public int totalOrdersCount { get; set; }
+        public int totalHatsCount { get; set; }
 
     }
 }

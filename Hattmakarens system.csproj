@@ -293,6 +293,8 @@
     <Content Include="Views\Customer\DisplayCustomer.cshtml" />
     <Content Include="Views\Material\AddMaterial.cshtml" />
     <Content Include="Views\Statistic\GetStatistics.cshtml" />
+    <Content Include="Views\Statistic\_GetStatistics.cshtml" />
+    <Content Include="Views\Statistic\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
