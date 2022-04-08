@@ -9,22 +9,25 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/Content/Site.css" />
     <title>GetStatistics</title>
 </head>
 <body>
     <div>
-        <table>
-            <thead><tr><td>Beställning</td><td>Antal hattar</td><td>Beställningsdatum</td><td>Summa</td></tr></thead>
+        <br />
+        <table class="statistik-tabell">
+            <thead><tr><td><h3>Beställningsnummer</h3></td><td><h3>Antal hattar</h3></td><td><h3>Beställningsdatum</h3></td><td><h3>Summa</h3></td></tr></thead>
             <tbody>
                    @foreach(var order in Model.orders)
             {
                     <tr>
-                        <td>@order.Customer</td><td>@order.Hats.Count</td><td>@order.Date</td><td>@order.TotalSum</td>
+                        <td>@order.Id</td><td>@order.Hats.Count</td><td>@order.Date</td><td>@order.TotalSum</td>
                     </tr>
             }
+                <tr><td></td><td></td><td></td><td></td></tr>
             </tbody>
             <tfoot><tr>
-                <td></td><td>Totalt antal beställingar: @Model.totalOrdersCount</td><td>Totalt antal hattar: @Model.totalHatsCount</td><td>Total summa: @Model.totalSum</td>
+                       <td><h4>Totalt antal beställingar: @Model.totalOrdersCount</h4></td><td><h4>Totalt antal hattar: @Model.totalHatsCount</h4></td><td></td><td><h4>Total summa: @Model.totalSum</h4></td>
                 </tr></tfoot>
         </table>
     </div>

@@ -22,3 +22,7 @@ select,
 textarea {
     max-width: 280px;
 }
+.statistik-tabell {
+    width: 80%;
+    empty-cells:show;
+}
