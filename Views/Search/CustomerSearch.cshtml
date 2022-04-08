@@ -1,0 +1,66 @@
+﻿@model Hattmakarens_system.ViewModels.SearchViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Sök</h2>
+
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <input type="button" value="Beställningar" class="btn btn-outline-primary" onclick="location.href = '@Url.Action("OrderSearch", "Search")'" />
+    <input type="button" value="Kunder" class="btn btn-primary" />
+</div>
+
+@using (Html.BeginForm())
+{
+    <div class="input-group col-md-10">
+        <br />
+        <div class="input-group-prepend">
+            @Html.TextBox("searchString")
+            <button class="btn btn-outline-primary" type="submit">Sök</button>
+        </div>
+    </div>
+}
+<hr />
+
+@if (ViewBag.ViewBagList != null)
+{
+    if (ViewBag.ViewBagList.Count > 0)
+    {
+        <table class="table">
+            <tr>
+                <th>Kund ID</th>
+                <th>Namn</th>
+                <th>Telefon</th>
+                <th>Email</th>
+                <th>Kund ID</th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in ViewBag.ViewBagList)
+            {
+                <tr>
+                    <td>
+                        @item.Id
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Phone
+                    </td>
+                    <td>
+                        @item.Email
+                    </td>
+                    <td>
+                        @Html.ActionLink("Se kundinfo", "DisplayCustomer", "Customer", new { item.Id }, null)
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <p  class="text-danger">Det finns inga sökresultat!</p>
+    }
+}
+
