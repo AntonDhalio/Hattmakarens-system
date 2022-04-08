@@ -65,7 +65,7 @@
                             @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                             @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
                         @*@Html.ActionLink("Lägg till", "Create", "Order", new { name = item.Name }, null)*@
-                        <input type="button" class="btn" value="Välj kund" onclick="location.href = '@Url.Action("CreateOrder", "Order", new { email = item.Email })'" />
+                        <input type="button" class="btn" value="Välj kund" onclick="location.href = '@Url.Action("CreateOrder", "Order", new { email = item.Email})'" />
                     </td>
                 </tr>
             }

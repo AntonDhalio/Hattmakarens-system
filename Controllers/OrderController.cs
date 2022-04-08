@@ -27,10 +27,10 @@ namespace Hattmakarens_system.Controllers
             return View();
         }
 
-        public int Create() 
+        public int Create(int customerId) 
         {
             //Kolla vem som är inloggad och koppla som skapare på beställning
-            int newOrderId = orderRepository.CreateEmptyOrder();
+            int newOrderId = orderRepository.CreateEmptyOrder(customerId);
             return newOrderId;
 
         }
@@ -39,14 +39,16 @@ namespace Hattmakarens_system.Controllers
         {
             if (email == null)
             {
+                
                 OrderViewModel order = new OrderViewModel();
                 return View(order);
             }
             if(email != null)
             {
 
+                int customerId = customerRepository.GetCustomerIdByEmail(email);
                 OrderViewModel order = SelectedCustomerEmail(email);
-                order.Id = Create();
+                order.Id = Create(customerId);
                 return View(order);
             }
             if(orderId != null)

@@ -58,12 +58,13 @@ namespace Hattmakarens_system.Repositories
             }
         }
 
-        public int CreateEmptyOrder()
+        public int CreateEmptyOrder(int customerId)
         {
             using (var hatCon = new ApplicationDbContext())
             {
                 OrderModels newOrderModel = new OrderModels();
                 newOrderModel.Date = DateTime.Now;
+                newOrderModel.CustomerId = customerId;
                 hatCon.Order.Add(newOrderModel);
                 hatCon.SaveChanges();
                 return newOrderModel.Id;

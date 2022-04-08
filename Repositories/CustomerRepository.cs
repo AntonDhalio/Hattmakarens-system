@@ -84,5 +84,14 @@ namespace Hattmakarens_system.Repositories
             }
 
         }
+        public int GetCustomerIdByEmail(string email)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                CustomerModels customer = hatCon.Customer.FirstOrDefault(c => c.Email == email);
+                int customerId = customer.Id;
+                return customerId;
+            }
+        }
     }
 }
