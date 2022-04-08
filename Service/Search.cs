@@ -16,18 +16,34 @@ namespace Hattmakarens_system.Service
         public List<OrderModels> GetSearchList(string searchString, string searchOption, string statusOption)
         {
             var orderList = orderRepository.GetAllOrders();
-            var searchList = new List<OrderModels>();
+            var searchOrderList = new List<OrderModels>();
 
             if (searchOption is null)
             {
-                searchList = orderList;
+                searchOrderList = orderList;
             }
             else if (searchOption.Equals("material"))
             {
                 //hämta alla ordrar på angivet material
                 //addera alla ordrar till söklistan
-
-
+                var materialList = new MaterialRepository().GetAllMaterials();
+                var searchMaterialList = new List<MaterialModels>();
+                var hatlist = new List<Hats>();
+                foreach(var material in materialList)
+                {
+                    if(material.Name.Contains(searchString))
+                    {
+                        searchMaterialList.Add(material);
+                    }
+                }
+                foreach(var material in searchMaterialList)
+                {
+                    foreach(var hat in material.Hats)
+                    {
+                        searchOrderList.Add(orderRepository.GetOrder(hat.OrderId));
+                    }
+                }
+                
             }
             else if (searchOption.Equals("model"))
             {
@@ -50,6 +66,8 @@ namespace Hattmakarens_system.Service
             {
                 //Söklistan ska filtreras på inaktiva ordrar
             }
+            
+            var searchList = searchOrderList.Distinct().ToList();
             return searchList;
         }
        
