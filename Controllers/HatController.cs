@@ -24,11 +24,12 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Hat/Create
-        public ActionResult CreateSpec(int orderId)
+        public ActionResult CreateSpec(int orderId, string customerEmail)
         {
             HatViewModel model = new HatViewModel()
             {
-                OrderId = orderId
+                OrderId = orderId,
+                CustomerEmail = customerEmail
             };
             return View(model);
         }
@@ -39,14 +40,14 @@ namespace Hattmakarens_system.Controllers
         {
             try
             {
-                model.ModelID = 3; //Hårdkodat värde för att representera specialltillverkad hatt
+                model.ModelID = 1; //Hårdkodat värde för att representera specialltillverkad hatt
                 //hatRepository.CreateHat(model);
                 OrderRepository orderRepository = new OrderRepository();
                 orderRepository.OrderAddHat(model);
                 //OrderViewModel orderModel = new OrderViewModel();
                 //orderModel.Id = model.OrderId;
                 //OrderRepository.AddSpecHat(model);
-                return RedirectToAction("CreateOrder", "Order", new {orderId = model.OrderId});
+                return RedirectToAction("CreateOrder", "Order", new {orderId = model.OrderId, email = model.CustomerEmail});
             }
             catch
             {

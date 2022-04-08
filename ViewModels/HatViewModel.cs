@@ -28,6 +28,7 @@ namespace Hattmakarens_system.ViewModels
         public virtual UserModels User { get; set; }
         public int ModelID { get; set; }
         public virtual HatModels Models { get; set; }
+        public string CustomerEmail { get; set; }
         public virtual ICollection<ImageModels> Images { get; set; }
         public virtual ICollection<MaterialModels> Materials { get; set; } 
     }

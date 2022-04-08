@@ -35,19 +35,22 @@ namespace Hattmakarens_system.Controllers
 
         }
         // GET: Order/Create
-        public ActionResult CreateOrder(string email, int? orderId)
+        public ActionResult CreateOrder(string customerEmail)
         {
-            if (email == null)
+            if (customerEmail == null)
             {
                 OrderViewModel order = new OrderViewModel();
                 return View(order);
             }
-            if (email != null)
+            if (customerEmail != null)
             {
-                int customerId = customerRepository.GetCustomerIdByEmail(email);
-                OrderViewModel order = SelectedCustomerEmail(email);
-                orderId = Create(customerId);
+                int customerId = customerRepository.GetCustomerIdByEmail(customerEmail);
+                OrderViewModel order = SelectedCustomerEmail(customerEmail);
+                int orderId = Create(customerId);
                 order = orderRepository.GetOrderViewModel(orderId);
+                order.CustomerEmail = customerEmail;
+               
+                
                 return View(order);
                 
                 //    int customerId = customerRepository.GetCustomerIdByEmail(email);
