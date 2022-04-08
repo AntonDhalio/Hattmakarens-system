@@ -15,10 +15,6 @@ namespace Hattmakarens_system.Controllers
         public ActionResult Hatmodel()
         {
             var materialRepo = new MaterialRepository();
-            //var model = new HatmodelViewModel
-            //{
-            //    MaterialsToPickFrom = new List<SelectListItem>()
-            //};
             var materials = new List<SelectListItem>();
             foreach(var material in materialRepo.GetAllMaterials())
             {
@@ -33,7 +29,7 @@ namespace Hattmakarens_system.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Hatmodel(HatmodelViewModel hatmodel) 
+        public ActionResult Hatmodel(HatmodelViewModel hatmodel, IEnumerable<string> PickedMaterials) 
         {
             var newHatmodel = new HatModels
             {
@@ -42,22 +38,16 @@ namespace Hattmakarens_system.Controllers
                 Price = hatmodel.Price,
                 Material = new List<MaterialModels>()
             };
-            var hatRepo = new HatmodelRepository();
-            hatRepo.SaveHatmodel(newHatmodel);
-            var lastHatmodel = hatRepo.GetHatmodel(hatRepo.GetAllHatmodels().LastOrDefault().Id);
-            var materialRepo = new MaterialRepository();
-            //foreach (var material in Request.Form["Material"])
-            //{
-                var aMaterial = materialRepo.GetMaterial(int.Parse(Request.Form["Material"]));
-                lastHatmodel.Material.Add(aMaterial);
-            //}
-            hatRepo.SaveHatmodel(lastHatmodel);
-            var theHat = hatRepo.GetHatmodel(lastHatmodel.Id);
-            foreach (var material in theHat.Material)
+            using (var context = new ApplicationDbContext())
             {
-                var mat = materialRepo.GetMaterial(material.Id);
-                mat.HatModels.Add(theHat);
-                materialRepo.SaveMaterial(mat);
+                foreach (var material in PickedMaterials)
+                {
+                    var id = int.Parse(material);
+                    var aMaterial = context.Material.ToList().FirstOrDefault(m => m.Id == id);
+                    newHatmodel.Material.Add(aMaterial);
+                }
+                context.HatModels.Add(newHatmodel);
+                context.SaveChanges();
             }
 
             return RedirectToAction("Hatmodel", "Hatmodel");

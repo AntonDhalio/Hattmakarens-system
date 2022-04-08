@@ -22,7 +22,11 @@ namespace Hattmakarens_system.Models
         [ForeignKey("Models")]
         public int ModelID { get; set; }
         public virtual HatModels Models { get; set; }
+        [ForeignKey("Order")]
+        public int OrderId { get; set; }
+        public virtual OrderModels Order { get; set; }
         public virtual ICollection<ImageModels> Images { get; set; }
+        public virtual ICollection<MaterialModels> Materials { get; set; }
 
 
     }
