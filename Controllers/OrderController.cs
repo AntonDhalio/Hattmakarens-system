@@ -11,7 +11,7 @@ namespace Hattmakarens_system.Controllers
 {
     public class OrderController : Controller
     {
-        ColorRepository customerRepository = new ColorRepository();
+        CustomerRepository customerRepository = new CustomerRepository();
         OrderRepository orderRepository = new OrderRepository();
         HatRepository hatRepository = new HatRepository();
 
@@ -27,27 +27,53 @@ namespace Hattmakarens_system.Controllers
             return View();
         }
 
-        // GET: Order/Create
-        public ActionResult Create()
+        public int Create(int customerId) 
         {
-            var customers = customerRepository.GetAllColors().ToList();
-            if (customers != null)
-            {
-                ViewBag.Customers = customers;
-            }
+            //Kolla vem som är inloggad och koppla som skapare på beställning
+            int newOrderId = orderRepository.CreateEmptyOrder(customerId);
+            return newOrderId;
 
+        }
+        // GET: Order/Create
+        public ActionResult CreateOrder(string email, int? orderId)
+        {
+            if (email == null)
+            {
+                
+                OrderViewModel order = new OrderViewModel();
+                return View(order);
+            }
+            if(email != null)
+            {
+
+                int customerId = customerRepository.GetCustomerIdByEmail(email);
+                OrderViewModel order = SelectedCustomerEmail(email);
+                order.Id = Create(customerId);
+                return View(order);
+            }
+            if(orderId != null)
+            {
+                OrderModels existOrder = orderRepository.GetOrder(orderId);
+                OrderViewModel order = new OrderViewModel()
+                {
+                    Id = existOrder.Id,
+                    Hats = existOrder.Hats
+                };                 
+                
+                return View(order);
+            }
             return View();
            
         }
 
         // POST: Order/Create
         [HttpPost]
-        public ActionResult Create(OrderViewModel orderModel, HatViewModel hatModel )
+        public ActionResult CreateOrder(int id/*OrderViewModel orderModel, HatViewModel hatModel */)
         {
-            try
+            try 
             {
-                orderRepository.CreateOrder(orderModel);
-                hatRepository.CreateHat(hatModel);
+            //    orderRepository.CreateOrder(orderModel);
+            //    hatRepository.CreateHat(hatModel);
 
                 return RedirectToAction("Index");
             }
@@ -99,6 +125,17 @@ namespace Hattmakarens_system.Controllers
             {
                 return View();
             }
+        }
+
+        public OrderViewModel SelectedCustomerEmail(string email)
+        {
+            CustomerModels customer = customerRepository.GetCustomerByEmail(email);
+            var model = new OrderViewModel()
+            {
+                CustomerId = customer.Id,
+                CustomerName = customer.Name
+            };
+            return model;
         }
     }
 }

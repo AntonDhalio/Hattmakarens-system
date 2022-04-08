@@ -23,7 +23,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Sök", "OrderSearch", "Search")</li>
+
                     @*<li>@Html.ActionLink("Customer", "DisplayCustomer", "Customer")</li>*@
+                    <li>@Html.ActionLink("Skapa beställning", "CreateOrder", "Order")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

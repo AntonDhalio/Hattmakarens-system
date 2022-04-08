@@ -1,0 +1,41 @@
+﻿@model Hattmakarens_system.ViewModels.ShippingViewModel
+
+@{
+    ViewBag.Title = "Fyll i";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Shipping", "Pdf", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(m => m.ShippingCode, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.ShippingCode, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ShippingCode, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Weight, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Weight, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Weight, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Skriv ut" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function ()
+        {
+            $("#datetimepicker").datetimepicker();
+        });
+    </script>
+}
