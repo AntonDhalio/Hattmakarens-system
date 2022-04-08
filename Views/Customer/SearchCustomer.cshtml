@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Hattmakarens_system.Models.CustomerModels>
+
+@{
+    //ViewBag.Title = "SearchIndex";
+}
+
+<h2>SearchIndex</h2>
+
+<p>
+    @using (Html.BeginForm())
+    {
+    <p>
+        Kundens namn: @Html.TextBox("searchString") <br />
+        <input type="submit" value="Sök" />
+    </p>
+}
+    <p />
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th></th>
+        </tr>
+
+        @using (Html.BeginForm("CreateOrder", "Order", FormMethod.Get))
+        {
+
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comment)
+                    </td>
+                    <td>
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                        @*@Html.ActionLink("Lägg till", "Create", "Order", new { name = item.Name }, null)*@
+                        <input type="button" class="btn" value="Välj kund" onclick="location.href = '@Url.Action("CreateOrder", "Order", new { email = item.Email})'" />
+                    </td>
+                </tr>
+            }
+        }
+
+    </table>
+
+    @Html.ActionLink("Registrera ny kund", "AddCustomer", "Customer")

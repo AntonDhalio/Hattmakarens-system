@@ -181,6 +181,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ColorController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\HatController.cs" />
     <Compile Include="Controllers\HatmodelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -304,6 +305,12 @@
     <Content Include="Views\Pdf\Shipping.cshtml" />
     <Content Include="Views\Search\OrderSearch.cshtml" />
     <Content Include="Views\Search\CustomerSearch.cshtml" />
+    <Content Include="Views\Order\CreateOrder.cshtml" />
+    <Content Include="Views\Hat\CreateSpec.cshtml" />
+    <Content Include="Views\Hat\CreateStored.cshtml" />
+    <Content Include="Views\Order\_ListSpecHats.cshtml" />
+    <Content Include="Views\Order\_ListStoredHats.cshtml" />
+    <Content Include="Views\Customer\SearchCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
