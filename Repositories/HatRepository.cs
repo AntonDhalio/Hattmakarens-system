@@ -41,7 +41,7 @@ namespace Hattmakarens_system.Repositories
         //    }
         //}
 
-        public void CreateHat(HatViewModel hat)
+        public Hats CreateHat(HatViewModel hat)
         {
             using (var hatCon = new ApplicationDbContext())
             {
@@ -51,10 +51,14 @@ namespace Hattmakarens_system.Repositories
                     Size = hat.Size,
                     Price = hat.Price,
                     Status = hat.Status,
-                    Comment = hat.Comment
+                    Comment = hat.Comment,
+                    ModelID = hat.ModelID
+                    
+
                 };
                 hatCon.Hats.Add(hats);
-                hatCon.SaveChanges();
+                //hatCon.SaveChanges();
+                return hats;
             }
         }
         public void DeleteHat(int id)

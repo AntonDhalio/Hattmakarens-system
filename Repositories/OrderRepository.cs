@@ -10,13 +10,14 @@ namespace Hattmakarens_system.Repositories
 {
     public class OrderRepository
     {
-        public OrderModels GetOrder(int id)
+        public OrderModels GetOrder(int? id)
         {
             using (var hatCon = new ApplicationDbContext())
             {
                 return hatCon.Order.Include(o => o.Hats).FirstOrDefault(o => o.Id == id);
             }
         }
+
         public List<OrderModels> GetAllOrders()
         {
             using (var hatCon = new ApplicationDbContext())
@@ -56,6 +57,19 @@ namespace Hattmakarens_system.Repositories
                 hatCon.SaveChanges();
             }
         }
+
+        public int CreateEmptyOrder(int customerId)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                OrderModels newOrderModel = new OrderModels();
+                newOrderModel.Date = DateTime.Now;
+                newOrderModel.CustomerId = customerId;
+                hatCon.Order.Add(newOrderModel);
+                hatCon.SaveChanges();
+                return newOrderModel.Id;
+            }
+        }
         public void DeleteOrder(int id)
         {
             using (var hatCon = new ApplicationDbContext())
@@ -68,5 +82,23 @@ namespace Hattmakarens_system.Repositories
                 }
             }
         }
+
+        public void OrderAddHat(HatViewModel model)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                int id = model.OrderId;
+                var order = hatCon.Order.FirstOrDefault(o => o.Id == id);
+                HatRepository hatRepository = new HatRepository();
+                Hats hat = hatRepository.CreateHat(model);
+                order.Hats.Add(hat);
+                hatCon.SaveChanges();
+            }
+        }
+        //public void AddSpecHat(HatViewModel specHat)
+        //{
+        //    GetOrder(specHat.OrderId);
+
+        //}
     }
 }

@@ -12,6 +12,7 @@ namespace Hattmakarens_system.Controllers
 {
     public class CustomerController : Controller
     {
+        CustomerRepository customerRepository = new CustomerRepository();
         // GET: Customer
         public ActionResult AddCustomer()
         {
@@ -80,6 +81,16 @@ namespace Hattmakarens_system.Controllers
                 return View();
             }
             
+        }
+
+        public ActionResult SearchCustomer(string searchString)
+        {
+            var customers = customerRepository.GetAllCostumers();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                customers = customerRepository.GetAllCustomersByName(searchString).ToList();
+            }
+            return View(customers);
         }
     }
 }
