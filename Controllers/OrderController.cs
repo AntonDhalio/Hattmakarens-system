@@ -39,31 +39,34 @@ namespace Hattmakarens_system.Controllers
         {
             if (email == null)
             {
-                
                 OrderViewModel order = new OrderViewModel();
                 return View(order);
             }
-            if(email != null)
+            if (email != null)
             {
-
                 int customerId = customerRepository.GetCustomerIdByEmail(email);
                 OrderViewModel order = SelectedCustomerEmail(email);
-                order.Id = Create(customerId);
+                orderId = Create(customerId);
+                order = orderRepository.GetOrderViewModel(orderId);
                 return View(order);
-            }
-            if(orderId != null)
-            {
-                OrderModels existOrder = orderRepository.GetOrder(orderId);
-                OrderViewModel order = new OrderViewModel()
-                {
-                    Id = existOrder.Id,
-                    Hats = existOrder.Hats
-                };                 
                 
-                return View(order);
+                //    int customerId = customerRepository.GetCustomerIdByEmail(email);
+                //    OrderViewModel order = SelectedCustomerEmail(email);
+                //    order.Id = Create(customerId);
+                //    return View(order);
             }
+            //if(orderId != null)
+            //{
+            //    //OrderModels existOrder = orderRepository.GetOrder(orderId);
+            //    //OrderViewModel order = new OrderViewModel()
+            //    //{
+            //    //    Id = existOrder.Id,
+            //    //    Hats = existOrder.Hats
+            //    //};
+            //    return View(orderRepository.GetOrderViewModel(orderId));
+            //}
             return View();
-           
+
         }
 
         // POST: Order/Create

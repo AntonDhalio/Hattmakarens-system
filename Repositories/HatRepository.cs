@@ -53,7 +53,7 @@ namespace Hattmakarens_system.Repositories
                     Status = hat.Status,
                     Comment = hat.Comment,
                     ModelID = hat.ModelID
-                    
+
 
                 };
                 hatCon.Hats.Add(hats);
@@ -71,6 +71,19 @@ namespace Hattmakarens_system.Repositories
                     hatCon.Hats.Remove(hat);
                     hatCon.SaveChanges();
                 }
+            }
+        }
+
+        public List<Hats> GetAllHatsByOrderId(int id)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                if(hatCon.Hats.Where(h => h.OrderId == id) != null)
+                {
+                    List<Hats> hats = new List<Hats>();
+                    return hats;
+                }
+                return hatCon.Hats.Where(h => h.OrderId == id).ToList();
             }
         }
     }

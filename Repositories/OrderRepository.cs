@@ -100,5 +100,17 @@ namespace Hattmakarens_system.Repositories
         //    GetOrder(specHat.OrderId);
 
         //}
+        public OrderViewModel GetOrderViewModel(int? id)
+        {
+            HatRepository hatRepository = new HatRepository();
+            var order = GetOrder(id);
+            OrderViewModel orderViewModel = new OrderViewModel()
+            {
+                Id = order.Id,
+                CustomerId = order.CustomerId,
+                Hats = hatRepository.GetAllHatsByOrderId(order.Id)
+            };
+            return orderViewModel;
+        }
     }
 }
