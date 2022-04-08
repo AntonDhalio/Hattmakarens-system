@@ -214,9 +214,13 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MaterialModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+<<<<<<< Updated upstream
     <Compile Include="Services\PdfService.cs" />
     <Compile Include="Services\PdfTemplates.cs" />
     <Compile Include="Service\Calculate.cs" />
+=======
+    <Compile Include="Service\Search.cs" />
+>>>>>>> Stashed changes
     <Compile Include="Service\Costumer.cs" />
     <Compile Include="Repositories\ColorRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
