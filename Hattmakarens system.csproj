@@ -194,6 +194,10 @@
     <Compile Include="Migrations\202204041148546_First iteration.designer.cs">
       <DependentUpon>202204041148546_First iteration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204080838292_orderId + Material.cs" />
+    <Compile Include="Migrations\202204080838292_orderId + Material.designer.cs">
+      <DependentUpon>202204080838292_orderId + Material.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ColorModels.cs" />
@@ -316,6 +320,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202204041148546_First iteration.resx">
       <DependentUpon>202204041148546_First iteration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204080838292_orderId + Material.resx">
+      <DependentUpon>202204080838292_orderId + Material.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
