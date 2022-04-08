@@ -61,9 +61,8 @@ namespace Hattmakarens_system.Controllers
                 
         }
 
-        public ActionResult DisplayCustomer()
+        public ActionResult DisplayCustomer(int id)
         {
-            int id = 1;
             var showCustomerInfo = new Service.Costumer().GetCustomerInfo(id);
             return View(showCustomerInfo);
         }

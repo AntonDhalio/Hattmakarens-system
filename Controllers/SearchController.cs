@@ -97,62 +97,41 @@ namespace Hattmakarens_system.Controllers
         {
             var customerList = new Repositories.CustomerRepository().GetAllCostumers();
             var searchList = new List<CustomerModels>();
-            foreach (var customer in customerList)
+            if (searchString.Equals(""))
             {
-                if (customer.Name.Contains(searchString))
-                {
-                    searchList.Add(customer);
-                }
+                searchList = customerList;
             }
-            foreach (var customer in customerList)
+            else
             {
-                if (customer.Email.Contains(searchString))
+                foreach (var customer in customerList)
                 {
-                    foreach(var item in searchList)
+                    if (customer.Name.Contains(searchString))
                     {
-                        if(item.Id != customer.Id)
+                        searchList.Add(customer);
+                    }
+                }
+                foreach (var customer in customerList)
+                {
+                    if (customer.Email.Contains(searchString))
+                    {
+                        foreach(var item in searchList)
                         {
-                            searchList.Add(customer);
-                        } 
+                            if(item.Id != customer.Id)
+                            {
+                                searchList.Add(customer);
+                            } 
+                        }
                     }
                 }
             }
+            
             ViewBag.ViewBagList = searchList;
             return View();
         }
         [HttpPost]
         public ActionResult OrderSearch(string searchString, string searchOption, string statusOption)
         {
-            var orderList = new Repositories.OrderRepository().GetAllOrders();
-            var searchList = new List<OrderModels>();
-
-            if(searchOption is null)
-            {
-                searchList = orderList;
-            }
-            if (searchOption.Equals("material"))
-            {
-                //hämta alla ordrar på angivet material
-                //addera alla ordrar till söklistan
-            }
-            if (searchOption.Equals("model"))
-            {
-                //hämta alla ordrar på angivet modell
-                //addera alla ordrar till söklistan
-            }
-            if (searchOption.Equals("customer"))
-            {
-                //hämta alla ordrar på angivet kundnamn
-                //addera alla ordrar till söklistan
-            }
-            if (statusOption.Equals("active"))
-            {
-                //söklistan ska filtreras på aktiva ordrar
-            }
-            if(statusOption.Equals("inactive"))
-            {
-                //Söklistan ska filtreras på inaktiva ordrar
-            }
+            var searchList = new Service.Search().GetSearchList(searchString, searchOption, statusOption);
 
             ViewBag.ViewBagList = searchList;
             return View();
