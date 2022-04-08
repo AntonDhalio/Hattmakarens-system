@@ -83,6 +83,18 @@ namespace Hattmakarens_system.Repositories
             }
         }
 
+        public void OrderAddHat(HatViewModel model)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                int id = model.OrderId;
+                var order = hatCon.Order.FirstOrDefault(o => o.Id == id);
+                HatRepository hatRepository = new HatRepository();
+                Hats hat = hatRepository.CreateHat(model);
+                order.Hats.Add(hat);
+                hatCon.SaveChanges();
+            }
+        }
         //public void AddSpecHat(HatViewModel specHat)
         //{
         //    GetOrder(specHat.OrderId);

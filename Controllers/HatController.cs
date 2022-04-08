@@ -38,8 +38,13 @@ namespace Hattmakarens_system.Controllers
         public ActionResult CreateSpec(HatViewModel model)
         {
             try
-            {              
-                hatRepository.CreateHat(model);
+            {
+                model.ModelID = 3; //Hårdkodat värde för att representera specialltillverkad hatt
+                //hatRepository.CreateHat(model);
+                OrderRepository orderRepository = new OrderRepository();
+                orderRepository.OrderAddHat(model);
+                //OrderViewModel orderModel = new OrderViewModel();
+                //orderModel.Id = model.OrderId;
                 //OrderRepository.AddSpecHat(model);
                 return RedirectToAction("CreateOrder", "Order", new {orderId = model.OrderId});
             }
