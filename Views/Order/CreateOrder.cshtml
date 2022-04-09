@@ -9,11 +9,12 @@
 
 <div class="row">
     <div class="col-md-4">
-        @Html.ActionLink("Välj kund för beställningen", "SearchCustomer", "Customer")
+        @*@Html.ActionLink("Välj kund för beställningen", "SearchCustomer", "Customer")*@
+        <input type="button" class="btn" value="Lägg till kund för beställningen" onclick="location.href = '@Url.Action("SearchCustomer", "Customer")'" />
         @*<p>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name) </p>
-            <p>@Html.DisplayNameFor(model => model.Address): @Html.DisplayFor(model => model.Address)</p>
-            <p>@Html.DisplayNameFor(model => model.Private): @Html.DisplayFor(model => model.Private)</p>
-            <p>@Html.ActionLink("Uppdatera information", "EditInfo", new { @Model.Id })</p>*@
+        <p>@Html.DisplayNameFor(model => model.Address): @Html.DisplayFor(model => model.Address)</p>
+        <p>@Html.DisplayNameFor(model => model.Private): @Html.DisplayFor(model => model.Private)</p>
+        <p>@Html.ActionLink("Uppdatera information", "EditInfo", new { @Model.Id })</p>*@
     </div>
 </div>
 
@@ -21,14 +22,16 @@
 {
     if (Model.CustomerEmail != null)
     {
-        <p>Vald kund:</p>
-        @Html.DisplayFor(model => model.CustomerEmail);
+        <h4>Vald kund:</h4>
+        <p>Id: @Html.DisplayFor(model => model.CustomerId)</p>
+        <p>Namn: @Html.DisplayFor(model => model.CustomerName)</p>
+        <p>E-post: @Html.DisplayFor(model => model.CustomerEmail)</p>
     }
 }
 
 <br />
 
-<h2>Specialtillverkade hattar</h2>
+<h3>Specialtillverkade hattar</h3>
 
 <p>
     @*@Html.ActionLink("Lägg till specialtillverkad hatt", "CreateSpec", "Hat", new (orderId = Model.Id), null)*@
@@ -40,10 +43,11 @@
 
 <br />
 
-<h2>Lagerförda hattar</h2>
+<h3>Lagerförda hattar</h3>
 
 <p>
-    @Html.ActionLink("Lägg till lagerförd hatt", "CreateStored", "Hat")
+    @*@Html.ActionLink("Lägg till lagerförd hatt", "CreateStored", "Hat")*@
+    <input type="button" class="btn" value="Lägg till lagerförd hatt" onclick="location.href = '@Url.Action("CreateStored", "Hat", new { orderId = Model.Id, customerEmail = Model.CustomerEmail})'" />
 </p>
 <div>
     @Html.Partial("_ListStoredHats")

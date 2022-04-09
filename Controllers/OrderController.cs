@@ -27,36 +27,31 @@ namespace Hattmakarens_system.Controllers
             return View();
         }
 
-        public int Create(int customerId) 
-        {
-            //Kolla vem som är inloggad och koppla som skapare på beställning
-            int newOrderId = orderRepository.CreateEmptyOrder(customerId);
-            return newOrderId;
-
-        }
         // GET: Order/Create
-        public ActionResult CreateOrder(string customerEmail)
+        public ActionResult CreateOrder(string customerEmail, int? currentOrderId)
         {
             if (customerEmail == null)
             {
                 OrderViewModel order = new OrderViewModel();
                 return View(order);
             }
-            if (customerEmail != null)
+            if (customerEmail != null && currentOrderId == null)
             {
                 int customerId = customerRepository.GetCustomerIdByEmail(customerEmail);
-                OrderViewModel order = SelectedCustomerEmail(customerEmail);
-                int orderId = Create(customerId);
-                order = orderRepository.GetOrderViewModel(orderId);
-                order.CustomerEmail = customerEmail;
-               
-                
+                //OrderViewModel order = CreateOrderViewModelWithCustomer(customerEmail);
+                int orderId = orderRepository.CreateOrderInDatabase(customerId);
+                OrderViewModel order = orderRepository.GetOrderViewModel(orderId, customerEmail);
+                //order.CustomerEmail = customerEmail;
                 return View(order);
-                
                 //    int customerId = customerRepository.GetCustomerIdByEmail(email);
                 //    OrderViewModel order = SelectedCustomerEmail(email);
                 //    order.Id = Create(customerId);
                 //    return View(order);
+            }
+            if(customerEmail != null && currentOrderId != null)
+            {
+                OrderViewModel order = orderRepository.GetOrderViewModel(currentOrderId, customerEmail);
+                return View(order);
             }
             //if(orderId != null)
             //{
@@ -133,7 +128,7 @@ namespace Hattmakarens_system.Controllers
             }
         }
 
-        public OrderViewModel SelectedCustomerEmail(string email)
+        public OrderViewModel CreateOrderViewModelWithCustomer(string email)
         {
             CustomerModels customer = customerRepository.GetCustomerByEmail(email);
             var model = new OrderViewModel()
