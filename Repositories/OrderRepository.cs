@@ -45,7 +45,7 @@ namespace Hattmakarens_system.Repositories
         //    }
         //}
 
-        public void CreateOrder(OrderViewModel order)
+        public void CreateOrder(OrderModel order)
         {
             using (var hatCon = new ApplicationDbContext())
             {
@@ -109,13 +109,13 @@ namespace Hattmakarens_system.Repositories
         //    GetOrder(specHat.OrderId);
 
         //}
-        public OrderViewModel GetOrderViewModel(int? id, string customerEmail)
+        public OrderModel GetOrderViewModel(int? id, string customerEmail)
         {
             CustomerRepository customerRepository = new CustomerRepository();
             HatRepository hatRepository = new HatRepository();
             var order = GetOrder(id);
             string customerName = customerRepository.GetCustomerNameById(order.CustomerId);
-            OrderViewModel orderViewModel = new OrderViewModel()
+            OrderModel orderViewModel = new OrderModel()
             {
                 Id = order.Id,
                 CustomerId = order.CustomerId,

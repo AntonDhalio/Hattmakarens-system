@@ -9,7 +9,7 @@ using Hattmakarens_system.Models;
 
 namespace Hattmakarens_system.ViewModels
 {
-    public class OrderViewModel
+    public class OrderModel
     {
         public int Id { get; set; }
 

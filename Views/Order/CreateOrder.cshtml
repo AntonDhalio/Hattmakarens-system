@@ -1,4 +1,4 @@
-﻿@model Hattmakarens_system.ViewModels.OrderViewModel
+﻿@model Hattmakarens_system.ViewModels.OrderModel
 
 @{
     ViewBag.Title = "CreateOrder";
@@ -12,9 +12,9 @@
         @*@Html.ActionLink("Välj kund för beställningen", "SearchCustomer", "Customer")*@
         <input type="button" class="btn" value="Lägg till kund för beställningen" onclick="location.href = '@Url.Action("SearchCustomer", "Customer")'" />
         @*<p>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name) </p>
-        <p>@Html.DisplayNameFor(model => model.Address): @Html.DisplayFor(model => model.Address)</p>
-        <p>@Html.DisplayNameFor(model => model.Private): @Html.DisplayFor(model => model.Private)</p>
-        <p>@Html.ActionLink("Uppdatera information", "EditInfo", new { @Model.Id })</p>*@
+            <p>@Html.DisplayNameFor(model => model.Address): @Html.DisplayFor(model => model.Address)</p>
+            <p>@Html.DisplayNameFor(model => model.Private): @Html.DisplayFor(model => model.Private)</p>
+            <p>@Html.ActionLink("Uppdatera information", "EditInfo", new { @Model.Id })</p>*@
     </div>
 </div>
 
@@ -81,3 +81,11 @@
     </div>
 </div>
 
+@if (Model.CustomerEmail != null) {
+    <div>
+        <input type="button" class="btn" value="Avbryt registreringen av denna order " onclick="location.href = '@Url.Action("Delete", "Order", new { id = Model.Id })'" />
+    </div>
+    <style>
+        #hideOnRegOrder { display: none; }
+    </style>
+ }
