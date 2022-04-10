@@ -26,7 +26,11 @@ namespace Hattmakarens_system.ViewModels
         public string UserId { get; set; }
         public int OrderId { get; set; }
         public virtual UserModels User { get; set; }
-        public int ModelID { get; set; }
+        public int HatModelID { get; set; }
+        [DisplayName("Lagerförd hatt")]
+        public string HatModelName { get; set; }
+        [DisplayName("Beskrivning för lagerförd hatt ")]
+        public string HatModelDescription { get; set; }
         public virtual HatModels Models { get; set; }
         public string CustomerEmail { get; set; }
         public virtual ICollection<ImageModels> Images { get; set; }

@@ -8,7 +8,7 @@
 
 <h3>Är du säker på att du vill ta bort denna hatt?</h3>
 <div>
-    <hr />
+    @*<hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -18,14 +18,14 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
 
-    </dl>
+    </dl>*@
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Ta bort" class="btn btn-default" /> |
+            <input type="submit" value="Ta bort" class="btn btn-default" />
         </div>
     }
 

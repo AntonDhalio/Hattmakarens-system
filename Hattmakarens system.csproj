@@ -312,6 +312,7 @@
     <Content Include="Views\Customer\SearchCustomer.cshtml" />
     <Content Include="Views\Hat\Delete.cshtml" />
     <Content Include="Views\Order\Delete.cshtml" />
+    <Content Include="Views\Hatmodel\SearchHatModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

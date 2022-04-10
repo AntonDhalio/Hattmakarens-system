@@ -67,7 +67,7 @@ namespace Hattmakarens_system.Repositories
                     Price = hat.Price,
                     Status = "Under behandling", //Eller vad det nu ska stå när man bara registrerat en ny hatt
                     Comment = hat.Comment,
-                    ModelID = hat.ModelID,
+                    ModelID = hat.HatModelID,
                     OrderId = hat.OrderId
                 };
                 hatCon.Hats.Add(hats);

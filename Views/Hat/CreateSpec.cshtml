@@ -4,15 +4,14 @@
     ViewBag.Title = "CreateSpec";
 }*@
 
-<h2>CreateSpec</h2>
+<h2>Lägg till en specialtillverkad hatt</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>HatViewModel</h4>
-    <hr />
+    @*<h4>HatViewModel</h4>*@
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
@@ -64,12 +63,13 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Lägg till specialtillverkad hatt på beställningen" class="btn btn-default" />
         </div>
     </div>
 </div>
 }
 
 <style>
+    #hidden { display: none; }
     #hideOnRegOrder { display: none; }
 </style>

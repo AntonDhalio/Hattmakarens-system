@@ -9,7 +9,7 @@ namespace Hattmakarens_system.Repositories
 {
     public class HatmodelRepository
     {
-        public HatModels GetHatmodel(int id)
+        public HatModels GetHatmodel(int? id)
         {
             using (var hatCon = new ApplicationDbContext())
             {
@@ -49,6 +49,14 @@ namespace Hattmakarens_system.Repositories
                     hatCon.HatModels.Remove(hatmodel);
                     hatCon.SaveChanges();
                 }
+            }
+        }
+
+        public HatModels GetHatmodelByName(string hatModelName)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                return hatCon.HatModels.FirstOrDefault(h => h.Name == hatModelName);
             }
         }
     }

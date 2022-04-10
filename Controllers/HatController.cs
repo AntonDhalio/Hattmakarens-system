@@ -14,6 +14,7 @@ namespace Hattmakarens_system.Controllers
         HatRepository hatRepository = new HatRepository();
         OrderRepository orderRepository = new OrderRepository();
         CustomerRepository customerRepository = new CustomerRepository();
+        HatmodelRepository hatModelRepository = new HatmodelRepository();
 
         // GET: Hat
         public ActionResult Index()
@@ -44,7 +45,7 @@ namespace Hattmakarens_system.Controllers
         {
             try
             {
-                model.ModelID = 1; //Hårdkodat värde för att representera specialltillverkad hatt
+                model.HatModelID = 1; //Hårdkodat värde för att representera specialltillverkad hatt
                 //hatRepository.CreateHat(model);
                 hatRepository.CreateHat(model);
                 //orderRepository.OrderAddHat(model);
@@ -59,13 +60,24 @@ namespace Hattmakarens_system.Controllers
             }
         }
         // GET: Hat/Create
-        public ActionResult CreateStored(int orderId, string customerEmail)
+        public ActionResult CreateStored(int orderId, string customerEmail, string hatModelName)
         {
             HatViewModel model = new HatViewModel()
             {
                 OrderId = orderId,
                 CustomerEmail = customerEmail
             };
+            if(hatModelName != null)
+            {
+                var hatModel = hatModelRepository.GetHatmodelByName(hatModelName);
+                model.Price = hatModel.Price;
+                //model.Path = hatModel.Path -- lägga till path-property på hatmodel i databas?
+                //model.Materials = hatModel.Material;
+                //model.HatModelName = 
+                model.HatModelName = hatModel.Name;
+                model.HatModelID = hatModel.Id;
+                model.HatModelDescription = hatModel.Description;
+            }
             return View(model);
         }
 
@@ -75,7 +87,7 @@ namespace Hattmakarens_system.Controllers
         {
             try
             {
-                model.ModelID = 2; //Hårdkodat värde för att representera icke-specialltillverkad hatt
+                //model.ModelID = 2; //Hårdkodat värde för att representera icke-specialltillverkad hatt
                 //hatRepository.CreateHat(model);
                 hatRepository.CreateHat(model);
                 //orderRepository.OrderAddHat(model);

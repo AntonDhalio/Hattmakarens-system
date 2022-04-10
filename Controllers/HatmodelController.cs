@@ -11,6 +11,8 @@ namespace Hattmakarens_system.Controllers
 {
     public class HatmodelController : Controller
     {
+        HatmodelRepository hatModelRepository = new HatmodelRepository();
+
         // GET: Hatmodel
         public ActionResult Hatmodel()
         {
@@ -52,6 +54,26 @@ namespace Hattmakarens_system.Controllers
 
             return RedirectToAction("Hatmodel", "Hatmodel");
 
+        }
+
+        public ActionResult SearchHatModel(int orderId, string customerEmail)
+        {
+            var hatModels = hatModelRepository.GetAllHatmodels();
+            List<HatmodelViewModel> hatmodelViewModels = new List<HatmodelViewModel>();
+            foreach(var hatModel in hatModels)
+            {
+                HatmodelViewModel newHatmodelViewModel = new HatmodelViewModel
+                {
+                    Id = hatModel.Id,
+                    Name = hatModel.Name,
+                    Description = hatModel.Description,
+                    Price = hatModel.Price,
+                    OrderId = orderId,
+                    CustomerEmail = customerEmail
+                };
+                hatmodelViewModels.Add(newHatmodelViewModel);
+            }
+            return View(hatmodelViewModels);
         }
     }
 }
