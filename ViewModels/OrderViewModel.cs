@@ -9,7 +9,7 @@ using Hattmakarens_system.Models;
 
 namespace Hattmakarens_system.ViewModels
 {
-    public class OrderViewModel
+    public class OrderModel
     {
         public int Id { get; set; }
 
@@ -33,8 +33,10 @@ namespace Hattmakarens_system.ViewModels
         //public virtual UserModels User { get; set; }
         public string CustomerName { get; set; }
         public int CustomerId { get; set; }
+        public string CustomerEmail { get; set; }
         //public virtual CustomerModels Customer { get; set; }
-        public virtual ICollection<Hats> Hats { get; set; }
+        //public virtual ICollection<Hats> Hats { get; set; }
+        public List<Hats> Hats { get; set; }
         //public virtual ICollection<Hats> StoredHats { get; set; }
 
     }

@@ -189,6 +189,7 @@
     <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\PdfController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\StatisticController.cs" />
 
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -229,6 +230,7 @@
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ActiveHatsViewModel.cs" />
     <Compile Include="ViewModels\ColorViewModel.cs" />
     <Compile Include="ViewModels\CostumerViewModel.cs" />
     <Compile Include="ViewModels\HatmodelViewModel.cs" />
@@ -238,6 +240,7 @@
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\PdfViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
+    <Compile Include="ViewModels\StatisticViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -312,6 +315,13 @@
     <Content Include="Views\Order\_ListSpecHats.cshtml" />
     <Content Include="Views\Order\_ListStoredHats.cshtml" />
     <Content Include="Views\Customer\SearchCustomer.cshtml" />
+    <Content Include="Views\Statistic\GetStatistics.cshtml" />
+    <Content Include="Views\Statistic\_GetStatistics.cshtml" />
+    <Content Include="Views\Statistic\Index.cshtml" />
+    <Content Include="Views\Hat\ActiveHats.cshtml" />
+    <Content Include="Views\Hat\Delete.cshtml" />
+    <Content Include="Views\Order\Delete.cshtml" />
+    <Content Include="Views\Hatmodel\SearchHatModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

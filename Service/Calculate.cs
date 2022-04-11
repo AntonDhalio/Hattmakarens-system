@@ -16,5 +16,16 @@ namespace Hattmakarens_system.Service
             double priceWithTax = price*1.25;
             return priceWithTax;
         }
+        public double GetTaxFromTotal(double priceIncTax)
+        {
+            double tax = priceIncTax * 0.8;
+            return tax;
+        }
+        public double GetTaxOnly(double priceExTax)
+        {
+            double priceIncTax = priceExTax * 1.25;
+            double tax = priceIncTax - priceExTax;
+            return tax;
+        }
     }
 }

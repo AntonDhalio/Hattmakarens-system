@@ -22,3 +22,12 @@ select,
 textarea {
     max-width: 280px;
 }
+.statistik-tabell {
+    width: 80%;
+    empty-cells:show;
+}
+.ja {
+    color: red;
+    font-style: oblique;
+}
+

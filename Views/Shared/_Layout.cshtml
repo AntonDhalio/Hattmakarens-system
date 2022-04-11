@@ -8,9 +8,9 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body>
+<body >
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container" id="hideOnRegOrder">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -26,7 +26,12 @@
                     <li>@Html.ActionLink("Sök", "OrderSearch", "Search")</li>
 
                     @*<li>@Html.ActionLink("Customer", "DisplayCustomer", "Customer")</li>*@
+                    @*TA BORT NÄR SEN OCH LÄGG IN PÅ RÄTT STÄLLE*@
                     <li>@Html.ActionLink("Skapa beställning", "CreateOrder", "Order")</li>
+
+                    <li>@Html.ActionLink("Se statistik", "Index", "Statistic")</li>
+
+                    <li>@Html.ActionLink("Lägg till hattmodell", "Hatmodel", "Hatmodel")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

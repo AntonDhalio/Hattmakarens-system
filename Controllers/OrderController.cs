@@ -27,55 +27,58 @@ namespace Hattmakarens_system.Controllers
             return View();
         }
 
-        public int Create(int customerId) 
-        {
-            //Kolla vem som är inloggad och koppla som skapare på beställning
-            int newOrderId = orderRepository.CreateEmptyOrder(customerId);
-            return newOrderId;
-
-        }
         // GET: Order/Create
-        public ActionResult CreateOrder(string email, int? orderId)
+        public ActionResult CreateOrder(string customerEmail, int? currentOrderId)
         {
-            if (email == null)
+            if (customerEmail == null)
             {
-                
-                OrderViewModel order = new OrderViewModel();
+                OrderModel order = new OrderModel();
                 return View(order);
             }
-            if(email != null)
+            if (customerEmail != null && currentOrderId == null)
             {
-
-                int customerId = customerRepository.GetCustomerIdByEmail(email);
-                OrderViewModel order = SelectedCustomerEmail(email);
-                order.Id = Create(customerId);
+                int customerId = customerRepository.GetCustomerIdByEmail(customerEmail);
+                //OrderViewModel order = CreateOrderViewModelWithCustomer(customerEmail);
+                int orderId = orderRepository.CreateOrderInDatabase(customerId);
+                OrderModel order = orderRepository.GetOrderViewModel(orderId, customerEmail);
+                //order.CustomerEmail = customerEmail;
+                return View(order);
+                //    int customerId = customerRepository.GetCustomerIdByEmail(email);
+                //    OrderViewModel order = SelectedCustomerEmail(email);
+                //    order.Id = Create(customerId);
+                //    return View(order);
+            }
+            if(customerEmail != null && currentOrderId != null)
+            {
+                OrderModel order = orderRepository.GetOrderViewModel(currentOrderId, customerEmail);
                 return View(order);
             }
-            if(orderId != null)
-            {
-                OrderModels existOrder = orderRepository.GetOrder(orderId);
-                OrderViewModel order = new OrderViewModel()
-                {
-                    Id = existOrder.Id,
-                    Hats = existOrder.Hats
-                };                 
-                
-                return View(order);
-            }
+            //if(orderId != null)
+            //{
+            //    //OrderModels existOrder = orderRepository.GetOrder(orderId);
+            //    //OrderViewModel order = new OrderViewModel()
+            //    //{
+            //    //    Id = existOrder.Id,
+            //    //    Hats = existOrder.Hats
+            //    //};
+            //    return View(orderRepository.GetOrderViewModel(orderId));
+            //}
             return View();
-           
+
         }
 
         // POST: Order/Create
         [HttpPost]
-        public ActionResult CreateOrder(int id/*OrderViewModel orderModel, HatViewModel hatModel */)
+        public ActionResult CreateOrderAdd(int? id, string comment, bool priority)
         {
             try 
             {
+                orderRepository.UpdateOrder(id, comment, priority);
+
             //    orderRepository.CreateOrder(orderModel);
             //    hatRepository.CreateHat(hatModel);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             catch
             {
@@ -108,7 +111,13 @@ namespace Hattmakarens_system.Controllers
         // GET: Order/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            OrderModels order = orderRepository.GetOrder(id);
+            OrderModel model = new OrderModel()
+            {
+                Id = order.Id
+            };
+            return View(model);
+          
         }
 
         // POST: Order/Delete/5
@@ -117,9 +126,13 @@ namespace Hattmakarens_system.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                orderRepository.DeleteOrder(id);
+                var hats = hatRepository.GetAllHatsByOrderId(id);
+                foreach(var item in hats)
+                {
+                    hatRepository.DeleteHat(item.Id);
+                }
+                return RedirectToAction("Login", "Account");
             }
             catch
             {
@@ -127,15 +140,15 @@ namespace Hattmakarens_system.Controllers
             }
         }
 
-        public OrderViewModel SelectedCustomerEmail(string email)
-        {
-            CustomerModels customer = customerRepository.GetCustomerByEmail(email);
-            var model = new OrderViewModel()
-            {
-                CustomerId = customer.Id,
-                CustomerName = customer.Name
-            };
-            return model;
-        }
+        //public OrderModel CreateOrderViewModelWithCustomer(string email)
+        //{
+        //    CustomerModels customer = customerRepository.GetCustomerByEmail(email);
+        //    var model = new OrderModel()
+        //    {
+        //        CustomerId = customer.Id,
+        //        CustomerName = customer.Name
+        //    };
+        //    return model;
+        //}
     }
 }

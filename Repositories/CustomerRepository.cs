@@ -9,6 +9,7 @@ namespace Hattmakarens_system.Repositories
 {
     public class CustomerRepository
     {
+        //private OrderRepository orderRepository = new OrderRepository();
         public CustomerModels GetCustomer(int id)
         {
             using (var hatCon = new ApplicationDbContext())
@@ -28,7 +29,7 @@ namespace Hattmakarens_system.Repositories
             var customerOrders = new List<OrderModels>();
             using (var hatCon = new ApplicationDbContext())
             {
-                var orders = new Repositories.OrderRepository().GetAllOrders();
+                var orders = new OrderRepository().GetAllOrders();
                 foreach (var item in orders)
                 {
                     if(item.CustomerId == id)
@@ -93,5 +94,26 @@ namespace Hattmakarens_system.Repositories
                 return customerId;
             }
         }
+
+        public string GetCustomerNameById(int Id)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                CustomerModels customer = hatCon.Customer.FirstOrDefault(c => c.Id == Id);
+                string customerName = customer.Name;
+                return customerName;
+            }
+        }
+
+        public CustomerModels GetCustomerByOrderId(int? orderId)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                OrderRepository orderRepository = new OrderRepository();
+                var order = orderRepository.GetOrder(orderId);
+                return GetCustomer(order.CustomerId);
+            }
+        }
+
     }
 }
