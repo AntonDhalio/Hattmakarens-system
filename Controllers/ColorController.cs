@@ -28,6 +28,7 @@ namespace Hattmakarens_system.Controllers
                     
                 };
                 colorReop.SaveColor(color);
+                ModelState.Clear();
                 return View();
             }
             catch
