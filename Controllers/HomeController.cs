@@ -13,6 +13,7 @@ namespace Hattmakarens_system.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            
             var hatmodels = hatmodelRepository.GetAllHatmodels();
             bool specExist = false;
             foreach(var hatmodel in hatmodels)
@@ -27,6 +28,8 @@ namespace Hattmakarens_system.Controllers
                 hatmodelRepository.CreateSpecHatModel();
             }
             return View();
+            return View("~/Views/Hat/ActiveHats.cshtml");
+
         }
     }
 }

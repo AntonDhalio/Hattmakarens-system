@@ -1,0 +1,44 @@
+﻿
+
+@model Hattmakarens_system.ViewModels.StatisticViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Orders";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GetStatistics</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div>
+        <h1>Se statistik</h1>
+        @using (Html.BeginForm("GetStatistics", "Statistic", FormMethod.Post))
+        {
+            <table cellpadding="15">
+                <tr><td>@Html.Label("Välj tid")</td></tr>
+                <tr>
+                    <td>@Html.LabelFor(m => m.time, "År")</td>
+                    <td></td>
+                    <td>@Html.RadioButtonFor(m => m.time, "År")</td>
+                </tr>
+                <tr><td>@Html.LabelFor(m => m.time, "Kvartal")</td><td></td><td>@Html.RadioButtonFor(m => m.time, "Kvartal")</td></tr>
+                <tr><td>@Html.LabelFor(m => m.time, "Månad")</td><td></td><td>@Html.RadioButtonFor(m => m.time, "Månad")</td></tr>
+
+            </table>
+
+
+
+
+            <input type="submit" class="btn btn-default" value="Se statistik">
+
+        }
+    </div>
+    @RenderBody()
+</body>
+</html>

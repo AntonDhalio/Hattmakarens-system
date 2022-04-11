@@ -4,8 +4,10 @@ using Hattmakarens_system.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace Hattmakarens_system.Controllers
 {
@@ -155,6 +157,21 @@ namespace Hattmakarens_system.Controllers
             {
                 return View();
             }
+        }
+        public ActionResult ActiveHats()
+        {
+            var repo = new HatRepository();
+            var allHats = new List<Hats>();
+            using (var context = new ApplicationDbContext())
+            {
+                allHats = context.Hats.Include(h => h.Order).ToList();
+            }
+            var hatstoShow = allHats.Where(h => h.UserId.Equals(User.Identity.GetUserId())).Where(h => h.Status == "Aktiv");
+            var viewModel = new ActiveHatsViewModel
+            {
+                hats = hatstoShow.ToList()
+            };
+            return View(viewModel);
         }
     }
 }
