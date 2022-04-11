@@ -290,5 +290,86 @@ namespace Hattmakarens_system.Services
             document.Save(path + filename);
             Process.Start(path + filename);
         }
+
+        //Statistik PDF
+        public void StatisticsPDF(StatisticViewModel statistics)
+        {
+            PdfDocument document = new PdfDocument();
+            PdfPage page = document.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page);
+
+            XFont headerFont = new XFont("Verdana", 20, XFontStyle.Bold);
+            XFont contentFont = new XFont("Verdana", 10, XFontStyle.Regular);
+            XFont contentFontBold = new XFont("Verdana", 10, XFontStyle.Bold);
+            XFont miniFont = new XFont("Verdana", 8, XFontStyle.Italic);
+
+            gfx.DrawString("STATISTIK", headerFont, XBrushes.Black,
+                new XRect(0, 50, page.Width, page.Height), XStringFormats.TopCenter);
+
+            gfx.DrawString("Hattmakaren", miniFont, XBrushes.Black,
+            50, 130);
+            gfx.DrawString("Hattgränd 34", miniFont, XBrushes.Black,
+            50, 140);
+            gfx.DrawString("876 65 ÖREBRO", miniFont, XBrushes.Black,
+            50, 150);
+            gfx.DrawString("07455684992", miniFont, XBrushes.Black,
+            50, 160);
+            gfx.DrawString("organisationsnummer: 5591433437", miniFont, XBrushes.Black,
+            50, 170);
+
+            //Titlar
+            //Tid
+            gfx.DrawString("Tid", contentFontBold, XBrushes.Black,
+            50, 210);
+            gfx.DrawString(statistics.time, contentFont, XBrushes.Black,
+            240, 210);
+            //Summa
+            gfx.DrawString("Summa", contentFontBold, XBrushes.Black,
+            50, 230);
+            gfx.DrawString(statistics.totalSum.ToString(), contentFont, XBrushes.Black,
+            240, 230);
+            //Antal hattar
+            gfx.DrawString("Antal hattar", contentFontBold, XBrushes.Black,
+            50, 250);
+            gfx.DrawString(statistics.totalHatsCount.ToString(), contentFont, XBrushes.Black,
+            240, 250);
+            //Antal beställningar
+            gfx.DrawString("Antal beställningar", contentFontBold, XBrushes.Black,
+            50, 270);
+            gfx.DrawString(statistics.totalOrdersCount.ToString(), contentFont, XBrushes.Black,
+            240, 270);
+
+            //Titlar
+            gfx.DrawString("Beställningsnr", contentFontBold, XBrushes.Black,
+            50, 310);
+            gfx.DrawString("Antal hattar", contentFontBold, XBrushes.Black,
+            200, 310);
+            gfx.DrawString("Beställningsdatum", contentFontBold, XBrushes.Black,
+            350, 310);
+            gfx.DrawString("Summa ()", contentFontBold, XBrushes.Black,
+            500, 310);
+
+            int x = 340;
+
+            foreach (var order in statistics.orders)
+            {
+                gfx.DrawString(order.Id.ToString(), contentFont, XBrushes.Black,
+                50, x);
+                gfx.DrawString(order.Hats.Count.ToString(), contentFont, XBrushes.Black,
+                200, x);
+                gfx.DrawString(order.Date.ToShortDateString(), contentFont, XBrushes.Black,
+                350, x);
+                gfx.DrawString(order.TotalSum.ToString(), contentFont, XBrushes.Black,
+                500, x);
+
+                x += 20;
+            }
+
+            string path = HttpContext.Current.Server.MapPath("~/App_Data/");
+            string filename = document.Guid.ToString() + "faktura.pdf";
+
+            document.Save(path + filename);
+            Process.Start(path + filename);
+        }
     }
 }
