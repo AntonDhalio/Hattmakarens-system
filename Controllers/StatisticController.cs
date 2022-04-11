@@ -1,4 +1,4 @@
-﻿using Hattmakarens_system.Models;
+using Hattmakarens_system.Models;
 using Hattmakarens_system.Repositories;
 using Hattmakarens_system.Services;
 using Hattmakarens_system.ViewModels;
@@ -26,6 +26,7 @@ namespace Hattmakarens_system.Controllers
         // GET: Statistic
         public ActionResult GetStatistics(StatisticViewModel viewModel)
         {
+        StatistikPDF
             if(ModelState.IsValid)
             {
                 pdfService.GetStatistics(viewModel);
@@ -35,12 +36,6 @@ namespace Hattmakarens_system.Controllers
         [HttpPost]
         public ActionResult PrintStatistics(StatisticViewModel viewModel)
         {
-            //List<OrderModels> orderlist = new List<OrderModels>();
-            //foreach (var order in viewModel.orders)
-            //{
-            //    orderlist.Add(order);
-            //}
-
             var aViewModel = new StatisticViewModel
             {
                 orders = viewModel.orders,
@@ -50,10 +45,6 @@ namespace Hattmakarens_system.Controllers
                 time = viewModel.time
             };
 
-            //foreach(var order in viewModel.orders)
-            //{
-            //    aViewModel.orders.Add(order);
-            //}
             pdfTemplates.StatisticsPDF(aViewModel);
             return View("Index");
         }

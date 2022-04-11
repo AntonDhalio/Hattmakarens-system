@@ -1,4 +1,4 @@
-﻿@model Hattmakarens_system.ViewModels.StatisticViewModel
+@model Hattmakarens_system.ViewModels.StatisticViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     Layout = "~/Views/Statistic/_GetStatistics.cshtml";
@@ -21,10 +21,7 @@
                 @foreach (var order in Model.orders)
                 {
                     <tr>
-                        <td>@order.Id</td>
-                        <td>@order.Hats.Count</td>
-                        <td>@order.Date</td>
-                        <td>@order.TotalSum</td>
+                        <td>@order.Id</td><td>@order.Hats.Count</td><td>@order.Date.ToShortDateString()</td><td>@order.TotalSum</td>
                     </tr>
                 }
                 <tr><td></td><td></td><td></td><td></td></tr>

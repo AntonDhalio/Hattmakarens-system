@@ -11,46 +11,67 @@
 </div>
 
 @using (Html.BeginForm())
-    {
+ {
     <div class="input-group col-md-10">
         <br />
         <div class="input-group-prepend">
             @Html.TextBox("searchString")
             <button class="btn btn-outline-primary" type="submit">Sök</button>
         </div>
-        <input type="radio" name="searchOption" value="material" /> Material
-        <input type="radio" name="searchOption" value="model" /> Modell
-        <input type="radio" name="searchOption" value="customer" /> Kund
+        <br />
+        @if (ViewBag.ViewOption == null || ViewBag.ViewOption.Equals("material"))
+        {
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-primary active">
+                    <input type="radio" name="searchOption" id="option1" autocomplete="off" value="material" checked> Material
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="searchOption" id="option2" autocomplete="off" value="model"> Modell
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="searchOption" id="option3" autocomplete="off" value="customer"> Kund
+                </label>
+            </div>
+        }
+        else if (ViewBag.ViewOption.Equals("model"))
+        {
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-primary active">
+                    <input type="radio" name="searchOption" id="option1" autocomplete="off" value="material" > Material
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="searchOption" id="option2" autocomplete="off" value="model" checked> Modell
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="searchOption" id="option3" autocomplete="off" value="customer"> Kund
+                </label>
+            </div>
+
+        }
+        else
+        {
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-primary active">
+                    <input type="radio" name="searchOption" id="option1" autocomplete="off" value="material"> Material
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="searchOption" id="option2" autocomplete="off" value="model" > Modell
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="searchOption" id="option3" autocomplete="off" value="customer" checked> Kund
+                </label>
+        
+            </div>
+        }
+        <br />
         <br />
         Filtrera på status @Html.DropDownList("statusOption", new List<SelectListItem>
             { new SelectListItem { Value = "all", Text = "Alla"},
-             new SelectListItem { Value = "active", Text = "Aktiva"},
-             new SelectListItem { Value = "inactive", Text = "Inaktiva"}})
-</div>
-}
-
-
-@*<div class="btn-group-toggle" data-toggle="buttons">
-    <label class="btn btn-outline-secondary">
-        <input type="checkbox" checked autocomplete="off"> Material
-    </label>
-    <label class="btn btn-outline-secondary">
-        <input type="checkbox" checked autocomplete="off"> Model
-    </label>
-    <label class="btn btn-outline-primary">
-        <input type="checkbox" checked autocomplete="off"> Kund
-    </label>
-</div>
-<div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Dropdown button
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#">Alla</a><br />
-        <a class="dropdown-item" href="#">Activa</a><br />
-        <a class="dropdown-item" href="#">Inaktiva</a><br />
+            new SelectListItem { Value = "active", Text = "Aktiva"},
+            new SelectListItem { Value = "inactive", Text = "Inaktiva"}})
     </div>
-</div>*@
+ }
+<br />
 
 
 @if (ViewBag.ViewBagList != null)
@@ -60,10 +81,9 @@
         <table class="table">
             <tr>
                 <th>Ordernummer</th>
-                <th>Kund</th>
                 <th>Orderdatum</th>
                 <th>Status</th>
-                <th></th>
+                @*<th></th>*@
             </tr>
 
             @foreach (var item in ViewBag.ViewBagList)
@@ -71,9 +91,6 @@
                 <tr>
                     <td>
                         @item.Id
-                    </td>
-                    <td>
-                        @item.Name
                     </td>
                     <td>
                         @item.Date

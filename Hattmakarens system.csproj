@@ -190,6 +190,7 @@
     <Compile Include="Controllers\PdfController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\StatisticController.cs" />
+
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -218,6 +219,7 @@
     <Compile Include="Services\PdfService.cs" />
     <Compile Include="Services\PdfTemplates.cs" />
     <Compile Include="Service\Calculate.cs" />
+    <Compile Include="Service\Search.cs" />
     <Compile Include="Service\Costumer.cs" />
     <Compile Include="Repositories\ColorRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
@@ -228,6 +230,7 @@
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ActiveHatsViewModel.cs" />
     <Compile Include="ViewModels\ColorViewModel.cs" />
     <Compile Include="ViewModels\CostumerViewModel.cs" />
     <Compile Include="ViewModels\HatmodelViewModel.cs" />
@@ -315,6 +318,10 @@
     <Content Include="Views\Statistic\GetStatistics.cshtml" />
     <Content Include="Views\Statistic\_GetStatistics.cshtml" />
     <Content Include="Views\Statistic\Index.cshtml" />
+    <Content Include="Views\Hat\ActiveHats.cshtml" />
+    <Content Include="Views\Hat\Delete.cshtml" />
+    <Content Include="Views\Order\Delete.cshtml" />
+    <Content Include="Views\Hatmodel\SearchHatModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

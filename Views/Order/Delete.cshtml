@@ -1,0 +1,25 @@
+﻿@model Hattmakarens_system.ViewModels.OrderModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Ta bort order</h2>
+
+<h3>Är du säker på att du vill ta bort denna order?</h3>
+<div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Ta bort order" class="btn btn-default" />
+        </div>
+    }
+</div>
+
+@*Lägg till ångra-knapp kanske?*@
+
+<style> 
+    #hideOnRegOrder { display: none; }
+</style>

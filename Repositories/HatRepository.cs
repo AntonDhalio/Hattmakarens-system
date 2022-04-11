@@ -17,11 +17,26 @@ namespace Hattmakarens_system.Repositories
                 return hatCon.Hats.FirstOrDefault(h => h.Id == id);
             }
         }
+
+        public HatViewModel GetHatViewModel(int id)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                Hats hat = hatCon.Hats.FirstOrDefault(h => h.Id == id);
+                HatViewModel model = new HatViewModel()
+                {
+                    Name = hat.Name,
+                    Id = hat.Id
+                };
+                return model;
+            }
+        }
+
         public List<Hats> GetAllHats()
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.Hats.ToList();
+                return hatCon.Hats.Include(h => h.Order).ToList();
             }
         }
         //public Hats SaveHats(Hats hat)
@@ -50,14 +65,13 @@ namespace Hattmakarens_system.Repositories
                     Name = hat.Name,
                     Size = hat.Size,
                     Price = hat.Price,
-                    Status = hat.Status,
+                    Status = "Aktiv", //Eller vad det nu ska stå när man bara registrerat en ny hatt
                     Comment = hat.Comment,
-                    ModelID = hat.ModelID
-                    
-
+                    ModelID = hat.HatModelID,
+                    OrderId = hat.OrderId
                 };
                 hatCon.Hats.Add(hats);
-                //hatCon.SaveChanges();
+                hatCon.SaveChanges();
                 return hats;
             }
         }
@@ -71,6 +85,19 @@ namespace Hattmakarens_system.Repositories
                     hatCon.Hats.Remove(hat);
                     hatCon.SaveChanges();
                 }
+            }
+        }
+
+        public List<Hats> GetAllHatsByOrderId(int id)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                //if(hatCon.Hats.Where(h => h.OrderId == id) == null)
+                //{
+                //    List<Hats> hats = new List<Hats>();
+                //    return hats;
+                //}
+                return hatCon.Hats.Where(h => h.OrderId == id).ToList();
             }
         }
     }
