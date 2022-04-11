@@ -35,7 +35,7 @@ namespace Hattmakarens_system.Service
 
                     foreach (var material in materialList)
                     {
-                        if (material.Type.Contains(searchString))
+                        if (material.Type.ToLower().Contains(searchString.ToLower()))
                         {
                             searchMaterialList.Add(material);
                         }
@@ -46,7 +46,7 @@ namespace Hattmakarens_system.Service
 
                         var hattar = db.Material.Single(c => c.Id == material.Id).Hats.ToList();
 
-                        foreach (var hat in hatList)
+                        foreach (var hat in hattar)
                         {
                             searchOrderList.Add(orderRepository.GetOrder(hat.OrderId));
                         }
@@ -62,7 +62,7 @@ namespace Hattmakarens_system.Service
 
                     foreach (var model in modelList)
                     {
-                        if (model.Name.Contains(searchString))
+                        if (model.Name.ToLower().Contains(searchString.ToLower()))
                         {
                             searchModelList.Add(model);
                         }
@@ -84,7 +84,7 @@ namespace Hattmakarens_system.Service
 
                     foreach (var customer in CustomerList)
                     {
-                        if (customer.Name.Contains(searchString))
+                        if (customer.Name.ToLower().Contains(searchString.ToLower()))
                         {
                             searchCustomerList.Add(customer);
                         }
@@ -101,22 +101,40 @@ namespace Hattmakarens_system.Service
                         }
                     }
                 }
-                if (statusOption.Equals("active"))
+                if (statusOption.Equals("all"))
+                {
+                    finalList = searchOrderList;
+                }
+                else if (statusOption.Equals("active"))
                 {
                     //söklistan ska filtreras på aktiva ordrar
-                    finalList = searchOrderList.Where(c => c.Status == "active").ToList();
+                    finalList = searchOrderList.Where(c => c.Status == "aktiv").ToList();
                 }
-                if (statusOption.Equals("inactive"))
+                else if (statusOption.Equals("inactive"))
                 {
                     //Söklistan ska filtreras på inaktiva ordrar
-                    finalList = searchOrderList.Where(c => c.Status == "inactive").ToList();
+                    finalList = searchOrderList.Where(c => c.Status == "inaktiv").ToList();
 
                 }
 
-                var searchList = finalList.Distinct().ToList();
+                var searchList = RemoveDuplicates(finalList);
                 return searchList;
             }
+        }
 
+        private List<OrderModels> RemoveDuplicates(List<OrderModels> orders)
+        {
+            var orderRepository = new OrderRepository();
+            var searchList = new List<OrderModels>();
+            var idList = orders.Select(c => c.Id).ToList();
+            var distinctList = idList.Distinct().ToList();
+
+            foreach(var id in distinctList)
+            {
+                searchList.Add(orderRepository.GetOrder(id));
+            }
+
+            return searchList;
         }
     }
 }
