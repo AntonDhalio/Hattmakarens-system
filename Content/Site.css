@@ -26,3 +26,8 @@ textarea {
     width: 80%;
     empty-cells:show;
 }
+.ja {
+    color: red;
+    font-style: oblique;
+}
+
