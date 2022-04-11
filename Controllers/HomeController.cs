@@ -27,8 +27,8 @@ namespace Hattmakarens_system.Controllers
             {
                 hatmodelRepository.CreateSpecHatModel();
             }
-            return View();
-            return View("~/Views/Hat/ActiveHats.cshtml");
+            //return View();
+            return RedirectToAction("ActiveHats", "Hat");
 
         }
     }
