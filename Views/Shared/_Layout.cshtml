@@ -17,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Hattmakaren", null, null, new { @class = "navbar-brand" })
+                @Html.ActionLink("Hattmakaren", "ActiveHats", "Hat", null, new { @class = "navbar-brand" })
                 @*TA BORT NÄR VI HAR DATA*@
                 @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
             </div>
@@ -32,6 +32,10 @@
                     <li>@Html.ActionLink("Se statistik", "Index", "Statistic")</li>
 
                     <li>@Html.ActionLink("Lägg till hattmodell", "Hatmodel", "Hatmodel")</li>
+
+                    <li>@Html.ActionLink("Lägg till färg", "AddColor", "Color")</li>
+
+                    <li>@Html.ActionLink("Lägg till material", "AddMaterial", "Material")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

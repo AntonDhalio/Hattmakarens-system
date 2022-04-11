@@ -24,6 +24,7 @@ namespace Hattmakarens_system.ViewModels
         public virtual ICollection<ImageModels> Images { get; set; }
         public virtual ICollection<MaterialModels> Material { get; set; }
         public List<SelectListItem> MaterialsToPickFrom { get; set; }
+        [DisplayName("Välj material")]
         public List<SelectListItem> PickedMaterials { get; set; }
     }
 }

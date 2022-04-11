@@ -53,7 +53,7 @@ namespace Hattmakarens_system.Repositories
                 {
                     Date = DateTime.Now,
                     Priority = order.Priority,
-                    Status = "Under behandling",
+                    Status = "Aktiv",
                     Comment = order.Comment
                 };
                 hatCon.Order.Add(newOrdermodel);
