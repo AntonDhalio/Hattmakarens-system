@@ -52,7 +52,7 @@ namespace Hattmakarens_system.Controllers
             var status = new Service.Costumer().EditCustomerInfo(model);
             if(status == true)
             {
-                return RedirectToAction("DisplayCustomer");
+                return RedirectToAction("DisplayCustomer", new {id = model.Id});
             }
             else
             {
