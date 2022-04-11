@@ -10,6 +10,9 @@ namespace Hattmakarens_system.Repositories
 {
     public class OrderRepository
     {
+        //private HatRepository hatRepository = new HatRepository();
+        //private CustomerRepository customerRepository = new CustomerRepository();
+
         public OrderModels GetOrder(int? id)
         {
             using (var hatCon = new ApplicationDbContext())
@@ -42,7 +45,7 @@ namespace Hattmakarens_system.Repositories
         //    }
         //}
 
-        public void CreateOrder(OrderViewModel order)
+        public void CreateOrder(OrderModel order)
         {
             using (var hatCon = new ApplicationDbContext())
             {
@@ -58,7 +61,7 @@ namespace Hattmakarens_system.Repositories
             }
         }
 
-        public int CreateEmptyOrder(int customerId)
+        public int CreateEmptyOrderModel(int customerId)
         {
             using (var hatCon = new ApplicationDbContext())
             {
@@ -69,6 +72,13 @@ namespace Hattmakarens_system.Repositories
                 hatCon.SaveChanges();
                 return newOrderModel.Id;
             }
+        }
+        public int CreateOrderInDatabase(int customerId)
+        {
+            //Kolla vem som är inloggad och koppla som skapare på beställning
+            int newOrderId = CreateEmptyOrderModel(customerId);
+            return newOrderId;
+
         }
         public void DeleteOrder(int id)
         {
@@ -89,9 +99,8 @@ namespace Hattmakarens_system.Repositories
             {
                 int id = model.OrderId;
                 var order = hatCon.Order.FirstOrDefault(o => o.Id == id);
-                HatRepository hatRepository = new HatRepository();
-                Hats hat = hatRepository.CreateHat(model);
-                order.Hats.Add(hat);
+                //Hats hat = hatRepository.CreateHat(model);
+                //order.Hats.Add(hat);
                 hatCon.SaveChanges();
             }
         }
@@ -100,5 +109,34 @@ namespace Hattmakarens_system.Repositories
         //    GetOrder(specHat.OrderId);
 
         //}
+        public OrderModel GetOrderViewModel(int? id, string customerEmail)
+        {
+            CustomerRepository customerRepository = new CustomerRepository();
+            HatRepository hatRepository = new HatRepository();
+            var order = GetOrder(id);
+            string customerName = customerRepository.GetCustomerNameById(order.CustomerId);
+            OrderModel orderViewModel = new OrderModel()
+            {
+                Id = order.Id,
+                CustomerId = order.CustomerId,
+                CustomerName = customerName,
+                CustomerEmail = customerEmail,
+                Hats = hatRepository.GetAllHatsByOrderId(order.Id)
+            };
+            return orderViewModel;
+        }
+
+        public void UpdateOrder(int? id, string comment, bool priority)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                var order = GetOrder(id);
+                order.Comment = comment;
+                order.Priority = priority;
+                order.Status = "Under behandling";
+                hatCon.Entry(order).State = EntityState.Modified;
+                hatCon.SaveChanges();
+            }
+        }
     }
 }

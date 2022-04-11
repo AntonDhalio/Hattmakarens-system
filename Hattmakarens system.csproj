@@ -190,6 +190,7 @@
     <Compile Include="Controllers\PdfController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\StatisticController.cs" />
+
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -317,6 +318,9 @@
     <Content Include="Views\Statistic\_GetStatistics.cshtml" />
     <Content Include="Views\Statistic\Index.cshtml" />
     <Content Include="Views\Hat\ActiveHats.cshtml" />
+    <Content Include="Views\Hat\Delete.cshtml" />
+    <Content Include="Views\Order\Delete.cshtml" />
+    <Content Include="Views\Hatmodel\SearchHatModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

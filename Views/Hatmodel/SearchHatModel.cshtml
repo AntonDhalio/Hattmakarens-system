@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Hattmakarens_system.ViewModels.HatmodelViewModel>
+@{
+    //ViewBag.Title = "SearchIndex";
+}
+
+<h2>Sök efter lagerförd hattmodel</h2>
+
+<p>
+    @using (Html.BeginForm())
+    {
+    <p>
+        Hattmodellens namn: @Html.TextBox("searchString") <br />
+        <input type="submit" value="Sök" />
+    </p>
+}
+    <p />
+
+    @*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            @*<th>
+                Bild
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+        </tr>
+
+        @using (Html.BeginForm("CreateStored", "Hat", FormMethod.Get))
+        {
+
+            foreach (var item in Model)
+            {
+                if(item.Id != 1) // Ändra beroende på vad den auto-inlaggda special-hattmodellen får
+                { 
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Path)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        <input type="button" class="btn" value="Välj lagrad hatt" onclick="location.href = '@Url.Action("CreateStored", "Hat", new { orderId = item.OrderId, customerEmail = item.CustomerEmail, HatModelName = item.Name })'" />
+                    </td>
+                </tr>
+                }
+            }
+        }
+
+    </table>
+
+    <style>
+        #hideOnRegOrder { display: none; }
+    </style>
