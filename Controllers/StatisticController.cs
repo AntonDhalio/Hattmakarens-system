@@ -45,7 +45,7 @@ namespace Hattmakarens_system.Controllers
                         viewModel.orders.Add(order);
                     }
                 }
-            }
+            } 
             else if (viewModel.time.Equals("Kvartal"))
             {
                 viewModel.orders = new List<Models.OrderModels>();

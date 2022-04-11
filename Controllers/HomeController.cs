@@ -11,7 +11,7 @@ namespace Hattmakarens_system.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View();
+            return View("~/Views/Hat/ActiveHats.cshtml");
         }
     }
 }
