@@ -39,6 +39,18 @@ namespace Hattmakarens_system.Repositories
                 return hatmodel;
             }
         }
+        public void CreateSpecHatModel()
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                HatModels hatmodel = new HatModels()
+                {
+                    Name = "Specialtillverkad"
+                };
+                hatCon.HatModels.Add(hatmodel);
+                hatCon.SaveChanges();
+            }
+        }
         public void DeleteHatmodel(int id)
         {
             using (var hatCon = new ApplicationDbContext())

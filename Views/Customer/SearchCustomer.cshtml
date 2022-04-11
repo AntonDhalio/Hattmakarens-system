@@ -16,9 +16,6 @@
 }
     <p />
 
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
     <table class="table">
         <tr>
             <th>
@@ -61,10 +58,6 @@
                         @Html.DisplayFor(modelItem => item.Comment)
                     </td>
                     <td>
-                        @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
-                        @*@Html.ActionLink("Lägg till", "Create", "Order", new { name = item.Name }, null)*@
                         <input type="button" class="btn" value="Välj kund" onclick="location.href = '@Url.Action("CreateOrder", "Order", new { customerEmail = item.Email})'" />
                     </td>
                 </tr>
