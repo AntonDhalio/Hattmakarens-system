@@ -12,20 +12,38 @@
 
 @using (Html.BeginForm())
     {
-    <div class="input-group col-md-10">
-        <br />
-        <div class="input-group-prepend">
-            @Html.TextBox("searchString")
-            <button class="btn btn-outline-primary" type="submit">Sök</button>
-        </div>
-        <input type="radio" name="searchOption" value="material" /> Material
-        <input type="radio" name="searchOption" value="model" /> Modell
-        <input type="radio" name="searchOption" value="customer" /> Kund
-        <br />
-        Filtrera på status @Html.DropDownList("statusOption", new List<SelectListItem>
-            { new SelectListItem { Value = "all", Text = "Alla"},
-             new SelectListItem { Value = "active", Text = "Aktiva"},
-             new SelectListItem { Value = "inactive", Text = "Inaktiva"}})
+<div class="input-group col-md-10">
+    <br />
+    <div class="input-group-prepend">
+        @Html.TextBox("searchString")
+        <button class="btn btn-outline-primary" type="submit">Sök</button>
+    </div>
+    @if (ViewBag.ViewOption == null || ViewBag.ViewOption.Equals("material"))
+    {
+        <input type="radio" name="searchOption" value="material" checked /> <span>Material</span>
+        <input type="radio" name="searchOption" value="model" /> <span>Modell</span>
+        <input type="radio" name="searchOption" value="customer" /> <span>Kund</span>
+    }
+    else if (ViewBag.ViewOption.Equals("model"))
+    {
+        <input type="radio" name="searchOption" value="material" /> <span>Material</span>
+        <input type="radio" name="searchOption" value="model" checked /> <span>Modell</span>
+        <input type="radio" name="searchOption" value="customer" /> <span>Kund</span>
+    }
+    else
+    {
+        <input type="radio" name="searchOption" value="material" /> <span>Material</span>
+        <input type="radio" name="searchOption" value="model" /> <span>Modell</span>
+        <input type="radio" name="searchOption" value="customer" checked/> <span>Kund</span>
+    }
+    @*<input type="radio" name="searchOption" value="material" checked /> Material
+    <input type="radio" name="searchOption" value="model" /> Modell
+    <input type="radio" name="searchOption" value="customer" /> Kund*@
+    <br />
+    Filtrera på status @Html.DropDownList("statusOption", new List<SelectListItem>
+{ new SelectListItem { Value = "all", Text = "Alla"},
+new SelectListItem { Value = "active", Text = "Aktiva"},
+new SelectListItem { Value = "inactive", Text = "Inaktiva"}})
 </div>
 }
 

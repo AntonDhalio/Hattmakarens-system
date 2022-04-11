@@ -134,6 +134,7 @@ namespace Hattmakarens_system.Controllers
             var searchList = new Service.Search().GetSearchList(searchString, searchOption, statusOption);
 
             ViewBag.ViewBagList = searchList;
+            ViewBag.ViewOption = searchOption;
             return View();
         }
     }
