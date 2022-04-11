@@ -18,18 +18,41 @@
         <table class="statistik-tabell">
             <thead><tr><td><h3>Beställningsnummer</h3></td><td><h3>Antal hattar</h3></td><td><h3>Beställningsdatum</h3></td><td><h3>Summa</h3></td></tr></thead>
             <tbody>
-                   @foreach(var order in Model.orders)
-            {
+                @foreach (var order in Model.orders)
+                {
                     <tr>
-                        <td>@order.Id</td><td>@order.Hats.Count</td><td>@order.Date</td><td>@order.TotalSum</td>
+                        <td>@order.Id</td>
+                        <td>@order.Hats.Count</td>
+                        <td>@order.Date</td>
+                        <td>@order.TotalSum</td>
                     </tr>
-            }
+                }
                 <tr><td></td><td></td><td></td><td></td></tr>
             </tbody>
-            <tfoot><tr>
-                       <td><h4>Totalt antal beställingar: @Model.totalOrdersCount</h4></td><td><h4>Totalt antal hattar: @Model.totalHatsCount</h4></td><td></td><td><h4>Total summa: @Model.totalSum</h4></td>
-                </tr></tfoot>
+            <tfoot>
+                <tr>
+                    <td><h4>Totalt antal beställingar: @Model.totalOrdersCount</h4></td>
+                    <td><h4>Totalt antal hattar: @Model.totalHatsCount</h4></td>
+                    <td></td>
+                    <td><h4>Total summa: @Model.totalSum</h4></td>
+                </tr>
+            </tfoot>
         </table>
     </div>
+    @using (Html.BeginForm("PrintStatistics", "Statistic"))
+    {
+        for (int i = 0; i < Model.orders.Count; i++)
+        {
+            @Html.HiddenFor(model => model.orders[i].Id);
+            @Html.HiddenFor(model => model.orders[i].Date);
+            @Html.HiddenFor(model => model.orders[i].TotalSum)
+        }
+
+        @Html.HiddenFor(x => x.totalOrdersCount)
+        @Html.HiddenFor(x => x.totalHatsCount)
+        @Html.HiddenFor(x => x.totalSum)
+        @Html.HiddenFor(x => x.time)
+        <input type="submit" value="Skriv ut statistik" />
+    }
 </body>
 </html>

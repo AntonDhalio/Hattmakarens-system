@@ -57,7 +57,7 @@ namespace Hattmakarens_system.Services
             50, 290);
             gfx.DrawString("Totalsumma: " + invoice.Order.TotalSum, contentFont, XBrushes.Black,
             50, 320);
-            gfx.DrawString("Förfallodatum: " + invoice.DueDate, contentFont, XBrushes.Black,
+            gfx.DrawString("Förfallodatum: " + invoice.DueDate.ToShortDateString(), contentFont, XBrushes.Black,
             50, 350);
 
             //Titlar
@@ -294,6 +294,12 @@ namespace Hattmakarens_system.Services
         //Statistik PDF
         public void StatisticsPDF(StatisticViewModel statistics)
         {
+            List<OrderModels> orders = statistics.orders;
+            foreach (var order in orders)
+            {
+                order.Hats = orderRepository.GetOrder(order.Id).Hats;
+            }
+
             PdfDocument document = new PdfDocument();
             PdfPage page = document.AddPage();
             XGraphics gfx = XGraphics.FromPdfPage(page);
@@ -346,7 +352,7 @@ namespace Hattmakarens_system.Services
             200, 310);
             gfx.DrawString("Beställningsdatum", contentFontBold, XBrushes.Black,
             350, 310);
-            gfx.DrawString("Summa ()", contentFontBold, XBrushes.Black,
+            gfx.DrawString("Summa (SEK)", contentFontBold, XBrushes.Black,
             500, 310);
 
             int x = 340;
