@@ -26,7 +26,6 @@ namespace Hattmakarens_system.Controllers
         // GET: Statistic
         public ActionResult GetStatistics(StatisticViewModel viewModel)
         {
-        StatistikPDF
             if(ModelState.IsValid)
             {
                 pdfService.GetStatistics(viewModel);
