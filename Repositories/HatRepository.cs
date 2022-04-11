@@ -21,7 +21,7 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.Hats.ToList();
+                return hatCon.Hats.Include(h => h.Order).ToList();
             }
         }
         //public Hats SaveHats(Hats hat)
