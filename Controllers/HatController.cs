@@ -14,6 +14,10 @@ namespace Hattmakarens_system.Controllers
     public class HatController : Controller
     {
         HatRepository hatRepository = new HatRepository();
+        OrderRepository orderRepository = new OrderRepository();
+        CustomerRepository customerRepository = new CustomerRepository();
+        HatmodelRepository hatModelRepository = new HatmodelRepository();
+
         // GET: Hat
         public ActionResult Index()
         {
@@ -27,11 +31,12 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Hat/Create
-        public ActionResult CreateSpec(int orderId)
+        public ActionResult CreateSpec(int orderId, string customerEmail)
         {
             HatViewModel model = new HatViewModel()
             {
-                OrderId = orderId
+                OrderId = orderId,
+                CustomerEmail = customerEmail
             };
             return View(model);
         }
@@ -42,14 +47,14 @@ namespace Hattmakarens_system.Controllers
         {
             try
             {
-                model.ModelID = 3; //Hårdkodat värde för att representera specialltillverkad hatt
+                model.HatModelID = 1; //Hårdkodat värde för att representera specialltillverkad hatt
                 //hatRepository.CreateHat(model);
-                OrderRepository orderRepository = new OrderRepository();
-                orderRepository.OrderAddHat(model);
+                hatRepository.CreateHat(model);
+                //orderRepository.OrderAddHat(model);
                 //OrderViewModel orderModel = new OrderViewModel();
                 //orderModel.Id = model.OrderId;
                 //OrderRepository.AddSpecHat(model);
-                return RedirectToAction("CreateOrder", "Order", new {orderId = model.OrderId});
+                return RedirectToAction("CreateOrder", "Order", new {currentOrderId = model.OrderId, customerEmail = model.CustomerEmail});
             }
             catch
             {
@@ -57,20 +62,41 @@ namespace Hattmakarens_system.Controllers
             }
         }
         // GET: Hat/Create
-        public ActionResult CreateStored()
+        public ActionResult CreateStored(int orderId, string customerEmail, string hatModelName)
         {
-            return View();
+            HatViewModel model = new HatViewModel()
+            {
+                OrderId = orderId,
+                CustomerEmail = customerEmail
+            };
+            if(hatModelName != null)
+            {
+                var hatModel = hatModelRepository.GetHatmodelByName(hatModelName);
+                model.Price = hatModel.Price;
+                //model.Path = hatModel.Path -- lägga till path-property på hatmodel i databas?
+                //model.Materials = hatModel.Material;
+                //model.HatModelName = 
+                model.HatModelName = hatModel.Name;
+                model.HatModelID = hatModel.Id;
+                model.HatModelDescription = hatModel.Description;
+            }
+            return View(model);
         }
 
         // POST: Hat/Create
         [HttpPost]
-        public ActionResult CreateStored(FormCollection collection)
+        public ActionResult CreateStored(HatViewModel model)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                //model.ModelID = 2; //Hårdkodat värde för att representera icke-specialltillverkad hatt
+                //hatRepository.CreateHat(model);
+                hatRepository.CreateHat(model);
+                //orderRepository.OrderAddHat(model);
+                //OrderViewModel orderModel = new OrderViewModel();
+                //orderModel.Id = model.OrderId;
+                //OrderRepository.AddSpecHat(model);
+                return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = model.CustomerEmail });
             }
             catch
             {
@@ -101,20 +127,31 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Hat/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id, int orderId)
         {
-            return View();
+            try
+            {
+                HatViewModel model = hatRepository.GetHatViewModel(id);
+                model.OrderId = orderId;
+                //var customer = customerRepository.GetCustomerByOrderId(orderId);
+                //model.CustomerEmail = customer.Email;
+                return View(model);
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // POST: Hat/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(HatViewModel model)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                hatRepository.DeleteHat(model.Id);
+                var customer = customerRepository.GetCustomerByOrderId(model.OrderId);
+                return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = customer.Email});
             }
             catch
             {

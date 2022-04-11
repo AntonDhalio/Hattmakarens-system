@@ -18,6 +18,8 @@ namespace Hattmakarens_system.ViewModels
         public string Description { get; set; }
         [DisplayName("Pris")]
         public double Price { get; set; }
+        public int OrderId { get; set; }
+        public string CustomerEmail { get; set; }
         public virtual ICollection<Hats> Hats { get; set; }
         public virtual ICollection<ImageModels> Images { get; set; }
         public virtual ICollection<MaterialModels> Material { get; set; }

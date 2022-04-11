@@ -1,21 +1,53 @@
-﻿@model Hattmakarens_system.ViewModels.OrderViewModel
+﻿@model Hattmakarens_system.ViewModels.OrderModel
 
 <table class="table">
+
+    <tr>
+        <th>
+            Namn
+        </th>
+        <th>
+            Storlek
+        </th>
+        <th>
+            Pris
+        </th>
+        <th>
+            Kommentar
+        </th>
+        @*<th>
+                Tillvekare
+            </th>*@
+    </tr>
     @if (Model != null)
     {
         if (Model.Hats != null)
         {
             foreach (var item in Model.Hats)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.ActionLink("Ändra", "Edit", "Competence", new { id = item.Id }, null) |
-                    @Html.ActionLink("Ta bort", "Delete", "Competence", new { id = item.Id }, null)
-                </td>
-            </tr>
+                if (item.ModelID == 1)//bytt ut "==1! till det Id:t som den hattmodellen som är auto-insatt som specialtillverkad hatt
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Size)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Comment)
+                        </td>
+                        <!--<td>
+                            Namnet på den som ska tillverka hatten?
+                        </td>-->
+                        <td>
+                            @Html.ActionLink("Ta bort", "Delete", "Hat", new { id = item.Id, orderId = item.OrderId }, null)
+                        </td>
+                    </tr>
+                }
             }
         }
     }
