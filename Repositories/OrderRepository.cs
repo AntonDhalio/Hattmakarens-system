@@ -125,5 +125,18 @@ namespace Hattmakarens_system.Repositories
             };
             return orderViewModel;
         }
+
+        public void UpdateOrder(int? id, string comment, bool priority)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                var order = GetOrder(id);
+                order.Comment = comment;
+                order.Priority = priority;
+                order.Status = "Under behandling";
+                hatCon.Entry(order).State = EntityState.Modified;
+                hatCon.SaveChanges();
+            }
+        }
     }
 }

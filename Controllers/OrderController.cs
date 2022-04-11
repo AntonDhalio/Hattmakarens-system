@@ -69,14 +69,16 @@ namespace Hattmakarens_system.Controllers
 
         // POST: Order/Create
         [HttpPost]
-        public ActionResult CreateOrder(int id/*OrderViewModel orderModel, HatViewModel hatModel */)
+        public ActionResult CreateOrderAdd(int? id, string comment, bool priority)
         {
             try 
             {
+                orderRepository.UpdateOrder(id, comment, priority);
+
             //    orderRepository.CreateOrder(orderModel);
             //    hatRepository.CreateHat(hatModel);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             catch
             {
