@@ -1,6 +1,7 @@
 ﻿using Hattmakarens_system.Models;
 using Hattmakarens_system.Repositories;
 using Hattmakarens_system.ViewModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,7 +74,8 @@ namespace Hattmakarens_system.Controllers
         {
             try 
             {
-                orderRepository.UpdateOrder(id, comment, priority);
+                string userId = User.Identity.GetUserId();            
+                orderRepository.UpdateOrder(id, comment, priority, userId);
 
             //    orderRepository.CreateOrder(orderModel);
             //    hatRepository.CreateHat(hatModel);

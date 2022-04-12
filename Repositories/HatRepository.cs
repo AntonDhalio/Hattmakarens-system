@@ -67,6 +67,7 @@ namespace Hattmakarens_system.Repositories
                     Price = hat.Price,
                     Status = "Aktiv", //Eller vad det nu ska stå när man bara registrerat en ny hatt
                     Comment = hat.Comment,
+                    UserId = hat.UserId,
                     ModelID = hat.HatModelID,
                     OrderId = hat.OrderId
                 };

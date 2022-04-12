@@ -48,6 +48,8 @@ namespace Hattmakarens_system.Controllers
             try
             {
                 model.HatModelID = 1; //Hårdkodat värde för att representera specialltillverkad hatt
+                           //ÄNDRA TILL TILLVERKARE
+                model.UserId = User.Identity.GetUserId();
                 //hatRepository.CreateHat(model);
                 hatRepository.CreateHat(model);
                 //orderRepository.OrderAddHat(model);
@@ -91,6 +93,9 @@ namespace Hattmakarens_system.Controllers
             {
                 //model.ModelID = 2; //Hårdkodat värde för att representera icke-specialltillverkad hatt
                 //hatRepository.CreateHat(model);
+
+                //ÄNDRA TILL TILLVERKARE
+                model.UserId = User.Identity.GetUserId();
                 hatRepository.CreateHat(model);
                 //orderRepository.OrderAddHat(model);
                 //OrderViewModel orderModel = new OrderViewModel();
