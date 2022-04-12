@@ -19,7 +19,7 @@
                 </button>
                 @Html.ActionLink("Hattmakaren", "ActiveHats", "Hat", null, new { @class = "navbar-brand" })
                 @*TA BORT NÄR VI HAR DATA*@
-                @*@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })*@
+                @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
             </div>
             @if (Request.IsAuthenticated)
             {

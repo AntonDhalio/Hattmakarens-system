@@ -165,6 +165,20 @@ namespace Hattmakarens_system.Controllers
         }
         public ActionResult ActiveHats()
         {
+            HatmodelRepository hatmodelRepository = new HatmodelRepository();
+            var hatmodels = hatmodelRepository.GetAllHatmodels();
+            bool specExist = false;
+            foreach (var hatmodel in hatmodels)
+            {
+                if (hatmodel.Name.Equals("Specialtillverkad"))
+                {
+                    specExist = true;
+                }
+            }
+            if (specExist == false)
+            {
+                hatmodelRepository.CreateSpecHatModel();
+            }
             var repo = new HatRepository();
             var allHats = new List<Hats>();
             using (var context = new ApplicationDbContext())

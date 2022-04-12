@@ -13,20 +13,20 @@ namespace Hattmakarens_system.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            
-            var hatmodels = hatmodelRepository.GetAllHatmodels();
-            bool specExist = false;
-            foreach(var hatmodel in hatmodels)
-            {
-                if(hatmodel.Name.Equals("Specialtillverkad"))
-                {
-                    specExist = true;
-                }
-            }
-            if(specExist == false)
-            {
-                hatmodelRepository.CreateSpecHatModel();
-            }
+         // TA BORT SEN    
+            //var hatmodels = hatmodelRepository.GetAllHatmodels();
+            //bool specExist = false;
+            //foreach(var hatmodel in hatmodels)
+            //{
+            //    if(hatmodel.Name.Equals("Specialtillverkad"))
+            //    {
+            //        specExist = true;
+            //    }
+            //}
+            //if(specExist == false)
+            //{
+            //    hatmodelRepository.CreateSpecHatModel();
+            //}
             //return View();
             return RedirectToAction("ActiveHats", "Hat");
 
