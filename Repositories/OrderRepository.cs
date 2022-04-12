@@ -121,7 +121,8 @@ namespace Hattmakarens_system.Repositories
                 CustomerId = order.CustomerId,
                 CustomerName = customerName,
                 CustomerEmail = customerEmail,
-                Hats = hatRepository.GetAllHatsByOrderId(order.Id)
+                Hats = hatRepository.GetAllHatsByOrderId(order.Id),
+                Comment = order.Comment
             };
             return orderViewModel;
         }
