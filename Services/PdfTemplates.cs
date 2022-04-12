@@ -325,9 +325,9 @@ namespace Hattmakarens_system.Services
 
             //Titlar
             //Tid
-            gfx.DrawString("Tid", contentFontBold, XBrushes.Black,
+            gfx.DrawString("Tidsperiod", contentFontBold, XBrushes.Black,
             50, 210);
-            gfx.DrawString(statistics.time, contentFont, XBrushes.Black,
+            gfx.DrawString(statistics.fromDate.ToShortDateString().ToString() + " - " + statistics.toDate.ToShortDateString().ToString(), contentFont, XBrushes.Black,
             240, 210);
             //Summa
             gfx.DrawString("Summa", contentFontBold, XBrushes.Black,

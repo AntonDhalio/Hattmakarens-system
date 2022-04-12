@@ -20,7 +20,7 @@
         <h1>Se statistik</h1>
         @using (Html.BeginForm("GetStatistics", "Statistic", FormMethod.Post))
         {
-            <table cellpadding="15">
+           @* <table cellpadding="15">
                 <tr><td>@Html.Label("Välj tidsperiod")</td></tr>
                 <tr>
                     <td>@Html.LabelFor(m => m.time, "År")</td>
@@ -30,8 +30,10 @@
                 <tr><td>@Html.LabelFor(m => m.time, "Kvartal")</td><td></td><td>@Html.RadioButtonFor(m => m.time, "Kvartal")</td></tr>
                 <tr><td>@Html.LabelFor(m => m.time, "Månad")</td><td></td><td>@Html.RadioButtonFor(m => m.time, "Månad")</td></tr>
 
-            </table>
-
+            </table>*@
+            <br />
+            @Html.LabelFor(m => m.fromDate, "Från")@Html.EditorFor(m => m.fromDate, new { htmlAttributes = new { @class = "datepicker" } })<br />
+            @Html.LabelFor(m => m.toDate, "Till")@Html.EditorFor(m => m.toDate, new { htmlAttributes = new { @class = "datepicker" } })<br />
 
 
 
