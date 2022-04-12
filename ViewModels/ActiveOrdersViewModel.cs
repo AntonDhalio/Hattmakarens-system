@@ -6,9 +6,8 @@ using System.Web;
 
 namespace Hattmakarens_system.ViewModels
 {
-    public class ActiveHatsViewModel
+    public class ActiveOrdersViewModel
     {
-        public List<Hats> hats { get; set; }
         public List<OrderModels> Orders { get; set; }
     }
 }

@@ -188,8 +188,19 @@ namespace Hattmakarens_system.Controllers
             var hatstoShow = allHats.Where(h => h.UserId.Equals(User.Identity.GetUserId())).Where(h => h.Status == "Aktiv");
             var viewModel = new ActiveHatsViewModel
             {
-                hats = hatstoShow.ToList()
+                hats = hatstoShow.ToList(),
+                Orders = new List<OrderModels>()
             };
+
+            var repos = new OrderRepository();
+            var allOrders = repos.GetAllOrders();
+            foreach (var order in allOrders)
+            {
+                if (order.Status.Equals("Aktiv"))
+                {
+                    viewModel.Orders.Add(order);
+                }
+            }
             return View(viewModel);
         }
     }
