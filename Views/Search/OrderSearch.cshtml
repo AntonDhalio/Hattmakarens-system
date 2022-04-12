@@ -98,9 +98,9 @@
                     <td>
                         @item.Status
                     </td>
-                    @*<td>
-                        @Html.ActionLink("Se orderinfo", "DisplayOrder", "Customer", new { item.Id }, null)
-                    </td>*@
+                    <td>
+                        @Html.ActionLink("Se orderinfo", "ViewOrder", "Order", new { item.Id }, null)
+                    </td>
                 </tr>
             }
         </table>

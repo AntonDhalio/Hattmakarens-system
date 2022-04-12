@@ -1,0 +1,62 @@
+﻿@model Hattmakarens_system.ViewModels.OrderModel
+
+@{
+    ViewBag.Title = "CreateOrder";
+}
+
+
+<h2>Ordersammanställning</h2>
+<h4>Ordernummer: @Html.DisplayFor(model => model.Id)</h4>
+<hr />
+<div>
+    @if (Model != null)
+    {
+        if (Model.CustomerEmail != null)
+        {
+            <h3>Beställare</h3>
+            <p>Kundnr.: @Html.DisplayFor(model => model.CustomerId)</p>
+            <p>Namn: @Html.DisplayFor(model => model.CustomerName)</p>
+            <p>E-post: @Html.DisplayFor(model => model.CustomerEmail)</p>
+
+            <hr />
+
+            <h3>Specialtillverkade hattar</h3>
+            <div>
+                @Html.Partial("_ListSpecHatsView")
+            </div>
+
+            <h3>Lagerförda hattar</h3>
+            <div>
+                @Html.Partial("_ListStoredHatsView")
+            </div>
+
+            <hr />
+
+            <div>
+                @Html.LabelFor(model => model.Priority)
+                @if (!Model.Priority)
+                {<p class="ja">Ja</p>}
+                else
+                { <p class="nej">Nej</p>}
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.Comment)
+                <p>@Html.DisplayFor(model => model.Comment)</p>
+            </div>
+
+            <hr />
+            <div>
+                <div class="form-group">
+                    <div class=" col-md-2">
+                        <input type="button" value="Uppdatera beställning" class="btn btn-success" />
+                        @*<input type="button" class="btn" value="Registrera beställning " onclick="location.href = '@Url.Action("CreateOrderAdd", "Order", new { id = Model.Id, comment = Model.Comment, priority = Model.Priority })'" />*@
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+<br />
+
+
