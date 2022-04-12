@@ -152,22 +152,6 @@ namespace Hattmakarens_system.Controllers
         //    };
         //    return model;
         //}
-        public ActionResult ActiveOrders()
-        {
-            var repo = new OrderRepository();
-            var allOrders = repo.GetAllOrders();
-            var ViewModel = new ActiveOrdersViewModel
-            {
-                Orders = new List<OrderModels>()
-            };
-            foreach(var order in allOrders)
-            {
-                if (order.Status.Equals("Aktiv"))
-                {
-                    ViewModel.Orders.Add(order);
-                }
-            }
-            return View(ViewModel);
-        }
+
     }
 }
