@@ -159,11 +159,15 @@ namespace Hattmakarens_system.Controllers
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     var newUser = new UserModels
                     {
+                        Id = user.Id,
                         Name = model.UserName,
                         Password = model.Password
                     };
-                    var repo = new UserRepository();
-                    repo.SaveUser(newUser);
+                    using(var applicationDbContext = new ApplicationDbContext())
+                    {
+                        applicationDbContext.User.Add(newUser);
+                        applicationDbContext.SaveChanges();
+                    }
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
