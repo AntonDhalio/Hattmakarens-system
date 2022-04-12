@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Hattmakarens_system.Models;
 
 namespace Hattmakarens_system.Service
 {
@@ -26,6 +27,15 @@ namespace Hattmakarens_system.Service
             double priceIncTax = priceExTax * 1.25;
             double tax = priceIncTax - priceExTax;
             return tax;
+        }
+        public double GetTotalPriceExTax(List<Hats> hats)
+        {
+            double totalSum = 0;
+            foreach(var hat in hats)
+            {
+                totalSum += hat.Price;
+            }
+            return totalSum;
         }
     }
 }
