@@ -322,7 +322,10 @@
     <Content Include="Views\Hat\Delete.cshtml" />
     <Content Include="Views\Order\Delete.cshtml" />
     <Content Include="Views\Hatmodel\SearchHatModel.cshtml" />
-    <Content Include="Views\Order\ActiveOrders.cshtml" />
+
+    <Content Include="Views\Order\ViewOrder.cshtml" />
+    <Content Include="Views\Order\_ListSpecHatsView.cshtml" />
+    <Content Include="Views\Order\_ListStoredHatsView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

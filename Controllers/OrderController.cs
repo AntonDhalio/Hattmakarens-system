@@ -153,5 +153,13 @@ namespace Hattmakarens_system.Controllers
         //    return model;
         //}
 
+        // GET: Order/Delete/5
+        public ActionResult ViewOrder(int Id)
+        {
+            var customer = customerRepository.GetCustomerByOrderId(Id);
+            OrderModel order = orderRepository.GetOrderViewModel(Id, customer.Email);
+            return View(order);
+
+        }
     }
 }
