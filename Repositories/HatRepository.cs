@@ -56,11 +56,11 @@ namespace Hattmakarens_system.Repositories
         //    }
         //}
 
-        public Hats CreateHat(HatViewModel hat, IEnumerable<string> PickedMaterials)
+        public Hats CreateHat(HatViewModel hat, IEnumerable<string> PickedMaterials, int[] SelectedStatuses)
         {
             using (var hatCon = new ApplicationDbContext())
             {
-
+                
                 Hats hats = new Hats()
                 {
                     Name = hat.Name,
@@ -73,12 +73,24 @@ namespace Hattmakarens_system.Repositories
                     OrderId = hat.OrderId,
                     Materials = new List<MaterialModels>()
                 };
-                foreach (var material in PickedMaterials)
+                if(hat.HatModelID == 1)
                 {
-                    var id = int.Parse(material);
-                    var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
-                    hats.Materials.Add(aMaterial);
+                    foreach (var material in PickedMaterials)
+                    {
+                        var id = int.Parse(material);
+                        var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
+                        hats.Materials.Add(aMaterial);
+                    }
+                } else
+                {
+                    foreach (var material in SelectedStatuses)
+                    {
+                        var id = material;
+                        var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
+                        hats.Materials.Add(aMaterial);
+                    }
                 }
+            
                 hatCon.Hats.Add(hats);
                 hatCon.SaveChanges();
                 return hats;

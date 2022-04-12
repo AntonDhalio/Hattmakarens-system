@@ -39,5 +39,7 @@ namespace Hattmakarens_system.ViewModels
         public List<SelectListItem> MaterialsToPickFrom { get; set; }
         [DisplayName("Välj material")]
         public List<SelectListItem> PickedMaterials { get; set; }
+        public List<SelectListItem> Statuses { get; set; }
+        public int[] SelectedStatuses { get; set; }
     }
 }

@@ -63,12 +63,7 @@ namespace Hattmakarens_system.Controllers
                 model.HatModelID = 1; //Hårdkodat värde för att representera specialltillverkad hatt
                            //ÄNDRA TILL TILLVERKARE
                 model.UserId = User.Identity.GetUserId();
-                //hatRepository.CreateHat(model);
-                hatRepository.CreateHat(model, PickedMaterials);
-                //orderRepository.OrderAddHat(model);
-                //OrderViewModel orderModel = new OrderViewModel();
-                //orderModel.Id = model.OrderId;
-                //OrderRepository.AddSpecHat(model);
+                hatRepository.CreateHat(model, PickedMaterials, null);
                 return RedirectToAction("CreateOrder", "Order", new {currentOrderId = model.OrderId, customerEmail = model.CustomerEmail});
             }
             catch
@@ -79,6 +74,7 @@ namespace Hattmakarens_system.Controllers
         // GET: Hat/Create
         public ActionResult CreateStored(int orderId, string customerEmail, string hatModelName)
         {
+            
             HatViewModel model = new HatViewModel()
             {
                 OrderId = orderId,
@@ -86,6 +82,30 @@ namespace Hattmakarens_system.Controllers
             };
             if(hatModelName != null)
             {
+                //var vm = new MaterialListToHatmodelViewModel();
+
+                model.Statuses = new List<SelectListItem>();
+                foreach (var material in materialRepository.GetAllMaterials())
+                {
+                    var listitem = new SelectListItem
+                    {
+                        Value = material.Id.ToString(),
+                        Text = material.Name + ", " + material.Color.Name + ", " + material.Type
+                    };
+                    model.Statuses.Add(listitem);
+                        //Add(listitem);
+                }
+
+                var SelectedMaterialsId = materialRepository.GetMaterialInHatmodel(hatModelName);
+                model.SelectedStatuses = new int[100];
+
+                int count = 0;
+                foreach(var id in SelectedMaterialsId)
+                {
+                    model.SelectedStatuses[count] = id;
+                    count++;
+                }
+
                 var hatModel = hatModelRepository.GetHatmodelByName(hatModelName);
                 model.Price = hatModel.Price;
                 //model.Path = hatModel.Path -- lägga till path-property på hatmodel i databas?
@@ -100,7 +120,7 @@ namespace Hattmakarens_system.Controllers
 
         // POST: Hat/Create
         [HttpPost]
-        public ActionResult CreateStored(HatViewModel model, IEnumerable<string> pickedMaterials)
+        public ActionResult CreateStored(HatViewModel model, IEnumerable<string> pickedMaterials, int[] SelectedStatuses)
         {
             try
             {
@@ -109,7 +129,7 @@ namespace Hattmakarens_system.Controllers
 
                 //ÄNDRA TILL TILLVERKARE
                 model.UserId = User.Identity.GetUserId();
-                hatRepository.CreateHat(model, pickedMaterials);
+                hatRepository.CreateHat(model, pickedMaterials, SelectedStatuses);
                 //orderRepository.OrderAddHat(model);
                 //OrderViewModel orderModel = new OrderViewModel();
                 //orderModel.Id = model.OrderId;
