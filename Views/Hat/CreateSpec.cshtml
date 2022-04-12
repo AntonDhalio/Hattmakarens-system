@@ -1,7 +1,7 @@
 ﻿@model Hattmakarens_system.ViewModels.HatViewModel
 
 @*@{
-    ViewBag.Title = "CreateSpec";
+    ViewBag.Title = "MaterialsToPickFrom";
 }*@
 
 <h2>Lägg till en specialtillverkad hatt</h2>
@@ -37,6 +37,13 @@
             @Html.ValidationMessageFor(model => model.Path, "", new { @class = "text-danger" })*@
         <!--</div>
     </div>-->
+
+    <div class="form-group ">
+        @Html.LabelFor(model => model.PickedMaterials, new {@class = "col-md-2 control-label" })
+        <div class="col-md-10 ">
+            @Html.ListBoxFor(model => model.PickedMaterials, new MultiSelectList(ViewBag.MaterialsToPickFrom, "Value", "Text"), new {@class = "form-control"})
+        </div>
+    </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })

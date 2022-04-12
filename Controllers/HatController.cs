@@ -17,6 +17,7 @@ namespace Hattmakarens_system.Controllers
         OrderRepository orderRepository = new OrderRepository();
         CustomerRepository customerRepository = new CustomerRepository();
         HatmodelRepository hatModelRepository = new HatmodelRepository();
+        MaterialRepository materialRepository = new MaterialRepository();
 
         // GET: Hat
         public ActionResult Index()
@@ -33,17 +34,29 @@ namespace Hattmakarens_system.Controllers
         // GET: Hat/Create
         public ActionResult CreateSpec(int orderId, string customerEmail)
         {
+
+            var materials = new List<SelectListItem>();
+            foreach(var material in materialRepository.GetAllMaterials())
+            {
+                var listitem = new SelectListItem
+                {
+                    Value = material.Id.ToString(),
+                    Text = material.Name + ", " + material.Color.Name + ", " + material.Type
+                };
+                materials.Add(listitem);
+            }
             HatViewModel model = new HatViewModel()
             {
                 OrderId = orderId,
                 CustomerEmail = customerEmail
             };
+            ViewBag.MaterialsToPickFrom = materials;
             return View(model);
         }
 
         // POST: Hat/Create
         [HttpPost]
-        public ActionResult CreateSpec(HatViewModel model)
+        public ActionResult CreateSpec(HatViewModel model, IEnumerable<string> PickedMaterials)
         {
             try
             {
@@ -51,7 +64,7 @@ namespace Hattmakarens_system.Controllers
                            //ÄNDRA TILL TILLVERKARE
                 model.UserId = User.Identity.GetUserId();
                 //hatRepository.CreateHat(model);
-                hatRepository.CreateHat(model);
+                hatRepository.CreateHat(model, PickedMaterials);
                 //orderRepository.OrderAddHat(model);
                 //OrderViewModel orderModel = new OrderViewModel();
                 //orderModel.Id = model.OrderId;
@@ -87,7 +100,7 @@ namespace Hattmakarens_system.Controllers
 
         // POST: Hat/Create
         [HttpPost]
-        public ActionResult CreateStored(HatViewModel model)
+        public ActionResult CreateStored(HatViewModel model, IEnumerable<string> pickedMaterials)
         {
             try
             {
@@ -96,7 +109,7 @@ namespace Hattmakarens_system.Controllers
 
                 //ÄNDRA TILL TILLVERKARE
                 model.UserId = User.Identity.GetUserId();
-                hatRepository.CreateHat(model);
+                hatRepository.CreateHat(model, pickedMaterials);
                 //orderRepository.OrderAddHat(model);
                 //OrderViewModel orderModel = new OrderViewModel();
                 //orderModel.Id = model.OrderId;
