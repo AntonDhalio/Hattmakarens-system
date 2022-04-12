@@ -53,7 +53,7 @@ namespace Hattmakarens_system.Controllers
             var status = new Service.Costumer().EditCustomerInfo(model);
             if(status == true)
             {
-                return RedirectToAction("DisplayCustomer");
+                return RedirectToAction("DisplayCustomer", new {id = model.Id});
             }
             else
             {
@@ -63,9 +63,8 @@ namespace Hattmakarens_system.Controllers
                 
         }
 
-        public ActionResult DisplayCustomer()
+        public ActionResult DisplayCustomer(int id)
         {
-            int id = 1;
             var showCustomerInfo = new Service.Costumer().GetCustomerInfo(id);
             return View(showCustomerInfo);
         }
