@@ -230,7 +230,6 @@
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ActiveHatsViewModel.cs" />
-    <Compile Include="ViewModels\ActiveOrdersViewModel.cs" />
     <Compile Include="ViewModels\ColorViewModel.cs" />
     <Compile Include="ViewModels\CostumerViewModel.cs" />
     <Compile Include="ViewModels\HatmodelViewModel.cs" />
@@ -322,7 +321,6 @@
     <Content Include="Views\Hat\Delete.cshtml" />
     <Content Include="Views\Order\Delete.cshtml" />
     <Content Include="Views\Hatmodel\SearchHatModel.cshtml" />
-    <Content Include="Views\Order\ActiveOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
