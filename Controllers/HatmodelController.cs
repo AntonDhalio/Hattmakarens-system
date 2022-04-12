@@ -23,7 +23,7 @@ namespace Hattmakarens_system.Controllers
                 var listitem = new SelectListItem
                 {
                     Value = material.Id.ToString(),
-                    Text = material.Name
+                    Text = material.Name + ", " + material.Color.Name + ", " + material.Type
                 };
                 materials.Add(listitem);
             }
