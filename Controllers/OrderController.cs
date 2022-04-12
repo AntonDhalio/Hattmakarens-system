@@ -78,7 +78,7 @@ namespace Hattmakarens_system.Controllers
             //    orderRepository.CreateOrder(orderModel);
             //    hatRepository.CreateHat(hatModel);
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("ActiveHats", "Hat");
             }
             catch
             {

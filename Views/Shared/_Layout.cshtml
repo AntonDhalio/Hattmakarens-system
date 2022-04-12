@@ -19,17 +19,19 @@
                 </button>
                 @Html.ActionLink("Hattmakaren", "ActiveHats", "Hat", null, new { @class = "navbar-brand" })
                 @*TA BORT NÄR VI HAR DATA*@
-                @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+                @*@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })*@
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Sök", "OrderSearch", "Search")</li>
+            @if (Request.IsAuthenticated)
+            {
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Sök", "OrderSearch", "Search")</li>
 
-                    @*<li>@Html.ActionLink("Customer", "DisplayCustomer", "Customer")</li>*@
-                    @*TA BORT NÄR SEN OCH LÄGG IN PÅ RÄTT STÄLLE*@
-                    <li>@Html.ActionLink("Skapa beställning", "CreateOrder", "Order")</li>
+                        @*<li>@Html.ActionLink("Customer", "DisplayCustomer", "Customer")</li>*@
+                        @*TA BORT NÄR SEN OCH LÄGG IN PÅ RÄTT STÄLLE*@
+                        <li>@Html.ActionLink("Skapa beställning", "CreateOrder", "Order")</li>
 
-                    <li>@Html.ActionLink("Se statistik", "Index", "Statistic")</li>
+                        <li>@Html.ActionLink("Se statistik", "Index", "Statistic")</li>
 
                     <li>@Html.ActionLink("Lägg till hattmodell", "Hatmodel", "Hatmodel")</li>
 
@@ -39,6 +41,7 @@
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
+
         </div>
     </div>
     <div class="container body-content">

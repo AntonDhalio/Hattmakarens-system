@@ -33,6 +33,7 @@ namespace Hattmakarens_system.Controllers
                     Phone = customerViewModel.Phone
                 };
                 cusRepo.SaveCostumer(customer);
+                ModelState.Clear();
                 return View();
             }
             catch
