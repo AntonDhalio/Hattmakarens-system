@@ -21,7 +21,6 @@ namespace Hattmakarens_system.ViewModels
         [Required]
         [DisplayName("Materialtyp")]
         public string Type { get; set; }
-        [Required]
         [DisplayName("Färg")]
         public int ColorId { get; set; }
         public virtual ColorModels Color { get; set; }
