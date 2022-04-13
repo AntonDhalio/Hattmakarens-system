@@ -1,7 +1,7 @@
 ﻿@model Hattmakarens_system.ViewModels.OrderModel
 
 @{
-    ViewBag.Title = "Modify order";
+    ViewBag.Title = "CreateOrder";
 }
 
 
@@ -31,25 +31,35 @@
             </div>
 
             <hr />
-
-            <div>
-                @Html.LabelFor(model => model.Priority)
-                @if (Model.Priority)
-                {<p class="ja">Ja</p>}
-                else
-                { <p class="nej">Nej</p>}
+            <div class="container">
+                <div class="row">
+                    <div class="col-md">
+                        @Html.LabelFor(model => model.Priority)
+                        @if (Model.Priority)
+                        {<p class="ja">Ja</p>}
+                        else
+                        { <p class="nej">Nej</p>}
+                    </div>
+                    <div class="col-md-auto">
+                        <input type="button" value="Ändra prioritet" class="btn btn-success" onclick="location.href = '@Url.Action("ChangePriority", "Order", new {id = Model.Id, status = Model.Priority})'" />
+                    </div>
+                </div>
             </div>
 
-            <div>
-                @Html.LabelFor(model => model.Comment)
-                <p>@Html.DisplayFor(model => model.Comment)</p>
+            <hr />
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.Comment)
+                    <p>@Html.DisplayFor(model => model.Comment)</p>
+                </div>
             </div>
+            
 
             <hr />
             <div>
                 <div class="form-group">
-                    <div class=" col-md-2">
-                        <input type="button" value="Uppdatera beställning" class="btn btn-success" onclick="location.href = '@Url.Action("ModifyOrder", "Order", new {id = Model.Id})'"/>
+                    <div class=" col-md-10">
+                        <input type="button" value="Spara ändringar" class="btn btn-success" />
                         @*<input type="button" class="btn" value="Registrera beställning " onclick="location.href = '@Url.Action("CreateOrderAdd", "Order", new { id = Model.Id, comment = Model.Comment, priority = Model.Priority })'" />*@
                     </div>
                 </div>

@@ -120,6 +120,7 @@ namespace Hattmakarens_system.Repositories
             OrderModel orderViewModel = new OrderModel()
             {
                 Id = order.Id,
+                Priority = order.Priority,
                 CustomerId = order.CustomerId,
                 CustomerName = customerName,
                 CustomerEmail = customerEmail,
