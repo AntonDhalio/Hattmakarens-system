@@ -19,7 +19,7 @@ namespace Hattmakarens_system.Service
         }
         public double GetTaxFromTotal(double priceIncTax)
         {
-            double tax = priceIncTax * 0.8;
+            double tax = priceIncTax * 0.2;
             return tax;
         }
         public double GetTaxOnly(double priceExTax)

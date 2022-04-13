@@ -34,12 +34,19 @@
         </div>
 
         <!--<div class="form-group">-->
-            @*@Html.LabelFor(model => model.Path, htmlAttributes: new { @class = "control-label col-md-2" })*@
-            <!--<div class="col-md-10">-->
-                @*@Html.EditorFor(model => model.Path, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Path, "", new { @class = "text-danger" })*@
-            <!--</div>
+        @*@Html.LabelFor(model => model.Path, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        <!--<div class="col-md-10">-->
+        @*@Html.EditorFor(model => model.Path, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Path, "", new { @class = "text-danger" })*@
+        <!--</div>
         </div>-->
+
+        <div class="form-group ">
+            @Html.LabelFor(model => model.PickedMaterials, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10 ">
+                @Html.ListBoxFor(model => model.SelectedStatuses, Model.Statuses)
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.HatModelName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -70,6 +77,13 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownList("UserId", new SelectList(ViewBag.UsersToPickFrom, "Value", "Text"), new { @class = "form-control" })
             </div>
         </div>
 

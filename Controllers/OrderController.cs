@@ -34,48 +34,45 @@ namespace Hattmakarens_system.Controllers
             if (customerEmail == null)
             {
                 OrderModel order = new OrderModel();
+                order.TotalSum = 0;
+                order.Moms = 0;
                 return View(order);
             }
             if (customerEmail != null && currentOrderId == null)
             {
+                string userId = User.Identity.GetUserId();
                 int customerId = customerRepository.GetCustomerIdByEmail(customerEmail);
-                //OrderViewModel order = CreateOrderViewModelWithCustomer(customerEmail);
-                int orderId = orderRepository.CreateOrderInDatabase(customerId);
+                int orderId = orderRepository.CreateOrderInDatabase(customerId, userId);
                 OrderModel order = orderRepository.GetOrderViewModel(orderId, customerEmail);
-                //order.CustomerEmail = customerEmail;
+
                 return View(order);
-                //    int customerId = customerRepository.GetCustomerIdByEmail(email);
-                //    OrderViewModel order = SelectedCustomerEmail(email);
-                //    order.Id = Create(customerId);
-                //    return View(order);
+
             }
             if(customerEmail != null && currentOrderId != null)
             {
                 OrderModel order = orderRepository.GetOrderViewModel(currentOrderId, customerEmail);
+                // HÄR SKA UTRÄKNINGEN AV MOMS OCH TOTALSUMMA FÖR EN BESTÄLLNING
+                var hats = hatRepository.GetAllHatsByOrderId(currentOrderId);
+                var calculate = new Service.Calculate();
+                var sumHats = calculate.GetTotalPriceExTax(hats);
+                order.TotalSum = calculate.CalculateTax(sumHats, order.Priority);
+                order.Moms = calculate.GetTaxFromTotal(order.TotalSum);
+                
+
                 return View(order);
             }
-            //if(orderId != null)
-            //{
-            //    //OrderModels existOrder = orderRepository.GetOrder(orderId);
-            //    //OrderViewModel order = new OrderViewModel()
-            //    //{
-            //    //    Id = existOrder.Id,
-            //    //    Hats = existOrder.Hats
-            //    //};
-            //    return View(orderRepository.GetOrderViewModel(orderId));
-            //}
             return View();
 
         }
 
         // POST: Order/Create
         [HttpPost]
-        public ActionResult CreateOrderAdd(int? id, string comment, bool priority)
+        public ActionResult CreateOrderAdd(int? id, string comment, bool priority, double? moms, double? totalSum)
         {
             try 
             {
-                string userId = User.Identity.GetUserId();            
-                orderRepository.UpdateOrder(id, comment, priority, userId);
+                //string userId = User.Identity.GetUserId();            
+                orderRepository.UpdateOrder(id, comment, priority, moms, totalSum);
 
             //    orderRepository.CreateOrder(orderModel);
             //    hatRepository.CreateHat(hatModel);
@@ -134,7 +131,7 @@ namespace Hattmakarens_system.Controllers
                 {
                     hatRepository.DeleteHat(item.Id);
                 }
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("ActiveHats", "Hat");
             }
             catch
             {
