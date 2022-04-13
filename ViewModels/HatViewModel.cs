@@ -43,6 +43,5 @@ namespace Hattmakarens_system.ViewModels
         public List<SelectListItem> Statuses { get; set; }
         public int[] SelectedStatuses { get; set; }
         public virtual List<SelectListItem> UsersToPickFrom { get; set; }
-        //public string PickedUser { get; set; }
     }
 }
