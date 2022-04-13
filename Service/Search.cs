@@ -23,7 +23,7 @@ namespace Hattmakarens_system.Service
                 var finalList = new List<OrderModels>();
 
 
-                if (searchOption is null)
+                if (searchOption is null || searchString.Equals(""))
                 {
                     searchOrderList = orderList;
                 }
