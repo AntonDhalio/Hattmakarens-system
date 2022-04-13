@@ -66,7 +66,7 @@ namespace Hattmakarens_system.Repositories
                     Name = hat.Name,
                     Size = hat.Size,
                     Price = hat.Price,
-                    Status = "Aktiv", //Eller vad det nu ska stå när man bara registrerat en ny hatt
+                    Status = "Aktiv", 
                     Comment = hat.Comment,
                     UserId = hat.UserId,
                     ModelID = hat.HatModelID,

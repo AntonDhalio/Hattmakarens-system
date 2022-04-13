@@ -18,6 +18,7 @@ namespace Hattmakarens_system.Controllers
         CustomerRepository customerRepository = new CustomerRepository();
         HatmodelRepository hatModelRepository = new HatmodelRepository();
         MaterialRepository materialRepository = new MaterialRepository();
+        UserRepository userRepository = new UserRepository();
 
         // GET: Hat
         public ActionResult Index()
@@ -51,6 +52,7 @@ namespace Hattmakarens_system.Controllers
                 CustomerEmail = customerEmail
             };
             ViewBag.MaterialsToPickFrom = materials;
+            ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
             return View(model);
         }
 
@@ -62,7 +64,7 @@ namespace Hattmakarens_system.Controllers
             {
                 model.HatModelID = 1; //Hårdkodat värde för att representera specialltillverkad hatt
                            //ÄNDRA TILL TILLVERKARE
-                model.UserId = User.Identity.GetUserId();
+                //model.UserId = User.Identity.GetUserId();
                 hatRepository.CreateHat(model, PickedMaterials, null);
                 return RedirectToAction("CreateOrder", "Order", new {currentOrderId = model.OrderId, customerEmail = model.CustomerEmail});
             }
@@ -115,6 +117,7 @@ namespace Hattmakarens_system.Controllers
                 model.HatModelID = hatModel.Id;
                 model.HatModelDescription = hatModel.Description;
             }
+            ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
             return View(model);
         }
 
@@ -124,16 +127,12 @@ namespace Hattmakarens_system.Controllers
         {
             try
             {
-                //model.ModelID = 2; //Hårdkodat värde för att representera icke-specialltillverkad hatt
-                //hatRepository.CreateHat(model);
+              
 
                 //ÄNDRA TILL TILLVERKARE
-                model.UserId = User.Identity.GetUserId();
+                //model.UserId = User.Identity.GetUserId();
                 hatRepository.CreateHat(model, pickedMaterials, SelectedStatuses);
-                //orderRepository.OrderAddHat(model);
-                //OrderViewModel orderModel = new OrderViewModel();
-                //orderModel.Id = model.OrderId;
-                //OrderRepository.AddSpecHat(model);
+     
                 return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = model.CustomerEmail });
             }
             catch

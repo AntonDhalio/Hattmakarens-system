@@ -38,32 +38,19 @@ namespace Hattmakarens_system.Controllers
             }
             if (customerEmail != null && currentOrderId == null)
             {
+                string userId = User.Identity.GetUserId();
                 int customerId = customerRepository.GetCustomerIdByEmail(customerEmail);
-                //OrderViewModel order = CreateOrderViewModelWithCustomer(customerEmail);
-                int orderId = orderRepository.CreateOrderInDatabase(customerId);
+                int orderId = orderRepository.CreateOrderInDatabase(customerId, userId);
                 OrderModel order = orderRepository.GetOrderViewModel(orderId, customerEmail);
-                //order.CustomerEmail = customerEmail;
+
                 return View(order);
-                //    int customerId = customerRepository.GetCustomerIdByEmail(email);
-                //    OrderViewModel order = SelectedCustomerEmail(email);
-                //    order.Id = Create(customerId);
-                //    return View(order);
+
             }
             if(customerEmail != null && currentOrderId != null)
             {
                 OrderModel order = orderRepository.GetOrderViewModel(currentOrderId, customerEmail);
                 return View(order);
             }
-            //if(orderId != null)
-            //{
-            //    //OrderModels existOrder = orderRepository.GetOrder(orderId);
-            //    //OrderViewModel order = new OrderViewModel()
-            //    //{
-            //    //    Id = existOrder.Id,
-            //    //    Hats = existOrder.Hats
-            //    //};
-            //    return View(orderRepository.GetOrderViewModel(orderId));
-            //}
             return View();
 
         }
@@ -74,8 +61,8 @@ namespace Hattmakarens_system.Controllers
         {
             try 
             {
-                string userId = User.Identity.GetUserId();            
-                orderRepository.UpdateOrder(id, comment, priority, userId);
+                //string userId = User.Identity.GetUserId();            
+                orderRepository.UpdateOrder(id, comment, priority);
 
             //    orderRepository.CreateOrder(orderModel);
             //    hatRepository.CreateHat(hatModel);

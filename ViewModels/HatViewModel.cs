@@ -24,6 +24,7 @@ namespace Hattmakarens_system.ViewModels
         public string Status { get; set; }
         [DisplayName("Kommentar på hatt")]
         public string Comment { get; set; }
+        [DisplayName("Tillverkare")]
         public string UserId { get; set; }
         public int OrderId { get; set; }
         public virtual UserModels User { get; set; }
@@ -41,5 +42,7 @@ namespace Hattmakarens_system.ViewModels
         public List<SelectListItem> PickedMaterials { get; set; }
         public List<SelectListItem> Statuses { get; set; }
         public int[] SelectedStatuses { get; set; }
+        public virtual List<SelectListItem> UsersToPickFrom { get; set; }
+        //public string PickedUser { get; set; }
     }
 }
