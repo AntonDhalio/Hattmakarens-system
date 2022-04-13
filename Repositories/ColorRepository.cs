@@ -17,6 +17,13 @@ namespace Hattmakarens_system.Repositories
                 return hatCon.Color.Include(c => c.Material).FirstOrDefault(c => c.Id == id);
             }
         }
+        public ColorModels GetColor(string name)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                return hatCon.Color.Include(c => c.Material).FirstOrDefault(c => c.Name == name);
+            }
+        }
 
         public List<ColorModels> GetAllColors()
         {

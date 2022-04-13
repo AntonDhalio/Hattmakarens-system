@@ -25,13 +25,21 @@ namespace Hattmakarens_system.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    var hexCode = Request.Form["ColorId"].ToString();
+                    var isRegistered = new Service.Color().IsColorSaved(hexCode);
+                    if (!isRegistered)
+                    {
+                        new Service.Color().AddColor(hexCode);
+                    }
+
+                    var colorId = new ColorRepository().GetColor(hexCode).Id;
                     var matRepo = new MaterialRepository();
                     var material = new MaterialModels
                     {
                         Name = materialViewModel.Name,
                         Description = materialViewModel.Description,
                         Type = Request.Form["Type"].ToString(),
-                        ColorId = int.Parse(Request.Form["ColorId"])
+                        ColorId = colorId
                     };
                     matRepo.SaveMaterial(material);
                     return RedirectToAction("AddMaterial", "Material");
