@@ -14,7 +14,9 @@ namespace Hattmakarens_system.Models
         public DateTime Date { get; set; }
         public bool Priority { get; set; }
         public string Status { get; set; }
+        //Varav moms
         public double Moms { get; set; }
+        //totalsumma inklusive moms
         public double TotalSum { get; set; }
         public string Comment { get; set; }
         [ForeignKey("User")]
