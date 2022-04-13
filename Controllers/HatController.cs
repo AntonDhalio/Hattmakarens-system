@@ -206,7 +206,7 @@ namespace Hattmakarens_system.Controllers
             var allHats = new List<Hats>();
             using (var context = new ApplicationDbContext())
             {
-                allHats = context.Hats.Include(h => h.Order).ToList();
+                allHats = context.Hats.Include(h => h.Order).Include(h => h.Models).ToList();
             }
             var hatstoShow = allHats.Where(h => h.UserId.Equals(User.Identity.GetUserId())).Where(h => h.Status == "Aktiv");
             var viewModel = new ActiveHatsViewModel
