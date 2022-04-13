@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using Hattmakarens_system.Models;
 
 namespace Hattmakarens_system.Repositories
@@ -49,6 +50,24 @@ namespace Hattmakarens_system.Repositories
                     hatCon.User.Remove(user);
                     hatCon.SaveChanges();
                 }
+            }
+        }
+
+        public List<SelectListItem> UsersToDropDownList()
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                var users = new List<SelectListItem>();
+                foreach (var user in GetAllUsers())
+                {
+                    var listitem = new SelectListItem
+                    {
+                        Value = user.Id.ToString(),
+                        Text = user.Name
+                    };
+                    users.Add(listitem);
+                }
+                return users;
             }
         }
     }

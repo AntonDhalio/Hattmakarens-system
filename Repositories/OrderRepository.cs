@@ -45,38 +45,40 @@ namespace Hattmakarens_system.Repositories
         //    }
         //}
 
-        public void CreateOrder(OrderModel order)
-        {
-            using (var hatCon = new ApplicationDbContext())
-            {
-                OrderModels newOrdermodel = new OrderModels()
-                {
-                    Date = DateTime.Now,
-                    Priority = order.Priority,
-                    Status = "Aktiv",
-                    Comment = order.Comment
-                };
-                hatCon.Order.Add(newOrdermodel);
-                hatCon.SaveChanges();
-            }
-        }
+        //public void CreateOrder(OrderModel order)
+        //{
+        //    using (var hatCon = new ApplicationDbContext())
+        //    {
+        //        OrderModels newOrdermodel = new OrderModels()
+        //        {
+        //            Date = DateTime.Now,
+        //            Priority = order.Priority,
+        //            Status = "Aktiv",
+        //            Comment = order.Comment
+        //        };
+        //        hatCon.Order.Add(newOrdermodel);
+        //        hatCon.SaveChanges();
+        //    }
+        //}
 
-        public int CreateEmptyOrderModel(int customerId)
+        public int CreateEmptyOrderModel(int customerId, string userId)
         {
             using (var hatCon = new ApplicationDbContext())
             {
                 OrderModels newOrderModel = new OrderModels();
                 newOrderModel.Date = DateTime.Now;
                 newOrderModel.CustomerId = customerId;
+                newOrderModel.UserId = userId;
+                newOrderModel.Status = "Aktiv";
                 hatCon.Order.Add(newOrderModel);
                 hatCon.SaveChanges();
                 return newOrderModel.Id;
             }
         }
-        public int CreateOrderInDatabase(int customerId)
+        public int CreateOrderInDatabase(int customerId, string userId)
         {
             //Kolla vem som är inloggad och koppla som skapare på beställning
-            int newOrderId = CreateEmptyOrderModel(customerId);
+            int newOrderId = CreateEmptyOrderModel(customerId, userId);
             return newOrderId;
 
         }
@@ -127,15 +129,16 @@ namespace Hattmakarens_system.Repositories
             return orderViewModel;
         }
 
-        public void UpdateOrder(int? id, string comment, bool priority, string userId)
+        public void UpdateOrder(int? id, string comment, bool priority, double? moms, double? totalSum)
         {
             using (var hatCon = new ApplicationDbContext())
             {
                 var order = GetOrder(id);
                 order.Comment = comment;
                 order.Priority = priority;
-                order.Status = "Aktiv";
-                order.UserId = userId;
+                order.Moms = (double)moms;
+                order.TotalSum = (double)totalSum;
+                //order.Status = "Aktiv";
                 hatCon.Entry(order).State = EntityState.Modified;
                 hatCon.SaveChanges();
             }

@@ -49,7 +49,7 @@
             @foreach (var order in Model.Orders)
             {
                 <tr>
-                    <td>@order.Id</td>
+                    <td>@order.Id &nbsp; &nbsp; &nbsp; @Html.ActionLink("Gå till beställning", "ViewOrder", "Order", new { order.Id }, null)</td>
                     <td>@order.Hats.Count</td>
                     <td>@order.Date.ToShortDateString()</td>
                     <td>@order.Customer.Name</td>
