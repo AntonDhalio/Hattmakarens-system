@@ -26,8 +26,8 @@
     <div class="form-group">
         @Html.LabelFor(m => m.DueDate, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.EditorFor(m => m.DueDate, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.DueDate, "", new { id = "datetimepicker", @class = "text-danger" })
+            @Html.EditorFor(m => m.DueDate, new { htmlAttributes = new { @class = "datepicker" } })
+            @*Html.ValidationMessageFor(m => m.DueDate, "", new { id = "datetimepicker", @class = "text-danger" })*@
         </div>
     </div>
     <div class="form-group">
