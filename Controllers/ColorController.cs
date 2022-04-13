@@ -16,6 +16,17 @@ namespace Hattmakarens_system.Controllers
         {
             return View();
         }
+        public int AddColor(string colorName)
+        {
+            var colorReop = new ColorRepository();
+            var color = new ColorModels
+            {
+                Name = colorName
+            };
+            colorReop.SaveColor(color);
+
+            return color.Id;
+        }
         [HttpPost]
         public ActionResult AddColor(ColorViewModel colorViewModel)
         {
@@ -37,6 +48,8 @@ namespace Hattmakarens_system.Controllers
             }
 
         }
+
+        
 
     }
 }
