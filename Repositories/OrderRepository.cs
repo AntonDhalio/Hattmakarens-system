@@ -129,13 +129,15 @@ namespace Hattmakarens_system.Repositories
             return orderViewModel;
         }
 
-        public void UpdateOrder(int? id, string comment, bool priority)
+        public void UpdateOrder(int? id, string comment, bool priority, double? moms, double? totalSum)
         {
             using (var hatCon = new ApplicationDbContext())
             {
                 var order = GetOrder(id);
                 order.Comment = comment;
                 order.Priority = priority;
+                order.Moms = (double)moms;
+                order.TotalSum = (double)totalSum;
                 //order.Status = "Aktiv";
                 hatCon.Entry(order).State = EntityState.Modified;
                 hatCon.SaveChanges();

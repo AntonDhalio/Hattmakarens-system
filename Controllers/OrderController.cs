@@ -52,6 +52,13 @@ namespace Hattmakarens_system.Controllers
             {
                 OrderModel order = orderRepository.GetOrderViewModel(currentOrderId, customerEmail);
                 // HÄR SKA UTRÄKNINGEN AV MOMS OCH TOTALSUMMA FÖR EN BESTÄLLNING
+                var hats = hatRepository.GetAllHatsByOrderId(currentOrderId);
+                var calculate = new Service.Calculate();
+                var sumHats = calculate.GetTotalPriceExTax(hats);
+                order.TotalSum = calculate.CalculateTax(sumHats, order.Priority);
+                order.Moms = calculate.GetTaxFromTotal(order.TotalSum);
+                
+
                 return View(order);
             }
             return View();
@@ -60,12 +67,12 @@ namespace Hattmakarens_system.Controllers
 
         // POST: Order/Create
         [HttpPost]
-        public ActionResult CreateOrderAdd(int? id, string comment, bool priority)
+        public ActionResult CreateOrderAdd(int? id, string comment, bool priority, double? moms, double? totalSum)
         {
             try 
             {
                 //string userId = User.Identity.GetUserId();            
-                orderRepository.UpdateOrder(id, comment, priority);
+                orderRepository.UpdateOrder(id, comment, priority, moms, totalSum);
 
             //    orderRepository.CreateOrder(orderModel);
             //    hatRepository.CreateHat(hatModel);

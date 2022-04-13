@@ -109,7 +109,7 @@ namespace Hattmakarens_system.Repositories
             }
         }
 
-        public List<Hats> GetAllHatsByOrderId(int id)
+        public List<Hats> GetAllHatsByOrderId(int? id)
         {
             using (var hatCon = new ApplicationDbContext())
             {
