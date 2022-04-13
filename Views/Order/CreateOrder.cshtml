@@ -98,17 +98,18 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.TotalSum, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.TotalSum, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.DisplayFor(model => model.TotalSum, new { htmlAttributes = new { @class = "form-control" } })
+                    @*@Html.EditorFor(model => model.TotalSum, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })*@
                 </div>
             </div>
-            <br/>
+            <br />
             <div class="form-group">
                 @Html.LabelFor(model => model.Moms, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Moms, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.DisplayFor(model => model.Moms, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
             </div>
-            <br/>
+            <br />
             <div>
                 <div class="form-group">
                     <div class=" col-md-2">
@@ -116,6 +117,12 @@
                         @*<input type="button" class="btn" value="Registrera beställning " onclick="location.href = '@Url.Action("CreateOrderAdd", "Order", new { id = Model.Id, comment = Model.Comment, priority = Model.Priority })'" />*@
                     </div>
                 </div>
+            </div>
+
+
+            <div id="hidden2">
+                @Html.EditorFor(model => model.TotalSum, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Moms, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         }
 
@@ -129,6 +136,10 @@
             }
 
             #hidden {
+                display: none;
+            }
+
+            #hidden2 {
                 display: none;
             }
         </style>
