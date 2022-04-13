@@ -20,13 +20,17 @@
             </div>
         </div>
         <br />
+        <br />
+        <br />
         <div class="form-group">
             @Html.LabelFor(m => m.ColorId, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.DropDownList("ColorId", new SelectList(ViewBag.ColorsToPickFrom, "Value", "Text"), "Välj färg", new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.ColorId, "", new { @class = "text-danger" })
             </div>
-        </div><br />
+        </div>
+        <br />
+        <br />
         <div class="form-group">
             @Html.LabelFor(m => m.Type, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
@@ -41,6 +45,8 @@
                 @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
             </div>
         </div>
+        <br />
+        <br />
         <div class="form-group">
             @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
