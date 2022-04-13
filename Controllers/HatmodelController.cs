@@ -16,13 +16,13 @@ namespace Hattmakarens_system.Controllers
         // GET: Hatmodel
         public ActionResult Hatmodel()
         {
-            ViewBag.MaterialsToPickFrom = GetSelectListMaterials();
+            ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
             return View();
         }
+
         [HttpPost]
         public ActionResult Hatmodel(HatmodelViewModel hatmodel, IEnumerable<string> PickedMaterials) 
         {
-            
             if (ModelState.IsValid)
             {
                 var newHatmodel = new HatModels
@@ -43,16 +43,13 @@ namespace Hattmakarens_system.Controllers
                     context.HatModels.Add(newHatmodel);
                     context.SaveChanges();
                 }
-
                 return RedirectToAction("Hatmodel", "Hatmodel");
             }
             else
             {
-                ViewBag.MaterialsToPickFrom = GetSelectListMaterials();
+                ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
                 return View(hatmodel);
             }
-
-
         }
 
         public ActionResult SearchHatModel(int orderId, string customerEmail)
@@ -73,22 +70,6 @@ namespace Hattmakarens_system.Controllers
                 hatmodelViewModels.Add(newHatmodelViewModel);
             }
             return View(hatmodelViewModels);
-        }
-
-        public List<SelectListItem> GetSelectListMaterials()
-        {
-            var materialRepo = new MaterialRepository();
-            var materials = new List<SelectListItem>();
-            foreach (var material in materialRepo.GetAllMaterials())
-            {
-                var listitem = new SelectListItem
-                {
-                    Value = material.Id.ToString(),
-                    Text = material.Name + ", " + material.Color.Name + ", " + material.Type
-                };
-                materials.Add(listitem);
-            }
-            return materials;
         }
     }
 }
