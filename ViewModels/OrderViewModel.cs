@@ -20,10 +20,10 @@ namespace Hattmakarens_system.ViewModels
         public bool Priority { get; set; }
         //[DisplayName("Status")]
         //public string Status { get; set; }
-        //[DisplayName("Moms")]
-        //public double Moms { get; set; }
-        //[DisplayName("Totalsumma")]
-        //public double TotalSum { get; set; }
+        [DisplayName("Varav moms")]
+        public double Moms { get; set; }
+        [DisplayName("Totalsumma")]
+        public double TotalSum { get; set; }
         //[DisplayName("Kommentar")]
         //[DisplayName("Storlek")]
         //public double Size { get; set; }

@@ -34,6 +34,8 @@ namespace Hattmakarens_system.Controllers
             if (customerEmail == null)
             {
                 OrderModel order = new OrderModel();
+                order.TotalSum = 0;
+                order.Moms = 0;
                 return View(order);
             }
             if (customerEmail != null && currentOrderId == null)
@@ -49,6 +51,7 @@ namespace Hattmakarens_system.Controllers
             if(customerEmail != null && currentOrderId != null)
             {
                 OrderModel order = orderRepository.GetOrderViewModel(currentOrderId, customerEmail);
+                // HÄR SKA UTRÄKNINGEN AV MOMS OCH TOTALSUMMA FÖR EN BESTÄLLNING
                 return View(order);
             }
             return View();
@@ -121,7 +124,7 @@ namespace Hattmakarens_system.Controllers
                 {
                     hatRepository.DeleteHat(item.Id);
                 }
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("ActiveHats", "Hat");
             }
             catch
             {

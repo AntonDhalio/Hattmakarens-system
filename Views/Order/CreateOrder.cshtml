@@ -95,8 +95,20 @@
             <br />
             <br />
             <br />
-            @*Lägg till totalsumma*@
-
+            <div class="form-group">
+                @Html.LabelFor(model => model.TotalSum, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.TotalSum, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Moms, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.Moms, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <br/>
             <div>
                 <div class="form-group">
                     <div class=" col-md-2">
