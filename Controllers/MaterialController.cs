@@ -17,8 +17,8 @@ namespace Hattmakarens_system.Controllers
         {
             var colorRepo = new ColorRepository();
             List<SelectListItem> colors = new List<SelectListItem>();
-            
-                foreach(var color in colorRepo.GetAllColors())
+
+            foreach (var color in colorRepo.GetAllColors())
             {
                 var listitem = new SelectListItem
                 {
@@ -36,16 +36,24 @@ namespace Hattmakarens_system.Controllers
         {
             try
             {
-                var matRepo = new MaterialRepository();
-                var material = new MaterialModels
+                if (ModelState.IsValid)
                 {
-                    Name = materialViewModel.Name,
-                    Description = materialViewModel.Description,
-                    Type = Request.Form["Type"].ToString(),
-                    ColorId = int.Parse(Request.Form["ColorId"])
-                };
-                matRepo.SaveMaterial(material);
-                return RedirectToAction("AddMaterial", "Material");
+                    var matRepo = new MaterialRepository();
+                    var material = new MaterialModels
+                    {
+                        Name = materialViewModel.Name,
+                        Description = materialViewModel.Description,
+                        Type = Request.Form["Type"].ToString(),
+                        ColorId = int.Parse(Request.Form["ColorId"])
+                    };
+                    matRepo.SaveMaterial(material);
+                    return RedirectToAction("AddMaterial", "Material");
+                }
+                else
+                {
+
+                    return View(materialViewModel);
+                }
             }
             catch
             {

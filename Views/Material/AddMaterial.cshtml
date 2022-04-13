@@ -7,45 +7,49 @@
 
 <h1>Lägg till Material</h1>
 
-    <div>
-        @using (Html.BeginForm("AddMaterial", "Material", FormMethod.Post))
-        {
+<div>
+    @using (Html.BeginForm("AddMaterial", "Material", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-            <div class="form-group">
-                @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
             </div>
-            <br />
-            <div class="form-group">
-                @Html.LabelFor(m => m.ColorId, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.DropDownList("ColorId", new SelectList(ViewBag.ColorsToPickFrom, "Value", "Text"), "Välj färg", new { @class = "form-control" })
-                </div>
-            </div><br />
-            <div class="form-group">
-                @Html.LabelFor(m => m.Type, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    
-                    @Html.DropDownListFor(m => m.Type, new List<SelectListItem>
-                {
-                   new SelectListItem { Value = "Tyg", Text = "Tyg" },
-                   new SelectListItem { Value = "Dekoration", Text = "Dekoration" },
-                   new SelectListItem { Value = "Tråd", Text = "Tråd" }
+        </div>
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(m => m.ColorId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownList("ColorId", new SelectList(ViewBag.ColorsToPickFrom, "Value", "Text"), "Välj färg", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ColorId, "", new { @class = "text-danger" })
+            </div>
+        </div><br />
+        <div class="form-group">
+            @Html.LabelFor(m => m.Type, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
 
-                }, "Välj materialtyp", new { @class = "form-control" })
-                </div>
+                @Html.DropDownListFor(m => m.Type, new List<SelectListItem>
+            {
+               new SelectListItem { Value = "Tyg", Text = "Tyg" },
+               new SelectListItem { Value = "Dekoration", Text = "Dekoration" },
+               new SelectListItem { Value = "Tråd", Text = "Tråd" }
+
+            }, "Välj materialtyp", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
-                </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
             </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="Lägg till material" />
-                </div>
-            </div>}
-    </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Lägg till material" />
+            </div>
+        </div>}
+</div>
