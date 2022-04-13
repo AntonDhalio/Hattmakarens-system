@@ -16,43 +16,42 @@ namespace Hattmakarens_system.Controllers
         // GET: Hatmodel
         public ActionResult Hatmodel()
         {
-            var materialRepo = new MaterialRepository();
-            var materials = new List<SelectListItem>();
-            foreach(var material in materialRepo.GetAllMaterials())
-            {
-                var listitem = new SelectListItem
-                {
-                    Value = material.Id.ToString(),
-                    Text = material.Name + ", " + material.Color.Name + ", " + material.Type
-                };
-                materials.Add(listitem);
-            }
-            ViewBag.MaterialsToPickFrom = materials;
+            ViewBag.MaterialsToPickFrom = GetSelectListMaterials();
             return View();
         }
         [HttpPost]
         public ActionResult Hatmodel(HatmodelViewModel hatmodel, IEnumerable<string> PickedMaterials) 
         {
-            var newHatmodel = new HatModels
+            
+            if (ModelState.IsValid)
             {
-                Name = hatmodel.Name,
-                Description = hatmodel.Description,
-                Price = hatmodel.Price,
-                Material = new List<MaterialModels>()
-            };
-            using (var context = new ApplicationDbContext())
-            {
-                foreach (var material in PickedMaterials)
+                var newHatmodel = new HatModels
                 {
-                    var id = int.Parse(material);
-                    var aMaterial = context.Material.ToList().FirstOrDefault(m => m.Id == id);
-                    newHatmodel.Material.Add(aMaterial);
+                    Name = hatmodel.Name,
+                    Description = hatmodel.Description,
+                    Price = hatmodel.Price,
+                    Material = new List<MaterialModels>()
+                };
+                using (var context = new ApplicationDbContext())
+                {
+                    foreach (var material in PickedMaterials)
+                    {
+                        var id = int.Parse(material);
+                        var aMaterial = context.Material.ToList().FirstOrDefault(m => m.Id == id);
+                        newHatmodel.Material.Add(aMaterial);
+                    }
+                    context.HatModels.Add(newHatmodel);
+                    context.SaveChanges();
                 }
-                context.HatModels.Add(newHatmodel);
-                context.SaveChanges();
+
+                return RedirectToAction("Hatmodel", "Hatmodel");
+            }
+            else
+            {
+                ViewBag.MaterialsToPickFrom = GetSelectListMaterials();
+                return View(hatmodel);
             }
 
-            return RedirectToAction("Hatmodel", "Hatmodel");
 
         }
 
@@ -74,6 +73,22 @@ namespace Hattmakarens_system.Controllers
                 hatmodelViewModels.Add(newHatmodelViewModel);
             }
             return View(hatmodelViewModels);
+        }
+
+        public List<SelectListItem> GetSelectListMaterials()
+        {
+            var materialRepo = new MaterialRepository();
+            var materials = new List<SelectListItem>();
+            foreach (var material in materialRepo.GetAllMaterials())
+            {
+                var listitem = new SelectListItem
+                {
+                    Value = material.Id.ToString(),
+                    Text = material.Name + ", " + material.Color.Name + ", " + material.Type
+                };
+                materials.Add(listitem);
+            }
+            return materials;
         }
     }
 }
