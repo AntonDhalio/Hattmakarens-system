@@ -41,7 +41,9 @@ namespace Hattmakarens_system.Controllers
                 totalSum = viewModel.totalSum,
                 totalHatsCount = viewModel.totalHatsCount,
                 totalOrdersCount = viewModel.totalOrdersCount,
-                time = viewModel.time
+                time = viewModel.time,
+                fromDate = viewModel.fromDate,
+                toDate = viewModel.toDate
             };
 
             pdfTemplates.StatisticsPDF(aViewModel);

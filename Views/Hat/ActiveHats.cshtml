@@ -4,11 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Dina pågående hattprojekt</h1>
-<div>
-    <br />
+
+<div class="halv">
+    <h1>Dina pågående hattprojekt</h1>
     <table class="statistik-tabell">
-        <thead><tr><td><h3>Beställningsnummer</h3></td><td><h3>Hattnamn</h3></td><td><h3>Beställningsdatum</h3></td><td><h3>Prioriterad</h3></td></tr></thead>
+        <thead><tr><td>Beställningsnummer</td><td>Hattnamn</td><td>Beställningsdatum</td><td>Prioriterad</td></tr></thead>
         <tbody>
             @foreach (var hat in Model.hats)
             {
@@ -27,9 +27,42 @@
         </tbody>
         <tfoot>
             <tr>
-                <td><h4>Totalt antal aktiva hattar: @Model.hats.Count</h4></td>
+                <td><p><strong>Totalt antal aktiva hattar: @Model.hats.Count</strong></p></td>
                 <td></td>
             </tr>
         </tfoot>
+    </table>
+</div>
+<div class="halv">
+    <h1>Aktiva beställningar</h1>
+    <table class="statistik-tabell">
+        <thead>
+            <tr>
+                <td>Beställningsnummer</td>
+                <td>Antal hattar</td>
+                <td>Datum</td>
+                <td>Kund</td>
+                <td>Prioriterad</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.Orders)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.Hats.Count</td>
+                    <td>@order.Date.ToShortDateString()</td>
+                    <td>@order.Customer.Name</td>
+                    @if (order.Priority)
+                    {
+                        <td><p class="ja">Ja</p></td>
+                    }
+                    else
+                    {
+                        <td><p>Nej</p></td>
+                    }
+                </tr>
+            }
+        </tbody>
     </table>
 </div>

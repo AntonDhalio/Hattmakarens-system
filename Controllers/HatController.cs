@@ -17,6 +17,8 @@ namespace Hattmakarens_system.Controllers
         OrderRepository orderRepository = new OrderRepository();
         CustomerRepository customerRepository = new CustomerRepository();
         HatmodelRepository hatModelRepository = new HatmodelRepository();
+        MaterialRepository materialRepository = new MaterialRepository();
+        UserRepository userRepository = new UserRepository();
 
         // GET: Hat
         public ActionResult Index()
@@ -33,29 +35,37 @@ namespace Hattmakarens_system.Controllers
         // GET: Hat/Create
         public ActionResult CreateSpec(int orderId, string customerEmail)
         {
+
+            var materials = new List<SelectListItem>();
+            foreach(var material in materialRepository.GetAllMaterials())
+            {
+                var listitem = new SelectListItem
+                {
+                    Value = material.Id.ToString(),
+                    Text = material.Name + ", " + material.Color.Name + ", " + material.Type
+                };
+                materials.Add(listitem);
+            }
             HatViewModel model = new HatViewModel()
             {
                 OrderId = orderId,
                 CustomerEmail = customerEmail
             };
+            ViewBag.MaterialsToPickFrom = materials;
+            ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
             return View(model);
         }
 
         // POST: Hat/Create
         [HttpPost]
-        public ActionResult CreateSpec(HatViewModel model)
+        public ActionResult CreateSpec(HatViewModel model, IEnumerable<string> PickedMaterials)
         {
             try
             {
                 model.HatModelID = 1; //Hårdkodat värde för att representera specialltillverkad hatt
                            //ÄNDRA TILL TILLVERKARE
-                model.UserId = User.Identity.GetUserId();
-                //hatRepository.CreateHat(model);
-                hatRepository.CreateHat(model);
-                //orderRepository.OrderAddHat(model);
-                //OrderViewModel orderModel = new OrderViewModel();
-                //orderModel.Id = model.OrderId;
-                //OrderRepository.AddSpecHat(model);
+                //model.UserId = User.Identity.GetUserId();
+                hatRepository.CreateHat(model, PickedMaterials, null);
                 return RedirectToAction("CreateOrder", "Order", new {currentOrderId = model.OrderId, customerEmail = model.CustomerEmail});
             }
             catch
@@ -66,6 +76,7 @@ namespace Hattmakarens_system.Controllers
         // GET: Hat/Create
         public ActionResult CreateStored(int orderId, string customerEmail, string hatModelName)
         {
+            
             HatViewModel model = new HatViewModel()
             {
                 OrderId = orderId,
@@ -73,6 +84,30 @@ namespace Hattmakarens_system.Controllers
             };
             if(hatModelName != null)
             {
+                //var vm = new MaterialListToHatmodelViewModel();
+
+                model.Statuses = new List<SelectListItem>();
+                foreach (var material in materialRepository.GetAllMaterials())
+                {
+                    var listitem = new SelectListItem
+                    {
+                        Value = material.Id.ToString(),
+                        Text = material.Name + ", " + material.Color.Name + ", " + material.Type
+                    };
+                    model.Statuses.Add(listitem);
+                        //Add(listitem);
+                }
+
+                var SelectedMaterialsId = materialRepository.GetMaterialInHatmodel(hatModelName);
+                model.SelectedStatuses = new int[100];
+
+                int count = 0;
+                foreach(var id in SelectedMaterialsId)
+                {
+                    model.SelectedStatuses[count] = id;
+                    count++;
+                }
+
                 var hatModel = hatModelRepository.GetHatmodelByName(hatModelName);
                 model.Price = hatModel.Price;
                 //model.Path = hatModel.Path -- lägga till path-property på hatmodel i databas?
@@ -82,25 +117,22 @@ namespace Hattmakarens_system.Controllers
                 model.HatModelID = hatModel.Id;
                 model.HatModelDescription = hatModel.Description;
             }
+            ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
             return View(model);
         }
 
         // POST: Hat/Create
         [HttpPost]
-        public ActionResult CreateStored(HatViewModel model)
+        public ActionResult CreateStored(HatViewModel model, IEnumerable<string> pickedMaterials, int[] SelectedStatuses)
         {
             try
             {
-                //model.ModelID = 2; //Hårdkodat värde för att representera icke-specialltillverkad hatt
-                //hatRepository.CreateHat(model);
+              
 
                 //ÄNDRA TILL TILLVERKARE
-                model.UserId = User.Identity.GetUserId();
-                hatRepository.CreateHat(model);
-                //orderRepository.OrderAddHat(model);
-                //OrderViewModel orderModel = new OrderViewModel();
-                //orderModel.Id = model.OrderId;
-                //OrderRepository.AddSpecHat(model);
+                //model.UserId = User.Identity.GetUserId();
+                hatRepository.CreateHat(model, pickedMaterials, SelectedStatuses);
+     
                 return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = model.CustomerEmail });
             }
             catch
@@ -188,8 +220,19 @@ namespace Hattmakarens_system.Controllers
             var hatstoShow = allHats.Where(h => h.UserId.Equals(User.Identity.GetUserId())).Where(h => h.Status == "Aktiv");
             var viewModel = new ActiveHatsViewModel
             {
-                hats = hatstoShow.ToList()
+                hats = hatstoShow.ToList(),
+                Orders = new List<OrderModels>()
             };
+
+            var repos = new OrderRepository();
+            var allOrders = repos.GetAllOrders();
+            foreach (var order in allOrders)
+            {
+                if (order.Status.Equals("Aktiv"))
+                {
+                    viewModel.Orders.Add(order);
+                }
+            }
             return View(viewModel);
         }
     }
