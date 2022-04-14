@@ -4,19 +4,28 @@
     Layout = "~/Views/Statistic/_GetStatistics.cshtml";
 }
 
-<!DOCTYPE html>
 
-<html>
+
+<html lang="sv">
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width; text/html; charset=UTF-8" />
     <link rel="stylesheet" href="~/Content/Site.css" />
     <title>GetStatistics</title>
 </head>
 <body>
     <div>
         <br />
+        <p>Statistik för tidsperioden: @Model.fromDate.ToShortDateString() - @Model.toDate.ToShortDateString()</p>
         <table class="statistik-tabell">
-            <thead><tr><td><h3>Beställningsnummer</h3></td><td><h3>Antal hattar</h3></td><td><h3>Beställningsdatum</h3></td><td><h3>Summa</h3></td></tr></thead>
+            
+            <thead>
+                <tr>
+                    <td><h3 lang="sv">Beställningsnummer</h3></td>
+                    <td><h3>Antal hattar</h3></td>
+                    <td><h3>Beställningsdatum</h3></td>
+                    <td><h3>Summa</h3></td>
+                </tr>
+            </thead>
             <tbody>
                 @foreach (var order in Model.orders)
                 {
@@ -27,7 +36,12 @@
                         <td>@order.TotalSum</td>
                     </tr>
                 }
-                <tr><td></td><td></td><td></td><td></td></tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
             </tbody>
             <tfoot>
                 <tr>
@@ -52,6 +66,8 @@
         @Html.HiddenFor(x => x.totalHatsCount)
         @Html.HiddenFor(x => x.totalSum)
         @Html.HiddenFor(x => x.time)
+        @Html.HiddenFor(x => x.fromDate)
+        @Html.HiddenFor(x => x.toDate)
         <input type="submit" value="Skriv ut statistik" />
     }
     <br />

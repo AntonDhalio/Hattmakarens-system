@@ -9,7 +9,6 @@ namespace Hattmakarens_system.Repositories
 {
     public class CustomerRepository
     {
-        //private OrderRepository orderRepository = new OrderRepository();
         public CustomerModels GetCustomer(int id)
         {
             using (var hatCon = new ApplicationDbContext())

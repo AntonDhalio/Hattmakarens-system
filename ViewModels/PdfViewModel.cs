@@ -14,6 +14,7 @@ namespace Hattmakarens_system.ViewModels
         public int OrderId { get; set; }
         [Required]
         [Display(Name = "Förfallodatum")]
+        [DataType(DataType.Date)]
         public DateTime DueDate { get; set; }
         [Required]
         public string OCR { get; set; }

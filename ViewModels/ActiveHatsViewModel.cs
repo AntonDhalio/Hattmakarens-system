@@ -9,5 +9,6 @@ namespace Hattmakarens_system.ViewModels
     public class ActiveHatsViewModel
     {
         public List<Hats> hats { get; set; }
+        public List<OrderModels> Orders { get; set; }
     }
 }

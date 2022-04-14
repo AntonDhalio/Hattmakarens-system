@@ -1,51 +1,78 @@
 ﻿@model Hattmakarens_system.ViewModels.MaterialViewModel
-    @using Hattmakarens_system.Models
+@using Hattmakarens_system.Models
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "ColorsToPickFrom";
 }
 
 <h1>Lägg till Material</h1>
+<script src="~/Scripts/jscolor.js"></script>
+<script>
+    // Here we can adjust defaults for all color pickers on page:
+    jscolor.presets.default = {
+        position: 'right',
+        palette: [
+            '#000000', '#7d7d7d', '#870014', '#ec1c23', '#ff7e26',
+            '#fef100', '#22b14b', '#00a1e7', '#3f47cc', '#a349a4',
+            '#ffffff', '#c3c3c3', '#b87957', '#feaec9', '#ffc80d',
+            '#eee3af', '#b5e61d', '#99d9ea', '#7092be', '#c8bfe7',
+        ],
+        //paletteCols: 12,
+        //hideOnPaletteClick: true,
+    };
+</script>
 
-    <div>
-        @using (Html.BeginForm("AddMaterial", "Material", FormMethod.Post))
-        {
+<div>
+    @using (Html.BeginForm("AddMaterial", "Material", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-            <div class="form-group">
-                @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
             </div>
-            <br />
-            <div class="form-group">
-                @Html.LabelFor(m => m.ColorId, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.DropDownList("ColorId", new SelectList(ViewBag.ColorsToPickFrom, "Value", "Text"), "Välj färg", new { @class = "form-control" })
-                </div>
-            </div><br />
-            <div class="form-group">
-                @Html.LabelFor(m => m.Type, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    
-                    @Html.DropDownListFor(m => m.Type, new List<SelectListItem>
+        </div>
+        <br />
+        <br />
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(m => m.Type, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.Type, new List<SelectListItem>
                 {
-                   new SelectListItem { Value = "Tyg", Text = "Tyg" },
-                   new SelectListItem { Value = "Dekoration", Text = "Dekoration" },
-                   new SelectListItem { Value = "Tråd", Text = "Tråd" }
-
+                new SelectListItem { Value = "Tyg", Text = "Tyg" },
+                new SelectListItem { Value = "Dekoration", Text = "Dekoration" },
+                new SelectListItem { Value = "Tråd", Text = "Tråd" }
                 }, "Välj materialtyp", new { @class = "form-control" })
-                </div>
+                @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
-                </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(m => m.ColorId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.ColorId, new { @class = "jscolor" })
+                @*<button class="btn btn-outline-primary jscolor" type="button" >Välj färg</button>*@
+                @Html.ValidationMessageFor(m => m.ColorId, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="Lägg till material" />
-                </div>
-            </div>}
-    </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Lägg till material" />
+            </div>
+        </div>
+    }
+</div>
