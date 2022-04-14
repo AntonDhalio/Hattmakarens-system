@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Hattmakarens_system.Service
 {
@@ -31,6 +32,23 @@ namespace Hattmakarens_system.Service
                 }
             }         
             return false;
+        }
+
+        public List<SelectListItem> GetSelectListColors()
+        {
+            var colorRepo = new ColorRepository();
+            List<SelectListItem> colors = new List<SelectListItem>();
+
+            foreach (var color in colorRepo.GetAllColors())
+            {
+                var listitem = new SelectListItem
+                {
+                    Value = color.Id.ToString(),
+                    Text = color.Name
+                };
+                colors.Add(listitem);
+            }
+            return colors;
         }
     }
 }

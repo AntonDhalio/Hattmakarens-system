@@ -219,6 +219,7 @@
     <Compile Include="Services\PdfService.cs" />
     <Compile Include="Services\PdfTemplates.cs" />
     <Compile Include="Service\Calculate.cs" />
+    <Compile Include="Service\Material.cs" />
     <Compile Include="Service\Color.cs" />
     <Compile Include="Service\Order.cs" />
     <Compile Include="Service\Search.cs" />
@@ -330,6 +331,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UploadedImages\" />
+    <Folder Include="xmlFile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -14,19 +14,15 @@ namespace Hattmakarens_system.ViewModels
         public int Id { get; set; }
 
         [DisplayName("Datum")]
-        //[DataType(DataType.Date)]
         public DateTime Date { get; set; }
         [DisplayName("Expresstillverkning på beställning")]
         public bool Priority { get; set; }
-        //[DisplayName("Status")]
-        //public string Status { get; set; }
+        [DisplayName("Status")]
+        public string Status { get; set; }
         [DisplayName("Varav moms")]
         public double Moms { get; set; }
         [DisplayName("Totalsumma")]
         public double TotalSum { get; set; }
-        //[DisplayName("Kommentar")]
-        //[DisplayName("Storlek")]
-        //public double Size { get; set; }
         [DisplayName("Kommentar på beställning")]
         public string Comment { get; set; }
         //public string UserId { get; set; }
@@ -38,7 +34,6 @@ namespace Hattmakarens_system.ViewModels
         //public virtual CustomerModels Customer { get; set; }
         //public virtual ICollection<Hats> Hats { get; set; }
         public List<Hats> Hats { get; set; }
-        //public virtual ICollection<Hats> StoredHats { get; set; }
 
     }
 }

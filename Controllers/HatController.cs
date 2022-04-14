@@ -63,8 +63,6 @@ namespace Hattmakarens_system.Controllers
             try
             {
                 model.HatModelID = 1; //Hårdkodat värde för att representera specialltillverkad hatt
-                           //ÄNDRA TILL TILLVERKARE
-                //model.UserId = User.Identity.GetUserId();
                 hatRepository.CreateHat(model, PickedMaterials, null);
                 return RedirectToAction("CreateOrder", "Order", new {currentOrderId = model.OrderId, customerEmail = model.CustomerEmail});
             }
@@ -84,8 +82,6 @@ namespace Hattmakarens_system.Controllers
             };
             if(hatModelName != null)
             {
-                //var vm = new MaterialListToHatmodelViewModel();
-
                 model.Statuses = new List<SelectListItem>();
                 foreach (var material in materialRepository.GetAllMaterials())
                 {
@@ -95,7 +91,6 @@ namespace Hattmakarens_system.Controllers
                         Text = material.Name + ", " + material.Color.Name + ", " + material.Type
                     };
                     model.Statuses.Add(listitem);
-                        //Add(listitem);
                 }
 
                 var SelectedMaterialsId = materialRepository.GetMaterialInHatmodel(hatModelName);
@@ -127,10 +122,6 @@ namespace Hattmakarens_system.Controllers
         {
             try
             {
-              
-
-                //ÄNDRA TILL TILLVERKARE
-                //model.UserId = User.Identity.GetUserId();
                 hatRepository.CreateHat(model, pickedMaterials, SelectedStatuses);
      
                 return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = model.CustomerEmail });
@@ -170,8 +161,6 @@ namespace Hattmakarens_system.Controllers
             {
                 HatViewModel model = hatRepository.GetHatViewModel(id);
                 model.OrderId = orderId;
-                //var customer = customerRepository.GetCustomerByOrderId(orderId);
-                //model.CustomerEmail = customer.Email;
                 return View(model);
             }
             catch
@@ -197,6 +186,7 @@ namespace Hattmakarens_system.Controllers
         }
         public ActionResult ActiveHats()
         {
+            //Lägger till specialtillverkad hattmodell första gången man går in på denna view
             HatmodelRepository hatmodelRepository = new HatmodelRepository();
             var hatmodels = hatmodelRepository.GetAllHatmodels();
             bool specExist = false;
@@ -211,6 +201,7 @@ namespace Hattmakarens_system.Controllers
             {
                 hatmodelRepository.CreateSpecHatModel();
             }
+            
             var repo = new HatRepository();
             var allHats = new List<Hats>();
             using (var context = new ApplicationDbContext())
