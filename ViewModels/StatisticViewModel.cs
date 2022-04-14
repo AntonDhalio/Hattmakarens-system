@@ -13,9 +13,13 @@ namespace Hattmakarens_system.ViewModels
     {
         public List<OrderModels> orders { get; set; }
         public String time { get; set; }
+        [Required]
         [DataType(DataType.Date)]
+        [DisplayName("Från-datum")]
         public DateTime fromDate { get; set; }
+        [Required]
         [DataType(DataType.Date)]
+        [DisplayName("Till-datum")]
         public DateTime toDate { get; set; }
         public double totalSum { get; set; }
         public int totalOrdersCount { get; set; }
