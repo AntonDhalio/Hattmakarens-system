@@ -116,5 +116,57 @@ namespace Hattmakarens_system.Repositories
                 return hatCon.Hats.Where(h => h.OrderId == id).ToList();
             }
         }
+
+        //public void UpdateHat(HatViewModel hat, int[] SelectedStatuses)
+        //{
+        //    using (var hatCon = new ApplicationDbContext())
+        //    {
+        //        hatCon.Hats.AsNoTracking();
+        //        Hats existingHat = GetHat(hat.Id);
+        //        Hats newHat = new Hats()
+        //        {
+        //            Id = hat.Id,
+        //            Name = hat.Name,
+        //            Size = hat.Size,
+        //            Comment = hat.Comment,
+        //            Status = hat.Status,
+        //            Price = hat.Price,
+        //            UserId = hat.UserId
+        //        };
+
+
+        //        existingHat.Id = hat.Id;
+        //        existingHat.Name = hat.Name;
+        //        existingHat.Size = hat.Size;
+        //        existingHat.Comment = hat.Comment;
+        //        existingHat.Status = hat.Status;
+        //        existingHat.Price = hat.Price;
+        //        existingHat.UserId = hat.UserId;
+
+
+        //        existingHat.Materials = new List<MaterialModels>();
+
+        //        List<MaterialModels> materials = new List<MaterialModels>();
+        //        foreach (var materialId in SelectedStatuses)
+        //        {
+        //            var id = material;
+        //            var aMaterial = hatCon.Material.Include(m => m.Hats).FirstOrDefault(m => m.Id == materialId);
+        //            materials.Add(aMaterial);
+        //            existingHat.Materials.Add(aMaterial);
+        //        }
+        //        existingHat.Materials = materials;
+        //        newHat.Materials = materials;
+        //        hatCon.Hats.Attach(newHat);
+        //        var entry = hatCon.Entry(newHat);
+        //        entry.State = EntityState.Modified;
+        //        entry.Property("OrderId").IsModified = false;
+
+
+        //        hatCon.Hats.Attach(existingHat);
+        //        hatCon.Entry(existingHat).State = EntityState.Modified;
+        //        hatCon.SaveChanges();
+
+        //    }
+        //}
     }
 }
