@@ -121,6 +121,7 @@ namespace Hattmakarens_system.Repositories
             {
                 Id = order.Id,
                 Priority = order.Priority,
+                Status = order.Status,
                 CustomerId = order.CustomerId,
                 CustomerName = customerName,
                 CustomerEmail = customerEmail,

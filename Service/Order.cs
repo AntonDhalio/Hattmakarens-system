@@ -31,5 +31,26 @@ namespace Hattmakarens_system.Service
             }
             
         }
+        public void ChangeOrderComment(int id, string comment)
+        {
+            using(var db = new ApplicationDbContext())
+            {
+                var order = db.Order.Single(c => c.Id == id);
+                order.Comment = comment;
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+
+        public void ChangeOrderStatus(int id, string orderStatus)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var order = db.Order.Single(c => c.Id == id);
+                order.Status = orderStatus;
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
     }
 }
