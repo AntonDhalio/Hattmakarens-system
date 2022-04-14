@@ -29,31 +29,57 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Order/Create
-        public ActionResult CreateOrder(string customerEmail, int? currentOrderId)
+        public ActionResult CreateOrder(string customerEmail/*, int? currentOrderId*/)
         {
+            
             if (customerEmail == null)
             {
                 OrderModel order = new OrderModel();
                 order.TotalSum = 0;
                 order.Moms = 0;
+
+                TempData["listOfHats"] = new List<HatViewModel>();
+                TempData["hat"] = null;
+                TempData["order"] = order;
+                TempData.Keep("order");
+                
                 return View(order);
             }
-            if (customerEmail != null && currentOrderId == null)
+            if (customerEmail != null && TempData.Peek("hat") == null /* && currentOrderId == null*/)
             {
-                string userId = User.Identity.GetUserId();
-                int customerId = customerRepository.GetCustomerIdByEmail(customerEmail);
-                int orderId = orderRepository.CreateOrderInDatabase(customerId, userId);
-                OrderModel order = orderRepository.GetOrderViewModel(orderId, customerEmail);
+                OrderModel orderModel = (OrderModel)TempData.Peek("order");
+                orderModel.UserId = User.Identity.GetUserId();
+                orderModel.CustomerEmail = customerEmail;
+                orderModel.CustomerId = customerRepository.GetCustomerIdByEmail(customerEmail);
+                TempData["order"] = orderModel;
+                TempData.Keep("order");
+                
+                return View(orderModel);
 
-                return View(order);
+                //string userId = User.Identity.GetUserId();
+                //int customerId = customerRepository.GetCustomerIdByEmail(customerEmail);
+
+                //int orderId = orderRepository.CreateOrderInDatabase(customerId, userId);
+                //OrderModel order = orderRepository.GetOrderViewModel(orderId, customerEmail);
+
+                //return View(order);
 
             }
-            if(customerEmail != null && currentOrderId != null)
+            if(customerEmail != null && (HatViewModel)TempData.Peek("hat") != null/*&& currentOrderId != null*/)
             {
-                OrderModel order = orderRepository.GetOrderViewModel(currentOrderId, customerEmail);
-                var updatedOrder = orderRepository.CaluculateOrderTotal(order);
+                List<HatViewModel> hatModels = new List<HatViewModel>();
+                hatModels = (List<HatViewModel>)TempData.Peek("listOfHats");
+                hatModels.Add((HatViewModel)TempData.Peek("hat"));
+                //TempData["listOfHats"] = hatModels;
+                //TempData.Keep("listOfHats");
+                OrderModel order = orderRepository.CaluculateOrderTotal((OrderModel)TempData.Peek("order"), (List<HatViewModel>)TempData.Peek("listOfHats"));
+                return View(order);
 
-                return View(updatedOrder);
+                
+                //OrderModel order = orderRepository.GetOrderViewModel(currentOrderId, customerEmail);
+                //var updatedOrder = orderRepository.CaluculateOrderTotal(order);
+
+                //return View(updatedOrder);
             }
             return View();
 
@@ -61,11 +87,24 @@ namespace Hattmakarens_system.Controllers
 
         // POST: Order/Create
         [HttpPost]
-        public ActionResult CreateOrderAdd(OrderModel model)
+        public ActionResult CreateOrder(OrderModel model)
         {
             try 
-            {           
-                orderRepository.UpdateOrder(model);
+            {
+                //orderRepository.UpdateOrder(model);
+                OrderModel order = (OrderModel)TempData["order"];
+                order.Comment = model.Comment;
+                order.Priority = model.Priority;
+                order.TotalSum = model.TotalSum;
+                order.Moms = model.Moms;
+                orderRepository.CreateOrder(order, (List<HatViewModel>)TempData["listOfHats"]);
+                var orderId = orderRepository.GetDBLastAddedOrderId();
+                List<HatViewModel> hats = (List<HatViewModel>)TempData.Peek("listOfHats");
+                foreach(var hat in hats)
+                {
+                    hatRepository.CreateHat(hat, orderId);
+                }
+
                 return RedirectToAction("ActiveHats", "Hat");
             }
             catch

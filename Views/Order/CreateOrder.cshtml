@@ -30,7 +30,8 @@
         <h3>Specialtillverkade hattar</h3>
 
         <p>
-            <input type="button" class="btn" value="Lägg till specialtillverkad hatt" onclick="location.href = '@Url.Action("CreateSpec", "Hat", new { orderId = Model.Id, customerEmail = Model.CustomerEmail})'" />
+            @*<input type="button" class="btn" value="Lägg till specialtillverkad hatt" onclick="location.href = '@Url.Action("CreateSpec", "Hat", new { orderId = Model.Id, customerEmail = Model.CustomerEmail})'" />*@
+            <input type="button" class="btn" value="Lägg till specialtillverkad hatt" onclick="location.href = '@Url.Action("CreateSpec", "Hat")'" />
         </p>
         <div>
             @Html.Partial("_ListSpecHats")
@@ -49,10 +50,10 @@
 
         <br />
 
-        using (Html.BeginForm("CreateOrderAdd", "Order", FormMethod.Post))
+        using (Html.BeginForm("CreateOrder", "Order", FormMethod.Post))
         {
 
-            <div class="form-group" id="hidden">
+            @*<div class="form-group" id="hidden">
                 @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="checkbox">
@@ -60,7 +61,7 @@
                         @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            </div>
+            </div>*@
 
             <div>
                 <div class="form-group">

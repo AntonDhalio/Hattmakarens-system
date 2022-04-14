@@ -33,7 +33,7 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Hat/Create
-        public ActionResult CreateSpec(int orderId, string customerEmail)
+        public ActionResult CreateSpec(/*int orderId, string customerEmail*/)
         {
 
             var materials = new List<SelectListItem>();
@@ -46,14 +46,15 @@ namespace Hattmakarens_system.Controllers
                 };
                 materials.Add(listitem);
             }
-            HatViewModel model = new HatViewModel()
-            {
-                OrderId = orderId,
-                CustomerEmail = customerEmail
-            };
+            //HatViewModel model = new HatViewModel()
+            //{
+            //    OrderId = orderId,
+            //    CustomerEmail = customerEmail
+            //};
             ViewBag.MaterialsToPickFrom = materials;
             ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
-            return View(model);
+            return View();
+            //return View(model);
         }
 
         // POST: Hat/Create
@@ -62,9 +63,27 @@ namespace Hattmakarens_system.Controllers
         {
             try
             {
-                model.HatModelID = 1; //Hårdkodat värde för att representera specialltillverkad hatt
-                hatRepository.CreateHat(model, PickedMaterials, null);
-                return RedirectToAction("CreateOrder", "Order", new {currentOrderId = model.OrderId, customerEmail = model.CustomerEmail});
+                var SelectedStatuses = new int[100];
+                OrderModel order = (OrderModel)TempData.Peek("order");
+                HatViewModel hat = new HatViewModel()
+                {
+                    HatModelID = 1,
+                    Name = model.Name,
+                    Size = model.Size,
+                    Price = model.Price,
+                    Status = "Aktiv",
+                    Comment = model.Comment,
+                    UserId = model.UserId,
+                    Materials = new List<MaterialModels>()
+                    
+                };
+                hat.Materials = materialRepository.GetPickedMaterialInHat(hat.HatModelID, PickedMaterials, SelectedStatuses);
+                TempData["hat"] = hat;
+                TempData.Keep("hat");
+                return RedirectToAction("CreateOrder", "Order", new { customerEmail = order.CustomerEmail });
+                //model.HatModelID = 1; //Hårdkodat värde för att representera specialltillverkad hatt
+                //hatRepository.CreateHat(model, PickedMaterials, null);
+                //return RedirectToAction("CreateOrder", "Order", new {currentOrderId = model.OrderId, customerEmail = model.CustomerEmail});
             }
             catch
             {
@@ -72,15 +91,15 @@ namespace Hattmakarens_system.Controllers
             }
         }
         // GET: Hat/Create
-        public ActionResult CreateStored(int orderId, string customerEmail, string hatModelName)
+        public ActionResult CreateStored(/*int orderId, string customerEmail,*/ string hatModelName)
         {
-            
-            HatViewModel model = new HatViewModel()
-            {
-                OrderId = orderId,
-                CustomerEmail = customerEmail
-            };
-            if(hatModelName != null)
+
+            HatViewModel model = new HatViewModel();
+            //{
+            //    OrderId = orderId,
+            //    CustomerEmail = customerEmail
+            //};
+            if (hatModelName != null)
             {
                 model.Statuses = new List<SelectListItem>();
                 foreach (var material in materialRepository.GetAllMaterials())
@@ -111,6 +130,8 @@ namespace Hattmakarens_system.Controllers
                 model.HatModelName = hatModel.Name;
                 model.HatModelID = hatModel.Id;
                 model.HatModelDescription = hatModel.Description;
+                TempData["hat"] = model;
+                TempData.Keep("hat");
             }
             ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
             return View(model);
@@ -122,9 +143,26 @@ namespace Hattmakarens_system.Controllers
         {
             try
             {
-                hatRepository.CreateHat(model, pickedMaterials, SelectedStatuses);
-     
-                return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = model.CustomerEmail });
+                OrderModel order = (OrderModel)TempData.Peek("order");
+                HatViewModel hat = new HatViewModel()
+                {
+                    HatModelID = model.HatModelID,
+                    Name = model.Name,
+                    Size = model.Size,
+                    Price = model.Price,
+                    Status = "Aktiv",
+                    Comment = model.Comment,
+                    UserId = model.UserId,
+                    Materials = new List<MaterialModels>()
+
+                };
+                hat.Materials = materialRepository.GetPickedMaterialInHat(hat.HatModelID, pickedMaterials, SelectedStatuses);
+                TempData["hat"] = hat;
+                TempData.Keep("hat");
+                return RedirectToAction("CreateOrder", "Order", new { customerEmail = order.CustomerEmail });
+
+                //hatRepository.CreateHat(model, pickedMaterials, SelectedStatuses);
+                //return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = model.CustomerEmail });
             }
             catch
             {

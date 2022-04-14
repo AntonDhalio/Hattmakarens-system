@@ -1,5 +1,7 @@
 ﻿using Hattmakarens_system.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 
@@ -62,6 +64,33 @@ namespace Hattmakarens_system.Repositories
                 }
                 return materialIds;
             }  
+        }
+
+        public List<MaterialModels> GetPickedMaterialInHat(int hatModelId, IEnumerable<string> PickedMaterials, int[] SelectedStatuses)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                List<MaterialModels> materials = new List<MaterialModels>();
+                if (hatModelId == 1)
+                {
+                    foreach (var material in PickedMaterials)
+                    {
+                        var id = int.Parse(material);
+                        var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
+                        materials.Add(aMaterial);
+                    };
+                }
+                else
+                {
+                    foreach (var material in SelectedStatuses)
+                    {
+                        var id = material;
+                        var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
+                        materials.Add(aMaterial);
+                    };
+                };
+                return materials;
+            }
         }
     }
 }

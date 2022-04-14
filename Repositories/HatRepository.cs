@@ -56,46 +56,45 @@ namespace Hattmakarens_system.Repositories
         //    }
         //}
 
-        public Hats CreateHat(HatViewModel hat, IEnumerable<string> PickedMaterials, int[] SelectedStatuses)
-        {
-            using (var hatCon = new ApplicationDbContext())
-            {
+        //public Hats CreateHat(HatViewModel hat, IEnumerable<string> PickedMaterials, int[] SelectedStatuses)
+        //{
+        //    using (var hatCon = new ApplicationDbContext())
+        //    {
                 
-                Hats hats = new Hats()
-                {
-                    Name = hat.Name,
-                    Size = hat.Size,
-                    Price = hat.Price,
-                    Status = "Aktiv", 
-                    Comment = hat.Comment,
-                    UserId = hat.UserId,
-                    ModelID = hat.HatModelID,
-                    OrderId = hat.OrderId,
-                    Materials = new List<MaterialModels>()
-                };
-                if(hat.HatModelID == 1)
-                {
-                    foreach (var material in PickedMaterials)
-                    {
-                        var id = int.Parse(material);
-                        var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
-                        hats.Materials.Add(aMaterial);
-                    }
-                } else
-                {
-                    foreach (var material in SelectedStatuses)
-                    {
-                        var id = material;
-                        var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
-                        hats.Materials.Add(aMaterial);
-                    }
-                }
+        //        Hats hats = new Hats()
+        //        {
+        //            Name = hat.Name,
+        //            Size = hat.Size,
+        //            Price = hat.Price,
+        //            Comment = hat.Comment,
+        //            UserId = hat.UserId,
+        //            ModelID = hat.HatModelID,
+        //            OrderId = hat.OrderId,
+        //            Materials = new List<MaterialModels>()
+        //        };
+        //        if(hat.HatModelID == 1)
+        //        {
+        //            foreach (var material in PickedMaterials)
+        //            {
+        //                var id = int.Parse(material);
+        //                var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
+        //                hats.Materials.Add(aMaterial);
+        //            }
+        //        } else
+        //        {
+        //            foreach (var material in SelectedStatuses)
+        //            {
+        //                var id = material;
+        //                var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
+        //                hats.Materials.Add(aMaterial);
+        //            }
+        //        }
             
-                hatCon.Hats.Add(hats);
-                hatCon.SaveChanges();
-                return hats;
-            }
-        }
+        //        hatCon.Hats.Add(hats);
+        //        hatCon.SaveChanges();
+        //        return hats;
+        //    }
+        //}
         public void DeleteHat(int id)
         {
             using (var hatCon = new ApplicationDbContext())
@@ -114,6 +113,27 @@ namespace Hattmakarens_system.Repositories
             using (var hatCon = new ApplicationDbContext())
             {
                 return hatCon.Hats.Where(h => h.OrderId == id).ToList();
+            }
+        }
+
+        public void CreateHat(HatViewModel model, int orderId)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                Hats hat = new Hats()
+                {
+                    Name = model.Name,
+                    Size = model.Size,
+                    Price = model.Price,
+                    Status = "Aktiv",
+                    Comment = model.Comment,
+                    UserId = model.UserId,
+                    ModelID = model.HatModelID,
+                    OrderId = orderId,
+                    Materials = model.Materials
+                };
+                hatCon.Hats.Add(hat);
+                hatCon.SaveChanges();
             }
         }
     }
