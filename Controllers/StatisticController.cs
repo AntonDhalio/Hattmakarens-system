@@ -26,11 +26,15 @@ namespace Hattmakarens_system.Controllers
         // GET: Statistic
         public ActionResult GetStatistics(StatisticViewModel viewModel)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 pdfService.GetStatistics(viewModel);
+                return View(viewModel);
             }
-            return View(viewModel);
+            else
+            {
+                return View("Index", viewModel);
+            }
         }
         [HttpPost]
         public ActionResult PrintStatistics(StatisticViewModel viewModel)
