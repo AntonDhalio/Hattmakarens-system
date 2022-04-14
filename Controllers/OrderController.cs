@@ -134,7 +134,27 @@ namespace Hattmakarens_system.Controllers
             var customer = customerRepository.GetCustomerByOrderId(Id);
             OrderModel order = orderRepository.GetOrderViewModel(Id, customer.Email);
             return View(order);
+        }
 
+        public ActionResult ModifyOrder(int Id)
+        {
+            var customer = customerRepository.GetCustomerByOrderId(Id);
+            OrderModel order = orderRepository.GetOrderViewModel(Id, customer.Email);
+            return View(order);
+        }
+
+        [HttpPost]
+        public ActionResult ModifyOrder(int id, string comment, string orderStatus)
+        {
+            new Service.Order().ChangeOrderStatus(id, orderStatus);
+            new Service.Order().ChangeOrderComment(id, comment);
+            return RedirectToAction("ViewOrder", new {Id = id});
+        }
+
+        public ActionResult ChangePriority(int id, bool status)
+        {
+            new Service.Order().ChangePriorityStatus(id, status);
+            return RedirectToAction("ModifyOrder", new {id = id});
         }
     }
 }

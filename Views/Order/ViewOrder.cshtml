@@ -1,7 +1,7 @@
 ﻿@model Hattmakarens_system.ViewModels.OrderModel
 
 @{
-    ViewBag.Title = "CreateOrder";
+    ViewBag.Title = "Modify order";
 }
 
 
@@ -34,7 +34,7 @@
 
             <div>
                 @Html.LabelFor(model => model.Priority)
-                @if (!Model.Priority)
+                @if (Model.Priority)
                 {<p class="ja">Ja</p>}
                 else
                 { <p class="nej">Nej</p>}
@@ -60,7 +60,7 @@
             <div>
                 <div class="form-group">
                     <div class=" col-md-2">
-                        <input type="button" value="Uppdatera beställning" class="btn btn-success" />
+                        <input type="button" value="Uppdatera beställning" class="btn btn-success" onclick="location.href = '@Url.Action("ModifyOrder", "Order", new {id = Model.Id})'"/>
                         @*<input type="button" class="btn" value="Registrera beställning " onclick="location.href = '@Url.Action("CreateOrderAdd", "Order", new { id = Model.Id, comment = Model.Comment, priority = Model.Priority })'" />*@
                     </div>
                 </div>
