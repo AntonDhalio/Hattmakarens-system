@@ -45,6 +45,17 @@
                 <p>@Html.DisplayFor(model => model.Comment)</p>
             </div>
 
+            <div>
+                @Html.LabelFor(model => model.TotalSum)
+                <p>(Inklusive möjlig expresskostnad)</p>
+                <p>@Html.DisplayFor(model => model.TotalSum)</p>
+            </div>
+
+            <div>
+                @Html.LabelFor(model => model.Moms)
+                <p>@Html.DisplayFor(model => model.Moms)<p>
+            </div>
+
             <hr />
             <div>
                 <div class="form-group">
