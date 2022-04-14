@@ -27,7 +27,6 @@ namespace Hattmakarens_system.ViewModels
         public string Comment { get; set; }
         //public string UserId { get; set; }
         //public virtual UserModels User { get; set; }
-        public string Status { get; set; }
         public string CustomerName { get; set; }
         public int CustomerId { get; set; }
         public string CustomerEmail { get; set; }
