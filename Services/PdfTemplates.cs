@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System;
 using Hattmakarens_system.Repositories;
 using Hattmakarens_system.ViewModels;
+using Hattmakarens_system.Services;
 
 namespace Hattmakarens_system.Services
 {
@@ -14,6 +15,8 @@ namespace Hattmakarens_system.Services
     {
         OrderRepository orderRepository = new OrderRepository();
         CustomerRepository customerRepository = new CustomerRepository();
+        TranslateService translateService = new TranslateService();
+        PdfLabelsViewModel labels = new PdfLabelsViewModel();
 
         //Faktura PDF
         public void InvoicePDF(InvoiceViewModel invoice)
@@ -27,10 +30,13 @@ namespace Hattmakarens_system.Services
             XFont contentFontBold = new XFont("Verdana", 10, XFontStyle.Bold);
             XFont miniFont = new XFont("Verdana", 8, XFontStyle.Italic);
 
-            //XImage image = XImage.FromFile(@"../../Pdf/sharpit.jpg");
-            gfx.DrawString("FAKTURA", headerFont, XBrushes.Black,
+            if (invoice.Translate == true)
+            {
+                labels = translateService.TranslatePdf(labels);
+            }
+
+            gfx.DrawString(labels.Invoice, headerFont, XBrushes.Black,
                 new XRect(0, 50, page.Width, page.Height), XStringFormats.TopCenter);
-            //gfx.DrawImage(image, 100, 100);
 
             gfx.DrawString("Hattmakaren", miniFont, XBrushes.Black,
             50, 130);
@@ -40,32 +46,32 @@ namespace Hattmakarens_system.Services
             50, 150);
             gfx.DrawString("07455684992", miniFont, XBrushes.Black,
             50, 160);
-            gfx.DrawString("organisationsnummer: 5591433437", miniFont, XBrushes.Black,
+            gfx.DrawString(labels.OrganisationNumber + ": 5591433437", miniFont, XBrushes.Black,
             50, 170);
-            gfx.DrawString("bankgiro: 85938", miniFont, XBrushes.Black,
+            gfx.DrawString(labels.Bankgiro + ": 85938", miniFont, XBrushes.Black,
             50, 180);
 
             //Skapa Rektangel
             XRect rect = new XRect(30, 200, 300, 180);
             gfx.DrawRectangle(XBrushes.LightGray, rect);
 
-            gfx.DrawString("Kundnamn: " + invoice.Customer.Name, contentFont, XBrushes.Black,
+            gfx.DrawString(labels.CustomerName + ": " + invoice.Customer.Name, contentFont, XBrushes.Black,
             50, 230);
-            gfx.DrawString("Adress: " + invoice.Customer.Adress, contentFont, XBrushes.Black,
+            gfx.DrawString(labels.Address + ": " + invoice.Customer.Adress, contentFont, XBrushes.Black,
             50, 260);
             gfx.DrawString("OCR: " + invoice.OCR, contentFont, XBrushes.Black,
             50, 290);
-            gfx.DrawString("Totalsumma: " + invoice.Order.TotalSum, contentFont, XBrushes.Black,
+            gfx.DrawString(labels.Total + ": " + invoice.Order.TotalSum, contentFont, XBrushes.Black,
             50, 320);
-            gfx.DrawString("Förfallodatum: " + invoice.DueDate.ToShortDateString(), contentFont, XBrushes.Black,
+            gfx.DrawString(labels.DueDate + ": " + invoice.DueDate.ToShortDateString(), contentFont, XBrushes.Black,
             50, 350);
 
             //Titlar
-            gfx.DrawString("Namn", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.HatName, contentFontBold, XBrushes.Black,
             50, 400);
-            gfx.DrawString("Storlek", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Size, contentFontBold, XBrushes.Black,
             150, 400);
-            gfx.DrawString("Pris", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Price, contentFontBold, XBrushes.Black,
             250, 400);
 
             int x = 420;
@@ -104,6 +110,10 @@ namespace Hattmakarens_system.Services
             XFont contentFontBold = new XFont("Verdana", 10, XFontStyle.Bold);
             XFont miniFont = new XFont("Verdana", 8, XFontStyle.Italic);
 
+            if (shipping.Translate == true)
+            {
+                labels = translateService.TranslatePdf(labels);
+            }
 
             //Skapa rektangel (bakgrund) 1
             XRect rect = new XRect(150, 120, 300, 150);
@@ -118,37 +128,37 @@ namespace Hattmakarens_system.Services
             gfx.DrawRectangle(XBrushes.LightGray, rect3);
 
             //Header
-            gfx.DrawString("FRAKTSEDEL", headerFont, XBrushes.Black,
+            gfx.DrawString(labels.Shipping, headerFont, XBrushes.Black,
                 new XRect(0, 50, page.Width, page.Height), XStringFormats.TopCenter);
 
             //Datum
-            gfx.DrawString("Datum: " + DateTime.Now.Date.ToShortDateString(), miniFont, XBrushes.Black,
+            gfx.DrawString(labels.Date + ": " + DateTime.Now.Date.ToShortDateString(), miniFont, XBrushes.Black,
             180, 100, XStringFormats.Center);
 
             //Kundinfo
-            gfx.DrawString("Till", contentFontItalic, XBrushes.Black,
+            gfx.DrawString(labels.To, contentFontItalic, XBrushes.Black,
             180, 150);
             //Kundnamn
-            gfx.DrawString("Kund", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Customer, contentFontBold, XBrushes.Black,
             180, 170);
             gfx.DrawString(shipping.Customer.Name, contentFont, XBrushes.Black,
             240, 170);
             //Adress
-            gfx.DrawString("Adress", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Address, contentFontBold, XBrushes.Black,
             180, 190);
             gfx.DrawString(shipping.Customer.Adress, contentFont, XBrushes.Black,
             240, 190);
 
             //Företagsinfo
-            gfx.DrawString("Från", contentFontItalic, XBrushes.Black,
+            gfx.DrawString(labels.From, contentFontItalic, XBrushes.Black,
             180, 350);
             //Företag
-            gfx.DrawString("Företag", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Company, contentFontBold, XBrushes.Black,
             180, 370);
             gfx.DrawString("Hattmakaren AB", contentFont, XBrushes.Black,
             240, 370);
             //Adress
-            gfx.DrawString("Adress", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Address, contentFontBold, XBrushes.Black,
             180, 390);
             gfx.DrawString("Hattmakargatan 32", contentFont, XBrushes.Black,
             240, 390);
@@ -156,30 +166,30 @@ namespace Hattmakarens_system.Services
             240, 410);
 
             //Paketinfo
-            gfx.DrawString("Innehåll", contentFontItalic, XBrushes.Black,
+            gfx.DrawString(labels.Content, contentFontItalic, XBrushes.Black,
             180, 550);
             //Vikt
-            gfx.DrawString("Vikt", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Weight, contentFontBold, XBrushes.Black,
             180, 570);
             gfx.DrawString(shipping.Weight.ToString() + " kg", contentFont, XBrushes.Black,
-            240, 570);
+            300, 570);
             //Pris
-            gfx.DrawString("Pris", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Price, contentFontBold, XBrushes.Black,
             180, 590);
-            gfx.DrawString(shipping.Order.TotalSum.ToString(), contentFont, XBrushes.Black,
-            240, 590);
+            gfx.DrawString(shipping.Order.TotalSum.ToString() + " SEK", contentFont, XBrushes.Black,
+            300, 590);
             //Pris
-            gfx.DrawString("Kod", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.ShippingCode, contentFontBold, XBrushes.Black,
             180, 610);
             gfx.DrawString(shipping.ShippingCode.ToString(), contentFont, XBrushes.Black,
-            240, 610);
+            300, 610);
 
             //Titlar
-            gfx.DrawString("Namn", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.HatName, contentFontBold, XBrushes.Black,
             150, 700);
-            gfx.DrawString("Storlek", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Size, contentFontBold, XBrushes.Black,
             250, 700);
-            gfx.DrawString("Pris", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Price + " (SEK)", contentFontBold, XBrushes.Black,
             350, 700);
 
             int x = 720;
@@ -204,7 +214,7 @@ namespace Hattmakarens_system.Services
         }
 
         //Beställningsinformation PDF
-        public void OrderPDF(int id)
+        public void OrderPDF(int id, bool translate)
         {
             var order = orderRepository.GetOrder(id);
             var customer = customerRepository.GetCustomer(order.CustomerId);
@@ -221,25 +231,30 @@ namespace Hattmakarens_system.Services
             XFont contentFontBold = new XFont("Verdana", 10, XFontStyle.Bold);
             XFont miniFont = new XFont("Verdana", 8, XFontStyle.Italic);
 
+            if (translate == true)
+            {
+                labels = translateService.TranslatePdf(labels);
+            }
+
             //Skapa rektangel (bakgrund) 1
             XRect rect = new XRect(150, 120, 300, 140);
             gfx.DrawRectangle(XBrushes.LightGray, rect);
 
             //Header
-            gfx.DrawString("BESTÄLLNING NR " + order.Id, headerFont, XBrushes.Black,
+            gfx.DrawString(labels.OrderNr + " " + order.Id, headerFont, XBrushes.Black,
                 new XRect(0, 50, page.Width, page.Height), XStringFormats.TopCenter);
 
             //Datum
-            gfx.DrawString("Datum: " + order.Date.ToShortDateString(), miniFont, XBrushes.Black,
+            gfx.DrawString(labels.Date + ": " + order.Date.ToShortDateString(), miniFont, XBrushes.Black,
             180, 100, XStringFormats.Center);
 
             //Kundnamn
-            gfx.DrawString("Kund", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Customer, contentFontBold, XBrushes.Black,
             180, 170);
             gfx.DrawString(customer.Name, contentFont, XBrushes.Black,
             240, 170);
             //Adress
-            gfx.DrawString("Adress", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Address, contentFontBold, XBrushes.Black,
             180, 190);
             gfx.DrawString(customer.Adress, contentFont, XBrushes.Black,
             240, 190);
@@ -249,21 +264,21 @@ namespace Hattmakarens_system.Services
             gfx.DrawString(customer.Email, contentFont, XBrushes.Black,
             240, 210);
             //KundId
-            gfx.DrawString("Kundnr", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.CustomerNumber, contentFontBold, XBrushes.Black,
             180, 230);
             gfx.DrawString(customer.Id.ToString(), contentFont, XBrushes.Black,
             240, 230);
 
             //Titlar
-            gfx.DrawString("Namn", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.HatName, contentFontBold, XBrushes.Black,
             50, 300);
-            gfx.DrawString("Storlek", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Size, contentFontBold, XBrushes.Black,
             150, 300);
-            gfx.DrawString("Skapare", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Maker, contentFontBold, XBrushes.Black,
             250, 300);
             gfx.DrawString("Status", contentFontBold, XBrushes.Black,
             350, 300);
-            gfx.DrawString("Pris", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Price, contentFontBold, XBrushes.Black,
             450, 300);
 
             int x = 320;
@@ -274,7 +289,7 @@ namespace Hattmakarens_system.Services
                 50, x);
                 gfx.DrawString(hat.Size, contentFont, XBrushes.Black,
                 150, x);
-                gfx.DrawString("mig", contentFont, XBrushes.Black,
+                gfx.DrawString(hat.User.Name, contentFont, XBrushes.Black,
                 250, x);
                 gfx.DrawString(hat.Status, contentFont, XBrushes.Black,
                 350, x);
@@ -309,7 +324,12 @@ namespace Hattmakarens_system.Services
             XFont contentFontBold = new XFont("Verdana", 10, XFontStyle.Bold);
             XFont miniFont = new XFont("Verdana", 8, XFontStyle.Italic);
 
-            gfx.DrawString("STATISTIK", headerFont, XBrushes.Black,
+            if (statistics.Translate == true)
+            {
+                labels = translateService.TranslatePdf(labels);
+            }
+
+            gfx.DrawString(labels.Statistics, headerFont, XBrushes.Black,
                 new XRect(0, 50, page.Width, page.Height), XStringFormats.TopCenter);
 
             gfx.DrawString("Hattmakaren", miniFont, XBrushes.Black,
@@ -320,39 +340,39 @@ namespace Hattmakarens_system.Services
             50, 150);
             gfx.DrawString("07455684992", miniFont, XBrushes.Black,
             50, 160);
-            gfx.DrawString("organisationsnummer: 5591433437", miniFont, XBrushes.Black,
+            gfx.DrawString(labels.OrganisationNumber + ": 5591433437", miniFont, XBrushes.Black,
             50, 170);
 
             //Titlar
             //Tid
-            gfx.DrawString("Tid", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Time, contentFontBold, XBrushes.Black,
             50, 210);
             gfx.DrawString(statistics.time, contentFont, XBrushes.Black,
             240, 210);
             //Summa
-            gfx.DrawString("Summa", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Total, contentFontBold, XBrushes.Black,
             50, 230);
             gfx.DrawString(statistics.totalSum.ToString(), contentFont, XBrushes.Black,
             240, 230);
             //Antal hattar
-            gfx.DrawString("Antal hattar", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.HatAmount, contentFontBold, XBrushes.Black,
             50, 250);
             gfx.DrawString(statistics.totalHatsCount.ToString(), contentFont, XBrushes.Black,
             240, 250);
             //Antal beställningar
-            gfx.DrawString("Antal beställningar", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.OrderAmount, contentFontBold, XBrushes.Black,
             50, 270);
             gfx.DrawString(statistics.totalOrdersCount.ToString(), contentFont, XBrushes.Black,
             240, 270);
 
             //Titlar
-            gfx.DrawString("Beställningsnr", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.OrderNr, contentFontBold, XBrushes.Black,
             50, 310);
-            gfx.DrawString("Antal hattar", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.HatAmount, contentFontBold, XBrushes.Black,
             200, 310);
-            gfx.DrawString("Beställningsdatum", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.OrderDate, contentFontBold, XBrushes.Black,
             350, 310);
-            gfx.DrawString("Summa (SEK)", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Total + " (SEK)", contentFontBold, XBrushes.Black,
             500, 310);
 
             int x = 340;

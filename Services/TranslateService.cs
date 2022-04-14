@@ -1,57 +1,69 @@
-﻿using System;
+﻿using Hattmakarens_system.ViewModels;
+using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using System.Net;
 using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.Script.Serialization;
-using Google.Apis.Services;
-using Google.Apis.Storage.v1;
-using Google.Cloud.Translation.V2;
-using Newtonsoft.Json;
 
 namespace Hattmakarens_system.Services
 {
-    public class TranslateClass
+    public class TranslateService
     {
-        public string Translate(string text)
+        public String Translate(String word)
         {
-			using (var client = new HttpClient())
+            var toLanguage = "en";
+            var fromLanguage = "sv";
+            var url = $"https://translate.googleapis.com/translate_a/single?client=gtx&sl={fromLanguage}&tl={toLanguage}&dt=t&q={HttpUtility.UrlEncode(word)}";
+            var webClient = new WebClient
             {
-                var request = new HttpRequestMessage
-                {
-                    Method = HttpMethod.Post,
-                    RequestUri = new Uri("https://google-translate1.p.rapidapi.com/language/translate/v2"),
-                    Headers =
-                    {
-                        { "X-RapidAPI-Host", "google-translate1.p.rapidapi.com" },
-                        { "X-RapidAPI-Key", "e11581426amsh78d782a5e6752b3p1cba1djsn9069677d70ca" },
-                    },
-                    Content = new FormUrlEncodedContent(new Dictionary<string, string>
-                    {
-                        { "q", text },
-                        { "target", "en" },
-                        { "source", "sv" },
-                    }),
-                };
-
-                var response = client.SendAsync(request).Result;
-                var content = response.Content.ReadAsStringAsync().Result;
-                var contentlength = content.Length - 49;
-                var finalcontent = content.Substring(44, contentlength);
-
-                List<char> charlist = new List<char>();
-
-                foreach(var item in finalcontent)
-                {
-                    charlist.Add(item);
-                }
-
-                string translatedText = new string (charlist.ToArray());
-                return translatedText;
+                Encoding = System.Text.Encoding.UTF8
+            };
+            var result = webClient.DownloadString(url);
+            try
+            {
+                result = result.Substring(4, result.IndexOf("\"", 4, StringComparison.Ordinal) - 4);
+                return result;
             }
+            catch
+            {
+                return "Error";
+            }
+        }
+
+        public PdfLabelsViewModel TranslatePdf(PdfLabelsViewModel swedish)
+        {
+            PdfLabelsViewModel english = new PdfLabelsViewModel
+            {
+                Invoice = Translate(swedish.Shipping),
+                To = Translate(swedish.To),
+                From = Translate(swedish.From),
+                Customer = Translate(swedish.Customer),
+                Company = Translate(swedish.Company),
+                Content = Translate(swedish.Content),
+                Weight = Translate(swedish.Weight),
+                Shipping = Translate(swedish.Shipping),
+                ShippingCode = Translate(swedish.ShippingCode),
+                Date = Translate(swedish.Date),
+                OrganisationNumber = Translate(swedish.OrganisationNumber),
+                Bankgiro = Translate(swedish.Bankgiro),
+                CustomerName = Translate(swedish.CustomerName),
+                Address = Translate(swedish.Address),
+                Total = Translate(swedish.Total),
+                DueDate = Translate(swedish.DueDate),
+                HatName = Translate(swedish.HatName),
+                Size = Translate(swedish.Size),
+                Price = Translate(swedish.Price),
+                OrderNr = Translate(swedish.OrderNr),
+                CustomerNumber = Translate(swedish.CustomerNumber),
+                Maker = Translate(swedish.Maker),
+                Statistics = Translate(swedish.Statistics),
+                Time = Translate(swedish.Time),
+                HatAmount = Translate(swedish.HatAmount),
+                OrderAmount = Translate(swedish.OrderAmount),
+                OrderDate = Translate(swedish.OrderDate),
+            };
+
+            return english;
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Hattmakarens_system.ViewModels
 {
     public class StatisticViewModel
     {
+        public bool Translate { get; set; } 
         public List<OrderModels> orders { get; set; }
         public String time { get; set; }
         public double totalSum { get; set; }
