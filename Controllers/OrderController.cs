@@ -51,15 +51,9 @@ namespace Hattmakarens_system.Controllers
             if(customerEmail != null && currentOrderId != null)
             {
                 OrderModel order = orderRepository.GetOrderViewModel(currentOrderId, customerEmail);
-                // HÄR SKA UTRÄKNINGEN AV MOMS OCH TOTALSUMMA FÖR EN BESTÄLLNING
-                var hats = hatRepository.GetAllHatsByOrderId(currentOrderId);
-                var calculate = new Service.Calculate();
-                var sumHats = calculate.GetTotalPriceExTax(hats);
-                order.TotalSum = calculate.CalculateTax(sumHats, order.Priority);
-                order.Moms = calculate.GetTaxFromTotal(order.TotalSum);
-                
+                var updatedOrder = orderRepository.CaluculateOrderTotal(order);
 
-                return View(order);
+                return View(updatedOrder);
             }
             return View();
 
@@ -67,16 +61,11 @@ namespace Hattmakarens_system.Controllers
 
         // POST: Order/Create
         [HttpPost]
-        public ActionResult CreateOrderAdd(int? id, string comment, bool priority, double? moms, double? totalSum)
+        public ActionResult CreateOrderAdd(OrderModel model)
         {
             try 
-            {
-                //string userId = User.Identity.GetUserId();            
-                orderRepository.UpdateOrder(id, comment, priority, moms, totalSum);
-
-            //    orderRepository.CreateOrder(orderModel);
-            //    hatRepository.CreateHat(hatModel);
-
+            {           
+                orderRepository.UpdateOrder(model);
                 return RedirectToAction("ActiveHats", "Hat");
             }
             catch
@@ -139,24 +128,33 @@ namespace Hattmakarens_system.Controllers
             }
         }
 
-        //public OrderModel CreateOrderViewModelWithCustomer(string email)
-        //{
-        //    CustomerModels customer = customerRepository.GetCustomerByEmail(email);
-        //    var model = new OrderModel()
-        //    {
-        //        CustomerId = customer.Id,
-        //        CustomerName = customer.Name
-        //    };
-        //    return model;
-        //}
-
         // GET: Order/Delete/5
         public ActionResult ViewOrder(int Id)
         {
             var customer = customerRepository.GetCustomerByOrderId(Id);
             OrderModel order = orderRepository.GetOrderViewModel(Id, customer.Email);
             return View(order);
+        }
 
+        public ActionResult ModifyOrder(int Id)
+        {
+            var customer = customerRepository.GetCustomerByOrderId(Id);
+            OrderModel order = orderRepository.GetOrderViewModel(Id, customer.Email);
+            return View(order);
+        }
+
+        [HttpPost]
+        public ActionResult ModifyOrder(int id, string comment, string orderStatus)
+        {
+            new Service.Order().ChangeOrderStatus(id, orderStatus);
+            new Service.Order().ChangeOrderComment(id, comment);
+            return RedirectToAction("ViewOrder", new {Id = id});
+        }
+
+        public ActionResult ChangePriority(int id, bool status)
+        {
+            new Service.Order().ChangePriorityStatus(id, status);
+            return RedirectToAction("ModifyOrder", new {id = id});
         }
     }
 }

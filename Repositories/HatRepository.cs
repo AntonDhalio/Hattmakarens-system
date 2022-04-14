@@ -113,11 +113,6 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                //if(hatCon.Hats.Where(h => h.OrderId == id) == null)
-                //{
-                //    List<Hats> hats = new List<Hats>();
-                //    return hats;
-                //}
                 return hatCon.Hats.Where(h => h.OrderId == id).ToList();
             }
         }
