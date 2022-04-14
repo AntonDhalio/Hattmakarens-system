@@ -24,6 +24,9 @@ namespace Hattmakarens_system.ViewModels
         public double totalSum { get; set; }
         public int totalOrdersCount { get; set; }
         public int totalHatsCount { get; set; }
+        [DisplayName("Total inköpsmoms:")]
+        public double purchasedTax { get; set; }
+
 
     }
 }
