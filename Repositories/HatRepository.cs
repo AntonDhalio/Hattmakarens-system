@@ -132,7 +132,9 @@ namespace Hattmakarens_system.Repositories
                     OrderId = orderId,
                     Materials = model.Materials
                 };
-                hatCon.Hats.Add(hat);
+                //hatCon.Hats.Add(hat); // Materialet läggs in i material.
+                hatCon.Hats.Attach(hat);
+                hatCon.Entry(hat).State = EntityState.Added;
                 hatCon.SaveChanges();
             }
         }
