@@ -23,11 +23,21 @@ textarea {
     max-width: 280px;
 }
 .statistik-tabell {
-    width: 80%;
+    width: 100%;
     empty-cells:show;
+    font-size:small;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}
+td {
+    padding-left: 3%;
 }
 .ja {
     color: red;
     font-style: oblique;
 }
-
+.halv {
+    width: 50%;
+    float: left;
+    display: inline;
+}

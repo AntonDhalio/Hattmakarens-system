@@ -1,10 +1,7 @@
 ﻿@model IEnumerable<Hattmakarens_system.Models.CustomerModels>
 
-@{
-    //ViewBag.Title = "SearchIndex";
-}
 
-<h2>SearchIndex</h2>
+<h2>Välj kund</h2>
 
 <p>
     @using (Html.BeginForm())
@@ -67,3 +64,4 @@
     </table>
 
     @Html.ActionLink("Registrera ny kund", "AddCustomer", "Customer")
+

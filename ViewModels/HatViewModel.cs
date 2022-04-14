@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using Hattmakarens_system.Models;
 
 namespace Hattmakarens_system.ViewModels
@@ -23,6 +24,7 @@ namespace Hattmakarens_system.ViewModels
         public string Status { get; set; }
         [DisplayName("Kommentar på hatt")]
         public string Comment { get; set; }
+        [DisplayName("Tillverkare")]
         public string UserId { get; set; }
         public int OrderId { get; set; }
         public virtual UserModels User { get; set; }
@@ -34,6 +36,12 @@ namespace Hattmakarens_system.ViewModels
         public virtual HatModels Models { get; set; }
         public string CustomerEmail { get; set; }
         public virtual ICollection<ImageModels> Images { get; set; }
-        public virtual ICollection<MaterialModels> Materials { get; set; } 
+        public virtual ICollection<MaterialModels> Materials { get; set; }
+        public List<SelectListItem> MaterialsToPickFrom { get; set; }
+        [DisplayName("Välj material")]
+        public List<SelectListItem> PickedMaterials { get; set; }
+        public List<SelectListItem> Statuses { get; set; }
+        public int[] SelectedStatuses { get; set; }
+        public virtual List<SelectListItem> UsersToPickFrom { get; set; }
     }
 }

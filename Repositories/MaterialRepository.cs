@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Hattmakarens_system.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
-using Hattmakarens_system.Models;
 
 namespace Hattmakarens_system.Repositories
 {
@@ -20,7 +18,7 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.Material.Include(m => m.HatModels).ToList();
+                return hatCon.Material.Include(m => m.HatModels).Include(m => m.Color).ToList();
             }
         }
         public MaterialModels SaveMaterial(MaterialModels material)
@@ -50,6 +48,20 @@ namespace Hattmakarens_system.Repositories
                     hatCon.SaveChanges();
                 }
             }
+        }
+
+        public List<int> GetMaterialInHatmodel(string hatModelName)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                List<int> materialIds = new List<int>();
+                var aHatmodel = hatCon.HatModels.FirstOrDefault(h => h.Name.Equals(hatModelName));
+                foreach(var materials in aHatmodel.Material)
+                { 
+                    materialIds.Add(materials.Id);
+                }
+                return materialIds;
+            }  
         }
     }
 }

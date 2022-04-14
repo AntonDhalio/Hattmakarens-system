@@ -347,7 +347,7 @@ namespace Hattmakarens_system.Services
             //Tid
             gfx.DrawString(labels.Time, contentFontBold, XBrushes.Black,
             50, 210);
-            gfx.DrawString(statistics.time, contentFont, XBrushes.Black,
+            gfx.DrawString(statistics.fromDate.ToShortDateString().ToString() + " - " + statistics.toDate.ToShortDateString().ToString(), contentFont, XBrushes.Black,
             240, 210);
             //Summa
             gfx.DrawString(labels.Total, contentFontBold, XBrushes.Black,

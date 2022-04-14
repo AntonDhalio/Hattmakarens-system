@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +15,10 @@ namespace Hattmakarens_system.ViewModels
         public int Id { get; set; }
         [DisplayName("Beskrivning")]
         public string Description { get; set; }
+        [Required]
         [DisplayName("Materialnamn")]
         public string Name { get; set; }
+        [Required]
         [DisplayName("Materialtyp")]
         public string Type { get; set; }
         [DisplayName("Färg")]

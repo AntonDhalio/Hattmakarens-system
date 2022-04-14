@@ -56,20 +56,41 @@ namespace Hattmakarens_system.Repositories
         //    }
         //}
 
-        public Hats CreateHat(HatViewModel hat)
+        public Hats CreateHat(HatViewModel hat, IEnumerable<string> PickedMaterials, int[] SelectedStatuses)
         {
             using (var hatCon = new ApplicationDbContext())
             {
+                
                 Hats hats = new Hats()
                 {
                     Name = hat.Name,
                     Size = hat.Size,
                     Price = hat.Price,
-                    Status = "Aktiv", //Eller vad det nu ska stå när man bara registrerat en ny hatt
+                    Status = "Aktiv", 
                     Comment = hat.Comment,
+                    UserId = hat.UserId,
                     ModelID = hat.HatModelID,
-                    OrderId = hat.OrderId
+                    OrderId = hat.OrderId,
+                    Materials = new List<MaterialModels>()
                 };
+                if(hat.HatModelID == 1)
+                {
+                    foreach (var material in PickedMaterials)
+                    {
+                        var id = int.Parse(material);
+                        var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
+                        hats.Materials.Add(aMaterial);
+                    }
+                } else
+                {
+                    foreach (var material in SelectedStatuses)
+                    {
+                        var id = material;
+                        var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
+                        hats.Materials.Add(aMaterial);
+                    }
+                }
+            
                 hatCon.Hats.Add(hats);
                 hatCon.SaveChanges();
                 return hats;
@@ -88,15 +109,10 @@ namespace Hattmakarens_system.Repositories
             }
         }
 
-        public List<Hats> GetAllHatsByOrderId(int id)
+        public List<Hats> GetAllHatsByOrderId(int? id)
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                //if(hatCon.Hats.Where(h => h.OrderId == id) == null)
-                //{
-                //    List<Hats> hats = new List<Hats>();
-                //    return hats;
-                //}
                 return hatCon.Hats.Where(h => h.OrderId == id).ToList();
             }
         }

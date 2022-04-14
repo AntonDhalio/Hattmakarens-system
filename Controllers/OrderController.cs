@@ -1,6 +1,7 @@
 ﻿using Hattmakarens_system.Models;
 using Hattmakarens_system.Repositories;
 using Hattmakarens_system.ViewModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,52 +34,39 @@ namespace Hattmakarens_system.Controllers
             if (customerEmail == null)
             {
                 OrderModel order = new OrderModel();
+                order.TotalSum = 0;
+                order.Moms = 0;
                 return View(order);
             }
             if (customerEmail != null && currentOrderId == null)
             {
+                string userId = User.Identity.GetUserId();
                 int customerId = customerRepository.GetCustomerIdByEmail(customerEmail);
-                //OrderViewModel order = CreateOrderViewModelWithCustomer(customerEmail);
-                int orderId = orderRepository.CreateOrderInDatabase(customerId);
+                int orderId = orderRepository.CreateOrderInDatabase(customerId, userId);
                 OrderModel order = orderRepository.GetOrderViewModel(orderId, customerEmail);
-                //order.CustomerEmail = customerEmail;
+
                 return View(order);
-                //    int customerId = customerRepository.GetCustomerIdByEmail(email);
-                //    OrderViewModel order = SelectedCustomerEmail(email);
-                //    order.Id = Create(customerId);
-                //    return View(order);
+
             }
             if(customerEmail != null && currentOrderId != null)
             {
                 OrderModel order = orderRepository.GetOrderViewModel(currentOrderId, customerEmail);
-                return View(order);
+                var updatedOrder = orderRepository.CaluculateOrderTotal(order);
+
+                return View(updatedOrder);
             }
-            //if(orderId != null)
-            //{
-            //    //OrderModels existOrder = orderRepository.GetOrder(orderId);
-            //    //OrderViewModel order = new OrderViewModel()
-            //    //{
-            //    //    Id = existOrder.Id,
-            //    //    Hats = existOrder.Hats
-            //    //};
-            //    return View(orderRepository.GetOrderViewModel(orderId));
-            //}
             return View();
 
         }
 
         // POST: Order/Create
         [HttpPost]
-        public ActionResult CreateOrderAdd(int? id, string comment, bool priority)
+        public ActionResult CreateOrderAdd(OrderModel model)
         {
             try 
-            {
-                orderRepository.UpdateOrder(id, comment, priority);
-
-            //    orderRepository.CreateOrder(orderModel);
-            //    hatRepository.CreateHat(hatModel);
-
-                return RedirectToAction("Index", "Home");
+            {           
+                orderRepository.UpdateOrder(model);
+                return RedirectToAction("ActiveHats", "Hat");
             }
             catch
             {
@@ -132,7 +120,7 @@ namespace Hattmakarens_system.Controllers
                 {
                     hatRepository.DeleteHat(item.Id);
                 }
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("ActiveHats", "Hat");
             }
             catch
             {
@@ -140,15 +128,13 @@ namespace Hattmakarens_system.Controllers
             }
         }
 
-        //public OrderModel CreateOrderViewModelWithCustomer(string email)
-        //{
-        //    CustomerModels customer = customerRepository.GetCustomerByEmail(email);
-        //    var model = new OrderModel()
-        //    {
-        //        CustomerId = customer.Id,
-        //        CustomerName = customer.Name
-        //    };
-        //    return model;
-        //}
+        // GET: Order/Delete/5
+        public ActionResult ViewOrder(int Id)
+        {
+            var customer = customerRepository.GetCustomerByOrderId(Id);
+            OrderModel order = orderRepository.GetOrderViewModel(Id, customer.Email);
+            return View(order);
+
+        }
     }
 }

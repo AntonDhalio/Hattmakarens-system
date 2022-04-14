@@ -10,9 +10,7 @@ namespace Hattmakarens_system.Repositories
 {
     public class OrderRepository
     {
-        //private HatRepository hatRepository = new HatRepository();
-        //private CustomerRepository customerRepository = new CustomerRepository();
-
+        HatRepository hatRepository = new HatRepository();
         public OrderModels GetOrder(int? id)
         {
             using (var hatCon = new ApplicationDbContext())
@@ -45,38 +43,23 @@ namespace Hattmakarens_system.Repositories
         //    }
         //}
 
-        public void CreateOrder(OrderModel order)
-        {
-            using (var hatCon = new ApplicationDbContext())
-            {
-                OrderModels newOrdermodel = new OrderModels()
-                {
-                    Date = DateTime.Now,
-                    Priority = order.Priority,
-                    Status = "Aktiv",
-                    Comment = order.Comment
-                };
-                hatCon.Order.Add(newOrdermodel);
-                hatCon.SaveChanges();
-            }
-        }
-
-        public int CreateEmptyOrderModel(int customerId)
+        public int CreateEmptyOrderModel(int customerId, string userId)
         {
             using (var hatCon = new ApplicationDbContext())
             {
                 OrderModels newOrderModel = new OrderModels();
                 newOrderModel.Date = DateTime.Now;
                 newOrderModel.CustomerId = customerId;
+                newOrderModel.UserId = userId;
+                newOrderModel.Status = "Aktiv";
                 hatCon.Order.Add(newOrderModel);
                 hatCon.SaveChanges();
                 return newOrderModel.Id;
             }
         }
-        public int CreateOrderInDatabase(int customerId)
+        public int CreateOrderInDatabase(int customerId, string userId)
         {
-            //Kolla vem som är inloggad och koppla som skapare på beställning
-            int newOrderId = CreateEmptyOrderModel(customerId);
+            int newOrderId = CreateEmptyOrderModel(customerId, userId);
             return newOrderId;
 
         }
@@ -99,16 +82,9 @@ namespace Hattmakarens_system.Repositories
             {
                 int id = model.OrderId;
                 var order = hatCon.Order.FirstOrDefault(o => o.Id == id);
-                //Hats hat = hatRepository.CreateHat(model);
-                //order.Hats.Add(hat);
                 hatCon.SaveChanges();
             }
         }
-        //public void AddSpecHat(HatViewModel specHat)
-        //{
-        //    GetOrder(specHat.OrderId);
-
-        //}
         public OrderModel GetOrderViewModel(int? id, string customerEmail)
         {
             CustomerRepository customerRepository = new CustomerRepository();
@@ -121,22 +97,37 @@ namespace Hattmakarens_system.Repositories
                 CustomerId = order.CustomerId,
                 CustomerName = customerName,
                 CustomerEmail = customerEmail,
-                Hats = hatRepository.GetAllHatsByOrderId(order.Id)
+                Hats = hatRepository.GetAllHatsByOrderId(order.Id),
+                Comment = order.Comment,
+                TotalSum = order.TotalSum,
+                Moms = order.Moms
             };
             return orderViewModel;
         }
 
-        public void UpdateOrder(int? id, string comment, bool priority)
+        public void UpdateOrder(OrderModel model)
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                var order = GetOrder(id);
-                order.Comment = comment;
-                order.Priority = priority;
-                order.Status = "Under behandling";
+                var order = GetOrder(model.Id);
+                order.Comment = model.Comment;
+                order.Priority = model.Priority;
+                var updatedOrder = CaluculateOrderTotal(model);
+                order.Moms = updatedOrder.Moms;
+                order.TotalSum = updatedOrder.TotalSum;
                 hatCon.Entry(order).State = EntityState.Modified;
                 hatCon.SaveChanges();
             }
+        }
+
+        public OrderModel CaluculateOrderTotal(OrderModel order)
+        {
+            var hats = hatRepository.GetAllHatsByOrderId(order.Id);
+            var calculate = new Service.Calculate();
+            var sumHats = calculate.GetTotalPriceExTax(hats);
+            order.TotalSum = calculate.CalculateTax(sumHats, order.Priority);
+            order.Moms = calculate.GetTaxFromTotal(order.TotalSum);
+            return order;
         }
     }
 }

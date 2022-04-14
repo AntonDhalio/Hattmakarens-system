@@ -15,6 +15,9 @@
         <th>
             Kommentar
         </th>
+        @*<th>
+                Tillvekare
+            </th>*@
     </tr>
     @if (Model != null)
     {
@@ -22,7 +25,7 @@
         {
             foreach (var item in Model.Hats)
             {
-                if (item.ModelID != 1) //1 är ID för specialtillverkad hatt
+                if (item.ModelID != 1)/// 1 är ID för specialtillverkad hatt
                 {
                     <tr>
                         <td>
@@ -37,9 +40,9 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Comment)
                         </td>
-                        <td>
-                            @Html.ActionLink("Ta bort", "Delete", "Hat", new { id = item.Id, orderId = item.OrderId }, null)
-                        </td>
+                        <!--<td>
+                            Namnet på den som ska tillverka hatten?
+                        </td>-->
                     </tr>
                 }
             }
