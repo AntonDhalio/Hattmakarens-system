@@ -29,7 +29,7 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Order/Create
-        public ActionResult CreateOrder(string customerEmail/*, int? currentOrderId*/)
+        public ActionResult CreateOrder(string customerEmail)
         {
             
             if (customerEmail == null)
@@ -45,7 +45,7 @@ namespace Hattmakarens_system.Controllers
                 
                 return View(order);
             }
-            if (customerEmail != null && TempData.Peek("hat") == null /* && currentOrderId == null*/)
+            if (customerEmail != null && TempData.Peek("hat") == null)
             {
                 OrderModel orderModel = (OrderModel)TempData.Peek("order");
                 orderModel.UserId = User.Identity.GetUserId();
@@ -53,19 +53,9 @@ namespace Hattmakarens_system.Controllers
                 orderModel.CustomerId = customerRepository.GetCustomerIdByEmail(customerEmail);
                 TempData["order"] = orderModel;
                 TempData.Keep("order");
-                
+
                 return View(orderModel);
-
-                //string userId = User.Identity.GetUserId();
-                //int customerId = customerRepository.GetCustomerIdByEmail(customerEmail);
-
-                //int orderId = orderRepository.CreateOrderInDatabase(customerId, userId);
-                //OrderModel order = orderRepository.GetOrderViewModel(orderId, customerEmail);
-
-                //return View(order);
-
             }
-            //if(customerEmail != null && (HatViewModel)TempData.Peek("hat") != null/*&& currentOrderId != null*/)
             else
             {
                 List<HatViewModel> hatModels = new List<HatViewModel>();
@@ -80,19 +70,9 @@ namespace Hattmakarens_system.Controllers
                     hat.Id = hatModels.Max(h => h.Id) + 1;
                 }
                 hatModels.Add(hat);
-                //TempData["listOfHats"] = hatModels;
-                //TempData.Keep("listOfHats");
                 OrderModel order = orderRepository.CaluculateOrderTotal((OrderModel)TempData.Peek("order"), (List<HatViewModel>)TempData.Peek("listOfHats"));
                 return View(order);
-
-                
-                //OrderModel order = orderRepository.GetOrderViewModel(currentOrderId, customerEmail);
-                //var updatedOrder = orderRepository.CaluculateOrderTotal(order);
-
-                //return View(updatedOrder);
             }
-            //return View();
-
         }
 
         // POST: Order/Create
@@ -101,7 +81,6 @@ namespace Hattmakarens_system.Controllers
         {
             try 
             {
-                //orderRepository.UpdateOrder(model);
                 OrderModel order = (OrderModel)TempData["order"];
                 order.Comment = model.Comment;
                 order.Priority = model.Priority;

@@ -33,7 +33,7 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Hat/Create
-        public ActionResult CreateSpec(/*int orderId, string customerEmail*/)
+        public ActionResult CreateSpec()
         {
 
             var materials = new List<SelectListItem>();
@@ -46,15 +46,9 @@ namespace Hattmakarens_system.Controllers
                 };
                 materials.Add(listitem);
             }
-            //HatViewModel model = new HatViewModel()
-            //{
-            //    OrderId = orderId,
-            //    CustomerEmail = customerEmail
-            //};
             ViewBag.MaterialsToPickFrom = materials;
             ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
             return View();
-            //return View(model);
         }
 
         // POST: Hat/Create
@@ -74,6 +68,7 @@ namespace Hattmakarens_system.Controllers
                     Status = "Aktiv",
                     Comment = model.Comment,
                     UserId = model.UserId,
+                    UserName = userRepository.GetUser(model.UserId).Name,
                     Materials = new List<MaterialModels>()
                     
                 };
@@ -81,9 +76,6 @@ namespace Hattmakarens_system.Controllers
                 TempData["hat"] = hat;
                 TempData.Keep("hat");
                 return RedirectToAction("CreateOrder", "Order", new { customerEmail = order.CustomerEmail });
-                //model.HatModelID = 1; //Hårdkodat värde för att representera specialltillverkad hatt
-                //hatRepository.CreateHat(model, PickedMaterials, null);
-                //return RedirectToAction("CreateOrder", "Order", new {currentOrderId = model.OrderId, customerEmail = model.CustomerEmail});
             }
             catch
             {
@@ -91,14 +83,10 @@ namespace Hattmakarens_system.Controllers
             }
         }
         // GET: Hat/Create
-        public ActionResult CreateStored(/*int orderId, string customerEmail,*/ string hatModelName)
+        public ActionResult CreateStored(string hatModelName)
         {
 
             HatViewModel model = new HatViewModel();
-            //{
-            //    OrderId = orderId,
-            //    CustomerEmail = customerEmail
-            //};
             if (hatModelName != null)
             {
                 model.Statuses = new List<SelectListItem>();
@@ -124,9 +112,6 @@ namespace Hattmakarens_system.Controllers
 
                 var hatModel = hatModelRepository.GetHatmodelByName(hatModelName);
                 model.Price = hatModel.Price;
-                //model.Path = hatModel.Path -- lägga till path-property på hatmodel i databas?
-                //model.Materials = hatModel.Material;
-                //model.HatModelName = 
                 model.HatModelName = hatModel.Name;
                 model.HatModelID = hatModel.Id;
                 model.HatModelDescription = hatModel.Description;
@@ -153,6 +138,7 @@ namespace Hattmakarens_system.Controllers
                     Status = "Aktiv",
                     Comment = model.Comment,
                     UserId = model.UserId,
+                    UserName = userRepository.GetUser(model.UserId).Name,
                     Materials = new List<MaterialModels>()
 
                 };
@@ -163,9 +149,6 @@ namespace Hattmakarens_system.Controllers
                 TempData["hat"] = hat;
                 TempData.Keep("hat");
                 return RedirectToAction("CreateOrder", "Order", new { customerEmail = order.CustomerEmail });
-
-                //hatRepository.CreateHat(model, pickedMaterials, SelectedStatuses);
-                //return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = model.CustomerEmail });
             }
             catch
             {
@@ -209,9 +192,6 @@ namespace Hattmakarens_system.Controllers
                     }
                 }
                 return View(hat);
-                //HatViewModel model = hatRepository.GetHatViewModel(id);
-                //model.OrderId = orderId;
-                //return View(model);
             }
             catch
             {
@@ -237,9 +217,6 @@ namespace Hattmakarens_system.Controllers
                 TempData.Keep("listOfHats");
                 OrderModel currentOrder = (OrderModel)TempData.Peek("order");
                 return RedirectToAction("CreateOrder", "Order", new { customerEmail = currentOrder.CustomerEmail });
-                //hatRepository.DeleteHat(model.Id);
-                //var customer = customerRepository.GetCustomerByOrderId(model.OrderId);
-                //return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = customer.Email});
             }
             catch
             {
