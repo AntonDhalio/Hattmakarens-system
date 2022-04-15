@@ -65,11 +65,21 @@ namespace Hattmakarens_system.Controllers
                 //return View(order);
 
             }
-            if(customerEmail != null && (HatViewModel)TempData.Peek("hat") != null/*&& currentOrderId != null*/)
+            //if(customerEmail != null && (HatViewModel)TempData.Peek("hat") != null/*&& currentOrderId != null*/)
+            else
             {
                 List<HatViewModel> hatModels = new List<HatViewModel>();
                 hatModels = (List<HatViewModel>)TempData.Peek("listOfHats");
-                hatModels.Add((HatViewModel)TempData.Peek("hat"));
+                HatViewModel hat = (HatViewModel)TempData["hat"];
+                if (hatModels.Count == 0)
+                {
+                    hat.Id = 1;
+                }
+                else
+                {
+                    hat.Id = hatModels.Max(h => h.Id) + 1;
+                }
+                hatModels.Add(hat);
                 //TempData["listOfHats"] = hatModels;
                 //TempData.Keep("listOfHats");
                 OrderModel order = orderRepository.CaluculateOrderTotal((OrderModel)TempData.Peek("order"), (List<HatViewModel>)TempData.Peek("listOfHats"));
@@ -81,7 +91,7 @@ namespace Hattmakarens_system.Controllers
 
                 //return View(updatedOrder);
             }
-            return View();
+            //return View();
 
         }
 

@@ -318,7 +318,7 @@
     <Content Include="Views\Statistic\_GetStatistics.cshtml" />
     <Content Include="Views\Statistic\Index.cshtml" />
     <Content Include="Views\Hat\ActiveHats.cshtml" />
-    <Content Include="Views\Hat\Delete.cshtml" />
+    <Content Include="Views\Hat\DeleteInRegOrder.cshtml" />
     <Content Include="Views\Order\Delete.cshtml" />
     <Content Include="Views\Hatmodel\SearchHatModel.cshtml" />
     <Content Include="Views\Order\ViewOrder.cshtml" />

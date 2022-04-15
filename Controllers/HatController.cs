@@ -156,6 +156,9 @@ namespace Hattmakarens_system.Controllers
                     Materials = new List<MaterialModels>()
 
                 };
+                var hatModel = hatModelRepository.GetHatmodel(model.HatModelID);
+                hat.HatModelName = hatModel.Name;
+                hat.HatModelDescription = hatModel.Description;
                 hat.Materials = materialRepository.GetPickedMaterialInHat(hat.HatModelID, pickedMaterials, SelectedStatuses);
                 TempData["hat"] = hat;
                 TempData.Keep("hat");
@@ -193,13 +196,22 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Hat/Delete/5
-        public ActionResult Delete(int id, int orderId)
+        public ActionResult DeleteInRegOrder(int id)
         {
             try
             {
-                HatViewModel model = hatRepository.GetHatViewModel(id);
-                model.OrderId = orderId;
-                return View(model);
+                HatViewModel hat = new HatViewModel();
+                foreach(HatViewModel item in (List<HatViewModel>)TempData.Peek("listOfHats"))
+                {
+                    if(item.Id == id)
+                    {
+                        hat = item;
+                    }
+                }
+                return View(hat);
+                //HatViewModel model = hatRepository.GetHatViewModel(id);
+                //model.OrderId = orderId;
+                //return View(model);
             }
             catch
             {
@@ -209,13 +221,25 @@ namespace Hattmakarens_system.Controllers
 
         // POST: Hat/Delete/5
         [HttpPost]
-        public ActionResult Delete(HatViewModel model)
+        public ActionResult DeleteInRegOrder(HatViewModel model)
         {
             try
             {
-                hatRepository.DeleteHat(model.Id);
-                var customer = customerRepository.GetCustomerByOrderId(model.OrderId);
-                return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = customer.Email});
+                List<HatViewModel> listOfHats = new List<HatViewModel>();
+                foreach(HatViewModel hat in (List<HatViewModel>)TempData.Peek("listOfHats"))
+                {
+                    if(hat.Id != model.Id)
+                    {
+                        listOfHats.Add(hat);
+                    }
+                }
+                TempData["listOfHats"] = listOfHats;
+                TempData.Keep("listOfHats");
+                OrderModel currentOrder = (OrderModel)TempData.Peek("order");
+                return RedirectToAction("CreateOrder", "Order", new { customerEmail = currentOrder.CustomerEmail });
+                //hatRepository.DeleteHat(model.Id);
+                //var customer = customerRepository.GetCustomerByOrderId(model.OrderId);
+                //return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = customer.Email});
             }
             catch
             {

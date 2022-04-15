@@ -21,8 +21,6 @@
     </tr>
     @if (Model != null)
     {
-        //if (Model.Hats != null)
-        //{
         foreach (var item in (List<Hattmakarens_system.ViewModels.HatViewModel>)TempData.Peek("listOfHats"))
         {
             if (item.HatModelID == 1)// 1 är ID för specialtillverkad hatt
@@ -40,12 +38,11 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Comment)
                         </td>
-                        @*<td>
-                            @Html.ActionLink("Ta bort", "Delete", "Hat", new { id = item.Id, orderId = item.OrderId }, null)
-                        </td>*@
+                        <td>
+                            @Html.ActionLink("Ta bort", "DeleteInRegOrder", "Hat", new { id = item.Id}, null)
+                        </td>
                     </tr>
             }
         }
-        //}
     }
 </table>
