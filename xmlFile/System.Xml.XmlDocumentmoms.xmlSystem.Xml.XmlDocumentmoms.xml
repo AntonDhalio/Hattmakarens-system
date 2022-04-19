@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Mainbody>
   <title>Moms</title>
-  <purchasedTax>100</purchasedTax>
-  <salesTax>500</salesTax>
-  <outgoingTax>400</outgoingTax>
+  <purchasedTax>500</purchasedTax>
+  <salesTax>114,5</salesTax>
+  <outgoingTax>-385,5</outgoingTax>
 </Mainbody>

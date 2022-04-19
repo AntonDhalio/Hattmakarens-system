@@ -219,6 +219,7 @@
     <Compile Include="Services\PdfService.cs" />
     <Compile Include="Services\PdfTemplates.cs" />
     <Compile Include="Services\TranslateService.cs" />
+    <Compile Include="Services\XmlService.cs" />
     <Compile Include="Service\Calculate.cs" />
     <Compile Include="Service\Material.cs" />
     <Compile Include="Service\Color.cs" />
