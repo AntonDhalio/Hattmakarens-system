@@ -159,5 +159,16 @@ namespace Hattmakarens_system.Repositories
                 return hatCon.Order.Max(h => h.Id);
             }
         }
+        public OrderModels ChangeCustomer (int id, int customerId)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var order = context.Order.FirstOrDefault(o => o.Id == id);
+                order.CustomerId = customerId;
+                context.Entry(order).State = EntityState.Modified;
+                context.SaveChanges();
+                return order;
+            }
+        }
     }
 }

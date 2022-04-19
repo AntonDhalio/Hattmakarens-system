@@ -114,5 +114,24 @@ namespace Hattmakarens_system.Repositories
             }
         }
 
+        public CustomerModels AddEmptyCustomer()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var customer = new CustomerModels
+                {
+                    Name = "Kund borttagen",
+                    Adress = "",
+                    Phone = 0,
+                    Comment = "När du tar bort en kund kommer alla dess tidigare ordrar att hamna på denna 'kund'",
+                    Email = "",
+                    Orders = new List<OrderModels>()
+                };
+                context.Customer.Add(customer);
+                context.SaveChanges();
+                return customer;
+            }
+        }
+
     }
 }
