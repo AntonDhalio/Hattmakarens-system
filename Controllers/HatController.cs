@@ -135,66 +135,67 @@ namespace Hattmakarens_system.Controllers
         // GET: Hat/Edit/5
         public ActionResult Edit(int hatId)
         {
-            //Hats hat = hatRepository.GetHat(hatId);
-            ///*List<int> materialIds = materialRepository.GetMaterialInHat(hatId);*/
-            //HatViewModel model = new HatViewModel()
-            //{
-            //    Id = hat.Id,
-            //    Name = hat.Name,
-            //    Comment = hat.Comment,
-            //    Price = hat.Price,
-            //    Size = hat.Size,
-            //    HatModelID = hat.ModelID,
-            //    Status = hat.Status,
-            //    UserId = hat.UserId
-            //};
-            //TempData["orderId"] = hat.OrderId;
-            //TempData.Keep("orderId");
-            //model.HatModelName = hatModelRepository.GetHatmodel(hat.ModelID).Name;
-            //model.HatModelDescription = hatModelRepository.GetHatmodel(hat.ModelID).Description;
+            Hats hat = hatRepository.GetHat(hatId);
+            /*List<int> materialIds = materialRepository.GetMaterialInHat(hatId);*/
+            HatViewModel model = new HatViewModel()
+            {
+                Id = hat.Id,
+                Name = hat.Name,
+                Comment = hat.Comment,
+                Price = hat.Price,
+                Size = hat.Size,
+                HatModelID = hat.ModelID,
+                Status = hat.Status,
+                UserId = hat.UserId
+            };
+            TempData["orderId"] = hat.OrderId;
+            TempData.Keep("orderId");
+            model.HatModelName = hatModelRepository.GetHatmodel(hat.ModelID).Name;
+            model.HatModelDescription = hatModelRepository.GetHatmodel(hat.ModelID).Description;
 
-            //model.Statuses = new List<SelectListItem>();
-            //foreach(var material in materialRepository.GetAllMaterials())
-            //{
-            //    var listItem = new SelectListItem()
-            //    {
-            //        Value = material.Id.ToString(),
-            //        Text = material.Name + ", " + material.Color.Name + ", " + material.Type
-            //    };
-            //    model.Statuses.Add(listItem);
-            //}
-            //var SelectedMaterialsId = new List<int>();
-            //foreach(var materialId in materialRepository.GetMaterialInHat(hatId))
-            //{
-            //    SelectedMaterialsId.Add(materialId);
-            //}
-            //model.SelectedStatuses = new int[100];
+            model.Statuses = new List<SelectListItem>();
+            foreach (var material in materialRepository.GetAllMaterials())
+            {
+                var listItem = new SelectListItem()
+                {
+                    Value = material.Id.ToString(),
+                    Text = material.Name + ", " + material.Color.Name + ", " + material.Type
+                };
+                model.Statuses.Add(listItem);
+            }
+            var SelectedMaterialsId = new List<int>();
+            foreach (var materialId in materialRepository.GetMaterialInHat(hatId))
+            {
+                SelectedMaterialsId.Add(materialId);
+            }
+            model.SelectedStatuses = new int[100];
 
-            //int count = 0;
-            //foreach(var id in SelectedMaterialsId)
-            //{
-            //    model.SelectedStatuses[count] = id;
-            //    count++;
-            //}
-            //ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
-            //return View(model);
-            return View();
+            int count = 0;
+            foreach (var id in SelectedMaterialsId)
+            {
+                model.SelectedStatuses[count] = id;
+                count++;
+            }
+            ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
+            ViewBag.StatusesToPickFrom = hatRepository.StatusesToDropDownList();
+            return View(model);
+            //return View();
         }
 
         // POST: Hat/Edit/5
         [HttpPost]
         public ActionResult Edit(HatViewModel model, int[] SelectedStatuses)
         {
-            //try
-            ////{
-            //    hatRepository.UpdateHat(model, SelectedStatuses);
+            try
+            {
+                hatRepository.UpdateHat(model, SelectedStatuses);
 
-                return RedirectToAction("ViewOrder", "Order", new { Id = (int)TempData.Peek("orderId")});
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
+            return RedirectToAction("ViewOrder", "Order", new { Id = (int)TempData.Peek("orderId")});
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: Hat/Delete/5

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using Hattmakarens_system.Models;
 using Hattmakarens_system.ViewModels;
 
@@ -14,7 +15,7 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.Hats.FirstOrDefault(h => h.Id == id);
+                return hatCon.Hats.Include(h => h.Materials).FirstOrDefault(h => h.Id == id);
             }
         }
 
@@ -117,56 +118,42 @@ namespace Hattmakarens_system.Repositories
             }
         }
 
-        //public void UpdateHat(HatViewModel hat, int[] SelectedStatuses)
-        //{
-        //    using (var hatCon = new ApplicationDbContext())
-        //    {
-        //        hatCon.Hats.AsNoTracking();
-        //        Hats existingHat = GetHat(hat.Id);
-        //        Hats newHat = new Hats()
-        //        {
-        //            Id = hat.Id,
-        //            Name = hat.Name,
-        //            Size = hat.Size,
-        //            Comment = hat.Comment,
-        //            Status = hat.Status,
-        //            Price = hat.Price,
-        //            UserId = hat.UserId
-        //        };
+        public void UpdateHat(HatViewModel hat, int[] SelectedStatuses)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                Hats existingHat = GetHat(hat.Id); 
+                hatCon.Hats.Attach(existingHat);
 
+                existingHat.Id = hat.Id;
+                existingHat.Name = hat.Name;
+                existingHat.Size = hat.Size;
+                existingHat.Comment = hat.Comment;
+                existingHat.Status = hat.Status;
+                existingHat.Price = hat.Price;
+                existingHat.UserId = hat.UserId;
 
-        //        existingHat.Id = hat.Id;
-        //        existingHat.Name = hat.Name;
-        //        existingHat.Size = hat.Size;
-        //        existingHat.Comment = hat.Comment;
-        //        existingHat.Status = hat.Status;
-        //        existingHat.Price = hat.Price;
-        //        existingHat.UserId = hat.UserId;
+                existingHat.Materials = new List<MaterialModels>();
 
+                foreach (var materialId in SelectedStatuses)
+                {
+                    var aMaterial = hatCon.Material.Include(m => m.Hats).FirstOrDefault(m => m.Id == materialId);
+                    existingHat.Materials.Add(aMaterial);
+                }
+               
+                hatCon.Entry(existingHat).State = EntityState.Modified;
+                hatCon.SaveChanges();
+            }
+        }
 
-        //        existingHat.Materials = new List<MaterialModels>();
-
-        //        List<MaterialModels> materials = new List<MaterialModels>();
-        //        foreach (var materialId in SelectedStatuses)
-        //        {
-        //            var id = material;
-        //            var aMaterial = hatCon.Material.Include(m => m.Hats).FirstOrDefault(m => m.Id == materialId);
-        //            materials.Add(aMaterial);
-        //            existingHat.Materials.Add(aMaterial);
-        //        }
-        //        existingHat.Materials = materials;
-        //        newHat.Materials = materials;
-        //        hatCon.Hats.Attach(newHat);
-        //        var entry = hatCon.Entry(newHat);
-        //        entry.State = EntityState.Modified;
-        //        entry.Property("OrderId").IsModified = false;
-
-
-        //        hatCon.Hats.Attach(existingHat);
-        //        hatCon.Entry(existingHat).State = EntityState.Modified;
-        //        hatCon.SaveChanges();
-
-        //    }
-        //}
+        public List<SelectListItem> StatusesToDropDownList()
+        {
+            var statuses = new List<SelectListItem>()
+            {
+                new SelectListItem { Value = "Aktiv", Text= "Aktiv"},
+                new SelectListItem { Value = "Inaktiv", Text = "Inaktiv"}
+            };
+            return statuses;
+        }
     }
 }
