@@ -65,6 +65,7 @@ namespace Hattmakarens_system.Controllers
             var taxFromOrdersCount = count.GetTaxFromTotal(viewModel.totalSum);
             var inTax = viewModel.purchasedTax;
             var result = taxFromOrdersCount - inTax;
+
             //Skapar xml dokument 
             XmlDocument doc = new XmlDocument();
             XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
@@ -92,8 +93,7 @@ namespace Hattmakarens_system.Controllers
             string path = Path.Combine(uploadPath, filename);
             doc.Save(path + filename);
             Process.Start(path + filename);
-            ModelState.Clear();
-            return new EmptyResult();
+            return new HttpStatusCodeResult(204);
         }
     }
 }
