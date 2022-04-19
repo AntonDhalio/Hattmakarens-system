@@ -15,11 +15,13 @@
     <div>
         @using (Html.BeginForm("AddCustomer", "Customer", FormMethod.Post))
         {
-            <div class="form-group">
-                @Html.LabelFor(c => c.Name, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(c => c.Name, "", new { @class = "text-danger" })
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(c => c.Name, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(c => c.Name, "", new { @class = "text-danger" })
+                    </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(c => c.Email, new { @class = "col-md-2 control-label" })
@@ -50,15 +52,17 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" class="btn btn-default" value="Lägg till kund" />
+                        <input type="submit" class="btn btn-success" value="Lägg till kund" />
+                        <input type="button" class="btn btn-danger" value="Gå tillbaka till skapa beställningen" onclick="location.href = '@Url.Action("SearchCustomer", "Customer")'" />
                     </div>
                 </div>
-                <input type="button" class="btn" value="Gå tillbaka till skapa beställningen" onclick="location.href = '@Url.Action("SearchCustomer", "Customer")'" />
+                
+                
             </div>
         }
     </div>
 
-    
+
 </body>
         
 </html>

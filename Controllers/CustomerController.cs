@@ -64,18 +64,12 @@ namespace Hattmakarens_system.Controllers
                 {
                     return RedirectToAction("DisplayCustomer", new {id = model.Id});
                 }
-                else
-                {
-                    return View();
-                }
+                return View();
             }
             else
             {
                 return View(model);
             }
-            
-
-                
         }
 
         public ActionResult DisplayCustomer(int id)
