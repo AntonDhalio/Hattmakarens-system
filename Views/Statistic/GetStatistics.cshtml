@@ -70,5 +70,26 @@
         @Html.HiddenFor(x => x.toDate)
         <input type="submit" value="Skriv ut statistik" />
     }
+    <br />
+    <br />
+    <h2>Räkna ut moms baserat på inköp</h2>
+    <div>
+        @using (Html.BeginForm("CountTax", "Statistic", FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.LabelFor(s => s.purchasedTax, new { @class = "col-md-2 control-label" })
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(s => s.purchasedTax, new { @class = "form-control" })
+                @Html.HiddenFor(s => s.totalSum)
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Räkna ut moms" />
+                </div>
+            </div>
+        }
+    </div>
 </body>
 </html>
+
