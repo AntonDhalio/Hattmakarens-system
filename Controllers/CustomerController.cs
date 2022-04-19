@@ -23,18 +23,26 @@ namespace Hattmakarens_system.Controllers
         {
             try
             {
-                var cusRepo = new CustomerRepository();
-                var customer = new CustomerModels
+                if (ModelState.IsValid)
                 {
-                    Adress = customerViewModel.Adress,
-                    Name = customerViewModel.Name,
-                    Email = customerViewModel.Email,
-                    Comment = customerViewModel.Comment,
-                    Phone = customerViewModel.Phone
-                };
-                cusRepo.SaveCostumer(customer);
-                ModelState.Clear();
-                return View();
+                    var cusRepo = new CustomerRepository();
+                    var customer = new CustomerModels
+                    {
+                        Adress = customerViewModel.Adress,
+                        Name = customerViewModel.Name,
+                        Email = customerViewModel.Email,
+                        Comment = customerViewModel.Comment,
+                        Phone = customerViewModel.Phone
+                    };
+                    cusRepo.SaveCostumer(customer);
+                    ModelState.Clear();
+                    return View();
+                }
+                else
+                {
+                    return View(customerViewModel);
+                }
+                
             }
             catch
             {
@@ -49,16 +57,23 @@ namespace Hattmakarens_system.Controllers
         [HttpPost]
         public ActionResult ChangeCustomer(CostumerViewModel model)
         {
-            
-            var status = new Service.Costumer().EditCustomerInfo(model);
-            if(status == true)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("DisplayCustomer", new {id = model.Id});
+                var status = new Service.Costumer().EditCustomerInfo(model);
+                if(status == true)
+                {
+                    return RedirectToAction("DisplayCustomer", new {id = model.Id});
+                }
+                else
+                {
+                    return View();
+                }
             }
             else
             {
-                return View();
+                return View(model);
             }
+            
 
                 
         }
