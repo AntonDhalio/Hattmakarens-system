@@ -176,6 +176,7 @@ namespace Hattmakarens_system.Controllers
         {
             new Service.Order().ChangeOrderStatus(id, orderStatus);
             new Service.Order().ChangeOrderComment(id, comment);
+            orderRepository.UpdateOrderPrice(id);
             return RedirectToAction("ViewOrder", new {Id = id});
         }
 
