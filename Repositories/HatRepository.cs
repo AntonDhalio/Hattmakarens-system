@@ -11,6 +11,8 @@ namespace Hattmakarens_system.Repositories
 {
     public class HatRepository
     {
+        UserRepository userRepository = new UserRepository();
+        HatmodelRepository hatmodelRepository = new HatmodelRepository();
         public Hats GetHat(int id)
         {
             using (var hatCon = new ApplicationDbContext())
@@ -23,11 +25,20 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                Hats hat = hatCon.Hats.FirstOrDefault(h => h.Id == id);
+                Hats hat = hatCon.Hats.Include(h => h.Materials).FirstOrDefault(h => h.Id == id);
                 HatViewModel model = new HatViewModel()
                 {
                     Name = hat.Name,
-                    Id = hat.Id
+                    Id = hat.Id,
+                    Comment = hat.Comment,
+                    Size = hat.Size,
+                    Price = hat.Price,
+                    Status = hat.Status,
+                    UserName = userRepository.GetUser(hat.UserId).Name,
+                    Materials = hat.Materials,
+                    HatModelID = hat.ModelID,
+                    HatModelName = hatmodelRepository.GetHatmodel(hat.ModelID).Name,
+                    HatModelDescription = hatmodelRepository.GetHatmodel(hat.ModelID).Description
                 };
                 return model;
             }

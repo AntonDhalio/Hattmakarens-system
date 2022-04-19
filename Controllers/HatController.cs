@@ -309,17 +309,10 @@ namespace Hattmakarens_system.Controllers
         }
 
         //GET
-        public ActionResult Show(int hatId)
+        public ActionResult ViewHat(int hatId)
         {
             var hat = hatRepository.GetHatViewModel(hatId);
             return View(hat);
-        }
-
-        //POST
-        [HttpPost]
-        public ActionResult Show()
-        {
-            return View();
         }
 
     }
