@@ -212,7 +212,7 @@ namespace Hattmakarens_system.Controllers
             {
                 hatRepository.UpdateHat(model, SelectedStatuses);
                 orderRepository.UpdateOrderPrice((int)TempData.Peek("orderId"));
-                return RedirectToAction("ViewOrder", "Order", new { Id = (int)TempData.Peek("orderId")});
+                return RedirectToAction("ModifyOrder", "Order", new { Id = (int)TempData.Peek("orderId")});
             }
             catch
             {
@@ -306,6 +306,13 @@ namespace Hattmakarens_system.Controllers
                 }
             }
             return View(viewModel);
+        }
+
+        //GET
+        public ActionResult ViewHat(int hatId)
+        {
+            var hat = hatRepository.GetHatViewModel(hatId);
+            return View(hat);
         }
 
     }
