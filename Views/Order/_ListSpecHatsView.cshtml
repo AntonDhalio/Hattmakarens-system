@@ -24,23 +24,26 @@
             {
                 if (item.ModelID == 1)/// 1 är ID för specialtillverkad hatt
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Size)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Comment)
-                        </td>
-                        <!--<td>
-                            Namnet på den som ska tillverka hatten?
-                        </td>-->
-                    </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Size)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Price)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Comment)
+    </td>
+    <!--<td>
+        Namnet på den som ska tillverka hatten?
+    </td>-->
+    <td>
+        @Html.ActionLink("Redigera", "Edit", "Hat", new { hatId = item.Id }, null)
+    </td>
+</tr>
                 }
             }
         }

@@ -1,4 +1,4 @@
-﻿@model Hattmakarens_system.Models.CustomerModels
+﻿@model Hattmakarens_system.ViewModels.CostumerViewModel
 
 @{
     ViewBag.Title = "ChangeCustomer";
@@ -58,7 +58,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Spara" class="btn btn-primary" />
-                <input type="submit" value="Avbryt" class="btn btn-danger" />
+                <input type="submit" value="Avbryt" class="btn btn-danger" onclick="location.href = '@Url.Action("DisplayCustomer", "Customer", new { id = Model.Id }, null)'" />
             </div>
         </div>
     </div>
