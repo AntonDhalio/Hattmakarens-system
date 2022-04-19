@@ -123,7 +123,7 @@ namespace Hattmakarens_system.Controllers
             try
             {
                 hatRepository.CreateHat(model, pickedMaterials, SelectedStatuses);
-     
+   
                 return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = model.CustomerEmail });
             }
             catch
@@ -136,7 +136,6 @@ namespace Hattmakarens_system.Controllers
         public ActionResult Edit(int hatId)
         {
             Hats hat = hatRepository.GetHat(hatId);
-            /*List<int> materialIds = materialRepository.GetMaterialInHat(hatId);*/
             HatViewModel model = new HatViewModel()
             {
                 Id = hat.Id,
@@ -179,7 +178,6 @@ namespace Hattmakarens_system.Controllers
             ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
             ViewBag.StatusesToPickFrom = hatRepository.StatusesToDropDownList();
             return View(model);
-            //return View();
         }
 
         // POST: Hat/Edit/5
@@ -189,8 +187,7 @@ namespace Hattmakarens_system.Controllers
             try
             {
                 hatRepository.UpdateHat(model, SelectedStatuses);
-
-            return RedirectToAction("ViewOrder", "Order", new { Id = (int)TempData.Peek("orderId")});
+                return RedirectToAction("ViewOrder", "Order", new { Id = (int)TempData.Peek("orderId")});
             }
             catch
             {
