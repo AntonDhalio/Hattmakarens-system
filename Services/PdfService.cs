@@ -37,13 +37,10 @@ namespace Hattmakarens_system.Services
         {
             var repo = new OrderRepository();
             var orders = repo.GetAllOrders();
-            var year = DateTime.Now.AddYears(-1);
-            var quarter = DateTime.Now.AddMonths(-3);
-            var month = DateTime.Now.AddMonths(-1);
             viewModel.orders = new List<Models.OrderModels>();
             foreach (var order in orders)
             {
-                if(order.Date > viewModel.fromDate && order.Date < viewModel.toDate)
+                if(order.Date >= viewModel.fromDate && order.Date <= viewModel.toDate)
                 {
                     viewModel.orders.Add(order);
                 }

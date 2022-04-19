@@ -12,13 +12,13 @@ namespace Hattmakarens_system.Service
     public class Costumer
     {
         private CustomerRepository customerRepository = new CustomerRepository();
-        public CustomerModels GetCustomerInfo(int id)
+        public CostumerViewModel GetCustomerInfo(int id)
         {
             try
             {
                 var customer = customerRepository.GetCustomer(id);
                 var orders = customerRepository.GetAllCustomerOrders(id);
-                var showCustomerInfo = new CustomerModels
+                var showCustomerInfo = new CostumerViewModel
                 {
                     Id = customer.Id,
                     Name = customer.Name,
