@@ -22,7 +22,7 @@ namespace Hattmakarens_system.Controllers
         }
 
         [HttpPost]
-        public ActionResult Hatmodel(HatmodelViewModel hatmodel, IEnumerable<string> PickedMaterials, HttpPostedFileBase file) 
+        public ActionResult Hatmodel(HatmodelViewModel hatmodel, IEnumerable<string> PickedMaterials, HttpPostedFileBase [] file) 
         {
 
             if (ModelState.IsValid) { 
@@ -35,9 +35,10 @@ namespace Hattmakarens_system.Controllers
                     Material = new List<MaterialModels>(),
                     Images = new List<ImageModels>()
                 };
-                if (file.ContentLength > 0)
+                if (file.Length > 0)
                 {
-                    string filename = Path.GetFileName(file.FileName);
+                    foreach (var item in file) { 
+                    string filename = Path.GetFileName(item.FileName);
                     string imagePath = Path.Combine(Server.MapPath("~/Images"), filename);
                     var image = new ImageModels
                     {
@@ -46,6 +47,7 @@ namespace Hattmakarens_system.Controllers
                     };
                     var imgRepo = new ImageRepository();               
                     newHatmodel.Images.Add(imgRepo.SaveImage(image));
+                     }
                 }
             //using (var context = new ApplicationDbContext())
 
