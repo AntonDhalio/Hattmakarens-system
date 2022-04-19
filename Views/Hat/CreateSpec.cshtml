@@ -3,7 +3,7 @@
 
 <h2>Lägg till en specialtillverkad hatt</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("CreateSpec", "Hat", FormMethod.Post, new { enctype = "multipart/form-data" })) 
 {
     @Html.AntiForgeryToken()
     
@@ -27,17 +27,17 @@
     </div>
 
     <!--<div class="form-group">-->
-        @*@Html.LabelFor(model => model.Path, htmlAttributes: new { @class = "control-label col-md-2" })*@
-        <!--<div class="col-md-10">-->
-            @*@Html.EditorFor(model => model.Path, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Path, "", new { @class = "text-danger" })*@
-        <!--</div>
+    @*@Html.LabelFor(model => model.Path, htmlAttributes: new { @class = "control-label col-md-2" })*@
+    <!--<div class="col-md-10">-->
+    @*@Html.EditorFor(model => model.Path, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Path, "", new { @class = "text-danger" })*@
+    <!--</div>
     </div>-->
 
     <div class="form-group ">
-        @Html.LabelFor(model => model.PickedMaterials, new {@class = "col-md-2 control-label" })
+        @Html.LabelFor(model => model.PickedMaterials, new { @class = "col-md-2 control-label" })
         <div class="col-md-10 ">
-            @Html.ListBoxFor(model => model.PickedMaterials, new MultiSelectList(ViewBag.MaterialsToPickFrom, "Value", "Text"), new {@class = "form-control"})
+            @Html.ListBoxFor(model => model.PickedMaterials, new MultiSelectList(ViewBag.MaterialsToPickFrom, "Value", "Text"), new { @class = "form-control" })
         </div>
     </div>
 
@@ -47,7 +47,7 @@
             @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
         </div>
-             <p>Priset anges exklusive moms</p>
+        <p>Priset anges exklusive moms</p>
     </div>
 
     <div class="form-group">
@@ -59,9 +59,16 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.UserId, new {@class = "col-md-2 control-label" } )
+        <div class="col-md-offset-2 col-md-10">
+            @Html.Label("Välj bild")
+            @Html.TextBox("file", "", new { type = "file", multiple = "multiple" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownList("UserId", new SelectList(ViewBag.UsersToPickFrom, "Value", "Text"), new {@class = "form-control"})
+            @Html.DropDownList("UserId", new SelectList(ViewBag.UsersToPickFrom, "Value", "Text"), new { @class = "form-control" })
         </div>
     </div>
 

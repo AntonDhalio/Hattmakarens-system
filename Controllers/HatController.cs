@@ -53,7 +53,7 @@ namespace Hattmakarens_system.Controllers
 
         // POST: Hat/Create
         [HttpPost]
-        public ActionResult CreateSpec(HatViewModel model, IEnumerable<string> PickedMaterials)
+        public ActionResult CreateSpec(HatViewModel model, IEnumerable<string> PickedMaterials, HttpPostedFileBase[] file)
         {
             try
             {
@@ -69,9 +69,22 @@ namespace Hattmakarens_system.Controllers
                     Comment = model.Comment,
                     UserId = model.UserId,
                     UserName = userRepository.GetUser(model.UserId).Name,
-                    Materials = new List<MaterialModels>()
+                    Materials = new List<MaterialModels>(),
+                    Images = new List<ImageModels>()
                     
                 };
+
+                var path = Server.MapPath("~/Images");
+                var images = new Service.Image().AddImages(file, path);
+               
+
+                foreach(var item in images)
+                {
+                    var imgRepo = new ImageRepository();
+                    imgRepo.SaveImage(item);
+                }
+
+                hat.Images = images;
                 hat.Materials = materialRepository.GetPickedMaterialInHat(hat.HatModelID, PickedMaterials, SelectedStatuses);
                 TempData["hat"] = hat;
                 TempData.Keep("hat");
