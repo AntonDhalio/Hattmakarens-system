@@ -19,7 +19,7 @@ namespace Hattmakarens_system.Services
         PdfLabelsViewModel labels = new PdfLabelsViewModel();
 
         //Faktura PDF
-        public void InvoicePDF(InvoiceViewModel invoice)
+        public PdfDocument InvoicePDF(InvoiceViewModel invoice)
         {
             PdfDocument document = new PdfDocument();
             PdfPage page = document.AddPage();
@@ -30,7 +30,7 @@ namespace Hattmakarens_system.Services
             XFont contentFontBold = new XFont("Verdana", 10, XFontStyle.Bold);
             XFont miniFont = new XFont("Verdana", 8, XFontStyle.Italic);
 
-            if (invoice.Translate == true)
+            if (!invoice.Language.Equals("sv"))
             {
                 labels = translateService.TranslatePdf(labels);
             }
@@ -88,12 +88,15 @@ namespace Hattmakarens_system.Services
                 x += 20;
             }
 
-            string path = HttpContext.Current.Server.MapPath("~/App_Data/");
-            string filename = document.Guid.ToString() + "faktura.pdf";
+            return document;
+            //string path = HttpContext.Current.Server.MapPath("~/App_Data/");
+            //string filename = document.Guid.ToString() + "faktura.pdf";
 
-            document.Save(path + filename);
-            Process.Start(path + filename);
+            //document.Save(path + filename);
+            //Process.Start(path + filename);
         }
+
+
 
         //Fraktsedel PDF
         public void ShippingPDF(ShippingViewModel shipping)

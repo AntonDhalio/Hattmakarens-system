@@ -1,6 +1,7 @@
 ﻿using Hattmakarens_system.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Web;
@@ -32,7 +33,7 @@ namespace Hattmakarens_system.Services
 
         public PdfLabelsViewModel TranslatePdf(PdfLabelsViewModel swedish)
         {
-            PdfLabelsViewModel english = new PdfLabelsViewModel
+            PdfLabelsViewModel translated = new PdfLabelsViewModel
             {
                 Invoice = Translate(swedish.Shipping),
                 To = Translate(swedish.To),
@@ -63,7 +64,7 @@ namespace Hattmakarens_system.Services
                 OrderDate = Translate(swedish.OrderDate),
             };
 
-            return english;
+            return translated;
         }
     }
 }
