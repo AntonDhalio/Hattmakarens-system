@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using Hattmakarens_system.Models;
 using Hattmakarens_system.ViewModels;
 
@@ -14,7 +15,7 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.Hats.FirstOrDefault(h => h.Id == id);
+                return hatCon.Hats.Include(h => h.Materials).FirstOrDefault(h => h.Id == id);
             }
         }
 
@@ -115,6 +116,44 @@ namespace Hattmakarens_system.Repositories
             {
                 return hatCon.Hats.Where(h => h.OrderId == id).ToList();
             }
+        }
+
+        public void UpdateHat(HatViewModel hat, int[] SelectedStatuses)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                Hats existingHat = GetHat(hat.Id); 
+                hatCon.Hats.Attach(existingHat);
+
+                existingHat.Id = hat.Id;
+                existingHat.Name = hat.Name;
+                existingHat.Size = hat.Size;
+                existingHat.Comment = hat.Comment;
+                existingHat.Status = hat.Status;
+                existingHat.Price = hat.Price;
+                existingHat.UserId = hat.UserId;
+
+                existingHat.Materials = new List<MaterialModels>();
+
+                foreach (var materialId in SelectedStatuses)
+                {
+                    var aMaterial = hatCon.Material.Include(m => m.Hats).FirstOrDefault(m => m.Id == materialId);
+                    existingHat.Materials.Add(aMaterial);
+                }
+               
+                hatCon.Entry(existingHat).State = EntityState.Modified;
+                hatCon.SaveChanges();
+            }
+        }
+
+        public List<SelectListItem> StatusesToDropDownList()
+        {
+            var statuses = new List<SelectListItem>()
+            {
+                new SelectListItem { Value = "Aktiv", Text= "Aktiv"},
+                new SelectListItem { Value = "Inaktiv", Text = "Inaktiv"}
+            };
+            return statuses;
         }
     }
 }
