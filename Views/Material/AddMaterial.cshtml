@@ -33,18 +33,7 @@
             </div>
         </div>
         <br />
-
         <br />
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.ColorId, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.ColorId, new { @class = "jscolor" })
-                @*<button class="btn btn-outline-primary jscolor" type="button" >Välj färg</button>*@
-                @Html.ValidationMessageFor(m => m.ColorId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
         <br />
         <div class="form-group">
             @Html.LabelFor(m => m.Type, new { @class = "col-md-2 control-label" })

@@ -108,30 +108,31 @@ namespace Hattmakarens_system.Repositories
             return orderViewModel;
         }
 
-        //public void UpdateOrder(OrderModel model)
-        //{
-        //    using (var hatCon = new ApplicationDbContext())
-        //    {
-        //        var order = GetOrder(model.Id);
-        //        order.Comment = model.Comment;
-        //        order.Priority = model.Priority;
-        //        var updatedOrder = CaluculateOrderTotal(model);
-        //        order.Moms = updatedOrder.Moms;
-        //        order.TotalSum = updatedOrder.TotalSum;
-        //        hatCon.Entry(order).State = EntityState.Modified;
-        //        hatCon.SaveChanges();
-        //    }
-        //}
+        public void UpdateOrder(OrderModel model)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                var order = GetOrder(model.Id);
+                order.Comment = model.Comment;
+                order.Priority = model.Priority;
+                var updatedOrder = CaluculateOrderTotal(model);
+                order.Moms = updatedOrder.Moms;
+                order.TotalSum = updatedOrder.TotalSum;
+                hatCon.Entry(order).State = EntityState.Modified;
+                hatCon.SaveChanges();
+            }
+        }
 
-        //public OrderModel CaluculateOrderTotal(OrderModel order)
-        //{
-        //    var hats = hatRepository.GetAllHatsByOrderId(order.Id);
-        //    var calculate = new Service.Calculate();
-        //    var sumHats = calculate.GetTotalPriceExTax(hats);
-        //    order.TotalSum = calculate.CalculateTax(sumHats, order.Priority);
-        //    order.Moms = calculate.GetTaxFromTotal(order.TotalSum);
-        //    return order;
-        //}
+        public OrderModel CaluculateOrderTotal(OrderModel order)
+        {
+            var hats = hatRepository.GetAllHatsByOrderId(order.Id);
+            var calculate = new Service.Calculate();
+            var sumHats = calculate.GetTotalPriceExTax(hats);
+            order.TotalSum = calculate.CalculateTax(sumHats, order.Priority);
+            order.Moms = calculate.GetTaxFromTotal(order.TotalSum);
+            return order;
+        }
+
         public OrderModel CaluculateOrderTotal(OrderModel order, List<HatViewModel> listOfHats)
         {
             List<Hats> hats = new List<Hats>();
