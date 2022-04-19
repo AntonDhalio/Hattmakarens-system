@@ -9,6 +9,11 @@
 <h4>Ordernummer: @Html.DisplayFor(model => model.Id)</h4>
 <hr />
 <div>
+    <div>
+        @Html.ActionLink("Skriv ut beställningsinformation", "Order", "Pdf", new { id = Model.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Skriv ut fraktsedel", "Shipping", "Pdf", new { id = Model.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Skriv ut faktura", "Invoice", "Pdf", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    </div>
     @if (Model != null)
     {
         if (Model.CustomerEmail != null)
@@ -69,5 +74,3 @@
     }
 </div>
 <br />
-
-

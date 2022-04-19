@@ -29,9 +29,7 @@ namespace Hattmakarens_system.ViewModels
 
     public class ShippingViewModel
     {
-        [Required]
-        List<SelectListItem> Languages { get; set; }
-        [Required]
+        public List<SelectListItem> Languages { get; set; }
         public string Language { get; set; }
         public bool Translate { get; set; } 
         public OrderModels Order { get; set; }
@@ -75,5 +73,6 @@ namespace Hattmakarens_system.ViewModels
         public string HatAmount { get; set; } = "Antal hattar";
         public string OrderAmount { get; set; } = "Antal beställningar";
         public string OrderDate { get; set; } = "Beställningsdatum";
+        public string Status { get; set; } = "Status";
     }
 }

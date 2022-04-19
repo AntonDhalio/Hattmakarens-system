@@ -12,21 +12,39 @@ namespace Hattmakarens_system.Controllers
     public class PdfController : Controller
     {
         PdfService pdfService = new PdfService();
-        TranslateService translateService = new TranslateService();
+        PdfTemplates pdfTemplates = new PdfTemplates();
 
         // PRINT: Invoice
-        public ActionResult Invoice(InvoiceViewModel createmodel)
+        public ActionResult Invoice(InvoiceViewModel invoice, int id)
         {
-            int id = 4;
-            createmodel.Languages = PopulateLangList();
+            invoice.Languages = PopulateLangList();
 
             if (ModelState.IsValid)
             {
-                pdfService.PrintInvoice(createmodel, id);
+                pdfService.PrintInvoice(invoice, id);
             }
 
             ModelState.Clear();
-            return View(createmodel);
+            return View(invoice);
+        }
+
+        // PRINT: Shipping
+        public ActionResult Shipping(ShippingViewModel shipping, int id)
+        {
+            shipping.Languages = PopulateLangList();
+
+            if (ModelState.IsValid)
+            {
+                pdfService.PrintShipping(shipping, id);
+            }
+
+            ModelState.Clear();
+            return View(shipping);
+        }
+
+        public void Order(int id)
+        {
+            pdfTemplates.OrderPDF(id);
         }
 
         public List<SelectListItem> PopulateLangList()
@@ -45,20 +63,6 @@ namespace Hattmakarens_system.Controllers
             }
 
             return languages;
-        }
-
-        // PRINT: Shipping
-        public ActionResult Shipping(ShippingViewModel shipping)
-        {
-            int id = 4;
-
-            if (ModelState.IsValid)
-            {
-                pdfService.PrintShipping(shipping, id);
-            }
-
-            ModelState.Clear();
-            return View(shipping);
         }
     }
 }

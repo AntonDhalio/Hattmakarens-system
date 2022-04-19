@@ -15,12 +15,13 @@ namespace Hattmakarens_system.Services
     {
         OrderRepository orderRepository = new OrderRepository();
         CustomerRepository customerRepository = new CustomerRepository();
-        TranslateService translateService = new TranslateService();
         PdfLabelsViewModel labels = new PdfLabelsViewModel();
 
         //Faktura PDF
-        public PdfDocument InvoicePDF(InvoiceViewModel invoice)
+        public void InvoicePDF(InvoiceViewModel invoice)
         {
+            TranslateService ts = new TranslateService(invoice.Language);
+
             PdfDocument document = new PdfDocument();
             PdfPage page = document.AddPage();
             XGraphics gfx = XGraphics.FromPdfPage(page);
@@ -30,9 +31,9 @@ namespace Hattmakarens_system.Services
             XFont contentFontBold = new XFont("Verdana", 10, XFontStyle.Bold);
             XFont miniFont = new XFont("Verdana", 8, XFontStyle.Italic);
 
-            if (!invoice.Language.Equals("sv"))
+            if (!invoice.Language.Equals("sv") || invoice.Language != null)
             {
-                labels = translateService.TranslatePdf(labels);
+                labels = ts.TranslatePdf(labels);
             }
 
             gfx.DrawString(labels.Invoice, headerFont, XBrushes.Black,
@@ -88,12 +89,11 @@ namespace Hattmakarens_system.Services
                 x += 20;
             }
 
-            return document;
-            //string path = HttpContext.Current.Server.MapPath("~/App_Data/");
-            //string filename = document.Guid.ToString() + "faktura.pdf";
+            string path = HttpContext.Current.Server.MapPath("~/App_Data/");
+            string filename = document.Guid.ToString() + "faktura.pdf";
 
-            //document.Save(path + filename);
-            //Process.Start(path + filename);
+            document.Save(path + filename);
+            Process.Start(path + filename);
         }
 
 
@@ -101,6 +101,8 @@ namespace Hattmakarens_system.Services
         //Fraktsedel PDF
         public void ShippingPDF(ShippingViewModel shipping)
         {
+            TranslateService ts = new TranslateService(shipping.Language);
+
             //Skapa dokument
             PdfDocument document = new PdfDocument();
             PdfPage page = document.AddPage();
@@ -113,9 +115,9 @@ namespace Hattmakarens_system.Services
             XFont contentFontBold = new XFont("Verdana", 10, XFontStyle.Bold);
             XFont miniFont = new XFont("Verdana", 8, XFontStyle.Italic);
 
-            if (shipping.Translate == true)
+            if (!shipping.Language.Equals("sv") || shipping.Language != null)
             {
-                labels = translateService.TranslatePdf(labels);
+                labels = ts.TranslatePdf(labels);
             }
 
             //Skapa rektangel (bakgrund) 1
@@ -174,7 +176,7 @@ namespace Hattmakarens_system.Services
             //Vikt
             gfx.DrawString(labels.Weight, contentFontBold, XBrushes.Black,
             180, 570);
-            gfx.DrawString(shipping.Weight.ToString() + " kg", contentFont, XBrushes.Black,
+            gfx.DrawString(shipping.Weight.ToString() + "(kg)", contentFont, XBrushes.Black,
             300, 570);
             //Pris
             gfx.DrawString(labels.Price, contentFontBold, XBrushes.Black,
@@ -217,7 +219,7 @@ namespace Hattmakarens_system.Services
         }
 
         //Beställningsinformation PDF
-        public void OrderPDF(int id, bool translate)
+        public void OrderPDF(int id)
         {
             var order = orderRepository.GetOrder(id);
             var customer = customerRepository.GetCustomer(order.CustomerId);
@@ -234,10 +236,10 @@ namespace Hattmakarens_system.Services
             XFont contentFontBold = new XFont("Verdana", 10, XFontStyle.Bold);
             XFont miniFont = new XFont("Verdana", 8, XFontStyle.Italic);
 
-            if (translate == true)
-            {
-                labels = translateService.TranslatePdf(labels);
-            }
+            //if (!invoice.Language.Equals("sv") || invoice.Language != null)
+            //{
+            //    labels = ts.TranslatePdf(labels);
+            //}
 
             //Skapa rektangel (bakgrund) 1
             XRect rect = new XRect(150, 120, 300, 140);
@@ -279,7 +281,7 @@ namespace Hattmakarens_system.Services
             150, 300);
             gfx.DrawString(labels.Maker, contentFontBold, XBrushes.Black,
             250, 300);
-            gfx.DrawString("Status", contentFontBold, XBrushes.Black,
+            gfx.DrawString(labels.Status, contentFontBold, XBrushes.Black,
             350, 300);
             gfx.DrawString(labels.Price, contentFontBold, XBrushes.Black,
             450, 300);
@@ -312,6 +314,13 @@ namespace Hattmakarens_system.Services
         //Statistik PDF
         public void StatisticsPDF(StatisticViewModel statistics)
         {
+            TranslateService ts = new TranslateService(statistics.Language);
+
+            if (!statistics.Language.Equals("sv") || statistics.Language != null)
+            {
+                labels = ts.TranslatePdf(labels);
+            }
+
             List<OrderModels> orders = statistics.orders;
             foreach (var order in orders)
             {
@@ -326,11 +335,6 @@ namespace Hattmakarens_system.Services
             XFont contentFont = new XFont("Verdana", 10, XFontStyle.Regular);
             XFont contentFontBold = new XFont("Verdana", 10, XFontStyle.Bold);
             XFont miniFont = new XFont("Verdana", 8, XFontStyle.Italic);
-
-            if (statistics.Translate == true)
-            {
-                labels = translateService.TranslatePdf(labels);
-            }
 
             gfx.DrawString(labels.Statistics, headerFont, XBrushes.Black,
                 new XRect(0, 50, page.Width, page.Height), XStringFormats.TopCenter);
