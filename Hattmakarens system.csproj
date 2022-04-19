@@ -330,6 +330,8 @@
     <Content Include="Views\Order\_ListStoredHatsView.cshtml" />
     <Content Include="Views\Order\ModifyOrder.cshtml" />
     <Content Include="Views\Hat\Edit.cshtml" />
+    <Content Include="Views\Order\_ListSpecHatsEditView.cshtml" />
+    <Content Include="Views\Order\_ListStoredHatsEditView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
