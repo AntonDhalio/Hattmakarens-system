@@ -44,26 +44,6 @@ namespace Hattmakarens_system.Repositories
         //    }
         //}
 
-        //public int CreateEmptyOrderModel(int customerId, string userId)
-        //{
-        //    using (var hatCon = new ApplicationDbContext())
-        //    {
-        //        OrderModels newOrderModel = new OrderModels();
-        //        newOrderModel.Date = DateTime.Now;
-        //        newOrderModel.CustomerId = customerId;
-        //        newOrderModel.UserId = userId;
-        //        newOrderModel.Status = "Aktiv";
-        //        hatCon.Order.Add(newOrderModel);
-        //        hatCon.SaveChanges();
-        //        return newOrderModel.Id;
-        //    }
-        //}
-        //public int CreateOrderInDatabase(int customerId, string userId)
-        //{
-        //    int newOrderId = CreateEmptyOrderModel(customerId, userId);
-        //    return newOrderId;
-
-        //}
         public void DeleteOrder(int id)
         {
             using (var hatCon = new ApplicationDbContext())
@@ -108,14 +88,12 @@ namespace Hattmakarens_system.Repositories
             return orderViewModel;
         }
 
-        public void UpdateOrder(OrderModel model)
+        public void UpdateOrderPrice(int orderId)
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                var order = GetOrder(model.Id);
-                order.Comment = model.Comment;
-                order.Priority = model.Priority;
-                var updatedOrder = CaluculateOrderTotal(model);
+                var order = GetOrder(orderId);
+                var updatedOrder = CaluculateOrderTotal(order);
                 order.Moms = updatedOrder.Moms;
                 order.TotalSum = updatedOrder.TotalSum;
                 hatCon.Entry(order).State = EntityState.Modified;
@@ -123,7 +101,7 @@ namespace Hattmakarens_system.Repositories
             }
         }
 
-        public OrderModel CaluculateOrderTotal(OrderModel order)
+        public OrderModels CaluculateOrderTotal(OrderModels order)
         {
             var hats = hatRepository.GetAllHatsByOrderId(order.Id);
             var calculate = new Service.Calculate();

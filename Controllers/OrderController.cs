@@ -161,7 +161,6 @@ namespace Hattmakarens_system.Controllers
         {
             var customer = customerRepository.GetCustomerByOrderId(Id);
             OrderModel order = orderRepository.GetOrderViewModel(Id, customer.Email);
-            orderRepository.UpdateOrder(order); // Uppdatera totalsumma & moms ifall man ändrat pris på en/flera hattar
             return View(order);
         }
 
