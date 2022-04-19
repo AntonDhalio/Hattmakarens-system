@@ -38,7 +38,8 @@ namespace Hattmakarens_system.Repositories
                     Materials = hat.Materials,
                     HatModelID = hat.ModelID,
                     HatModelName = hatmodelRepository.GetHatmodel(hat.ModelID).Name,
-                    HatModelDescription = hatmodelRepository.GetHatmodel(hat.ModelID).Description
+                    HatModelDescription = hatmodelRepository.GetHatmodel(hat.ModelID).Description,
+                    OrderId = hat.OrderId
                 };
                 return model;
             }

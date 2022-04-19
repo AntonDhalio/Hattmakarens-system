@@ -10,26 +10,26 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.Size, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.Size, new { htmlAttributes = new { @class = "form-control" } })
         </div>
+    </div>
 
-        @*<div class="form-group">
+    @*<div class="form-group">
             @Html.LabelFor(model => model.Path, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Path, new { htmlAttributes = new { @class = "form-control" } })
@@ -37,28 +37,36 @@
             </div>
         </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
+    <div class="form-group" id="partial" >
+    <p><strong>Material</strong></p>
+        <div>
+            @Html.Partial("_ListMaterials")
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
         </div>
+    </div>
 
-        @*<div class="form-group">
+    <div class="form-group">
+        @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    @*<div class="form-group">
             @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
@@ -66,22 +74,22 @@
             </div>
         </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
         </div>
+    </div>
 
-        @*<div class="form-group">
+    <div class="form-group" id="hidden">
             @Html.LabelFor(model => model.OrderId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.OrderId, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.OrderId, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
 
-        @*<div class="form-group">
+    @*<div class="form-group">
             @Html.LabelFor(model => model.HatModelID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.HatModelID, new { htmlAttributes = new { @class = "form-control" } })
@@ -89,22 +97,28 @@
             </div>
         </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.HatModelName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.HatModelName, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.HatModelName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.HatModelName, new { htmlAttributes = new { @class = "form-control" } })
         </div>
+    </div>
 
-        @if (Model.HatModelID != 1)
-        {
+    @if (Model.HatModelID != 1)
+    {
         <div class="form-group">
             @Html.LabelFor(model => model.HatModelDescription, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DisplayFor(model => model.HatModelDescription, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
-        }
+    }
 
-    </div>
+    <input type="button" class="btn" value="Tillbaka till beställning" onclick="location.href = '@Url.Action("ViewOrder", "Order", new {Id = Model.OrderId})'"/>
+</div>
 }
+
+<style>
+    #partial{margin-left: 10%; margin-right: 10%}
+    #hidden{display: none;}
+</style>
