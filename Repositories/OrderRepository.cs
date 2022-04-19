@@ -94,11 +94,15 @@ namespace Hattmakarens_system.Repositories
             OrderModel orderViewModel = new OrderModel()
             {
                 Id = order.Id,
+                Priority = order.Priority,
+                Status = order.Status,
                 CustomerId = order.CustomerId,
                 CustomerName = customerName,
                 CustomerEmail = customerEmail,
                 Hats = hatRepository.GetAllHatsByOrderId(order.Id),
-                Comment = order.Comment
+                Comment = order.Comment,
+                TotalSum = order.TotalSum,
+                Moms = order.Moms
             };
             return orderViewModel;
         }
