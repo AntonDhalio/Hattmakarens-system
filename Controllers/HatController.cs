@@ -211,6 +211,7 @@ namespace Hattmakarens_system.Controllers
             try
             {
                 hatRepository.UpdateHat(model, SelectedStatuses);
+                orderRepository.UpdateOrderPrice((int)TempData.Peek("orderId"));
                 return RedirectToAction("ViewOrder", "Order", new { Id = (int)TempData.Peek("orderId")});
             }
             catch
