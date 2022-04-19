@@ -66,6 +66,20 @@ namespace Hattmakarens_system.Repositories
             }  
         }
 
+        public List<int> GetMaterialInHat(int id)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                List<int> materialIds = new List<int>();
+                var aHat = hatCon.Hats.FirstOrDefault(h => h.Id == id);
+                foreach (var materials in aHat.Materials)
+                {
+                    materialIds.Add(materials.Id);
+                }
+                return materialIds;
+            }
+        }
+
         public List<MaterialModels> GetPickedMaterialInHat(int hatModelId, IEnumerable<string> PickedMaterials, int[] SelectedStatuses)
         {
             using (var hatCon = new ApplicationDbContext())
@@ -90,6 +104,7 @@ namespace Hattmakarens_system.Repositories
                     };
                 };
                 return materials;
+
             }
         }
     }

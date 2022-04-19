@@ -18,15 +18,30 @@
         <p>Statistik för tidsperioden: @Model.fromDate.ToShortDateString() - @Model.toDate.ToShortDateString()</p>
         <table class="statistik-tabell">
             
-            <thead><tr><td><h3 lang="sv">Beställningsnummer</h3></td><td><h3>Antal hattar</h3></td><td><h3>Beställningsdatum</h3></td><td><h3>Summa</h3></td></tr></thead>
+            <thead>
+                <tr>
+                    <td><h3 lang="sv">Beställningsnummer</h3></td>
+                    <td><h3>Antal hattar</h3></td>
+                    <td><h3>Beställningsdatum</h3></td>
+                    <td><h3>Summa</h3></td>
+                </tr>
+            </thead>
             <tbody>
                 @foreach (var order in Model.orders)
                 {
                     <tr>
-                        <td>@order.Id</td><td>@order.Hats.Count</td><td>@order.Date.ToShortDateString()</td><td>@order.TotalSum</td>
+                        <td>@order.Id</td>
+                        <td>@order.Hats.Count</td>
+                        <td>@order.Date.ToShortDateString()</td>
+                        <td>@order.TotalSum</td>
                     </tr>
                 }
-                <tr><td></td><td></td><td></td><td></td></tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
             </tbody>
             <tfoot>
                 <tr>
@@ -55,5 +70,26 @@
         @Html.HiddenFor(x => x.toDate)
         <input type="submit" value="Skriv ut statistik" />
     }
+    <br />
+    <br />
+    <h2>Räkna ut moms baserat på inköp</h2>
+    <div>
+        @using (Html.BeginForm("CountTax", "Statistic", FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.LabelFor(s => s.purchasedTax, new { @class = "col-md-2 control-label" })
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(s => s.purchasedTax, new { @class = "form-control" })
+                @Html.HiddenFor(s => s.totalSum)
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Räkna ut moms" />
+                </div>
+            </div>
+        }
+    </div>
 </body>
 </html>
+

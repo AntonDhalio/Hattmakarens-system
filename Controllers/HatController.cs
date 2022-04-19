@@ -157,20 +157,61 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Hat/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int hatId)
         {
-            return View();
+            Hats hat = hatRepository.GetHat(hatId);
+            HatViewModel model = new HatViewModel()
+            {
+                Id = hat.Id,
+                Name = hat.Name,
+                Comment = hat.Comment,
+                Price = hat.Price,
+                Size = hat.Size,
+                HatModelID = hat.ModelID,
+                Status = hat.Status,
+                UserId = hat.UserId
+            };
+            TempData["orderId"] = hat.OrderId;
+            TempData.Keep("orderId");
+            model.HatModelName = hatModelRepository.GetHatmodel(hat.ModelID).Name;
+            model.HatModelDescription = hatModelRepository.GetHatmodel(hat.ModelID).Description;
+
+            model.Statuses = new List<SelectListItem>();
+            foreach (var material in materialRepository.GetAllMaterials())
+            {
+                var listItem = new SelectListItem()
+                {
+                    Value = material.Id.ToString(),
+                    Text = material.Name + ", " + material.Color.Name + ", " + material.Type
+                };
+                model.Statuses.Add(listItem);
+            }
+            var SelectedMaterialsId = new List<int>();
+            foreach (var materialId in materialRepository.GetMaterialInHat(hatId))
+            {
+                SelectedMaterialsId.Add(materialId);
+            }
+            model.SelectedStatuses = new int[100];
+
+            int count = 0;
+            foreach (var id in SelectedMaterialsId)
+            {
+                model.SelectedStatuses[count] = id;
+                count++;
+            }
+            ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
+            ViewBag.StatusesToPickFrom = hatRepository.StatusesToDropDownList();
+            return View(model);
         }
 
         // POST: Hat/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(HatViewModel model, int[] SelectedStatuses)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                hatRepository.UpdateHat(model, SelectedStatuses);
+                return RedirectToAction("ViewOrder", "Order", new { Id = (int)TempData.Peek("orderId")});
             }
             catch
             {
@@ -265,5 +306,6 @@ namespace Hattmakarens_system.Controllers
             }
             return View(viewModel);
         }
+
     }
 }

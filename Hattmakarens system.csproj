@@ -218,8 +218,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\PdfService.cs" />
     <Compile Include="Services\PdfTemplates.cs" />
+    <Compile Include="Services\TranslateService.cs" />
     <Compile Include="Service\Calculate.cs" />
+    <Compile Include="Service\Material.cs" />
     <Compile Include="Service\Color.cs" />
+    <Compile Include="Service\Order.cs" />
     <Compile Include="Service\Search.cs" />
     <Compile Include="Service\Costumer.cs" />
     <Compile Include="Repositories\ColorRepository.cs" />
@@ -324,10 +327,13 @@
     <Content Include="Views\Order\ViewOrder.cshtml" />
     <Content Include="Views\Order\_ListSpecHatsView.cshtml" />
     <Content Include="Views\Order\_ListStoredHatsView.cshtml" />
+    <Content Include="Views\Order\ModifyOrder.cshtml" />
+    <Content Include="Views\Hat\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UploadedImages\" />
+    <Folder Include="xmlFile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

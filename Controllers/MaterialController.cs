@@ -15,9 +15,10 @@ namespace Hattmakarens_system.Controllers
         // GET: Material
         public ActionResult AddMaterial()
         {
-            ViewBag.ColorsToPickFrom = GetSelectListColors();
+            ViewBag.ColorsToPickFrom = new Service.Color().GetSelectListColors();
             return View();
         }
+
         [HttpPost]
         public ActionResult AddMaterial(MaterialViewModel materialViewModel, FormCollection forms)
         {
@@ -46,7 +47,7 @@ namespace Hattmakarens_system.Controllers
                 }
                 else
                 {
-                    ViewBag.ColorsToPickFrom = GetSelectListColors();
+                    ViewBag.ColorsToPickFrom = new Service.Color().GetSelectListColors();
                     return View(materialViewModel);
                 }
             }
@@ -54,22 +55,6 @@ namespace Hattmakarens_system.Controllers
             {
                 return View("Error");
             }
-        }
-        public List<SelectListItem> GetSelectListColors()
-        {
-            var colorRepo = new ColorRepository();
-            List<SelectListItem> colors = new List<SelectListItem>();
-
-            foreach (var color in colorRepo.GetAllColors())
-            {
-                var listitem = new SelectListItem
-                {
-                    Value = color.Id.ToString(),
-                    Text = color.Name
-                };
-                colors.Add(listitem);
-            }
-            return colors;
         }
     }
 }
