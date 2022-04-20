@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Hattmakarens_system.ViewModels
 {
     public class InvoiceViewModel
     {
-        public bool Translate { get; set; } 
+        public List<SelectListItem> Languages { get; set; }
+        [Required]
+        public string Language { get; set; }
         public OrderModels Order { get; set; }
         public CustomerModels Customer { get; set; }
         public int OrderId { get; set; }
@@ -27,6 +30,8 @@ namespace Hattmakarens_system.ViewModels
 
     public class ShippingViewModel
     {
+        public List<SelectListItem> Languages { get; set; }
+        public string Language { get; set; }
         public bool Translate { get; set; } 
         public OrderModels Order { get; set; }
         public CustomerModels Customer { get; set; }
@@ -69,5 +74,6 @@ namespace Hattmakarens_system.ViewModels
         public string HatAmount { get; set; } = "Antal hattar";
         public string OrderAmount { get; set; } = "Antal beställningar";
         public string OrderDate { get; set; } = "Beställningsdatum";
+        public string Status { get; set; } = "Status";
     }
 }

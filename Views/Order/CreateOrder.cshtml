@@ -30,7 +30,7 @@
         <h3>Specialtillverkade hattar</h3>
 
         <p>
-            <input type="button" class="btn" value="Lägg till specialtillverkad hatt" onclick="location.href = '@Url.Action("CreateSpec", "Hat", new { orderId = Model.Id, customerEmail = Model.CustomerEmail})'" />
+            <input type="button" class="btn" value="Lägg till specialtillverkad hatt" onclick="location.href = '@Url.Action("CreateSpec", "Hat")'" />
         </p>
         <div>
             @Html.Partial("_ListSpecHats")
@@ -49,19 +49,8 @@
 
         <br />
 
-        using (Html.BeginForm("CreateOrderAdd", "Order", FormMethod.Post))
+        using (Html.BeginForm("CreateOrder", "Order", FormMethod.Post))
         {
-
-            <div class="form-group" id="hidden">
-                @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.Id)
-                        @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-
             <div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -104,6 +93,7 @@
             </div>
             <p>Priset för expressleverans är exkluderat i priset ovan </p>
             <br />
+            <p class="text-danger">@TempData["message"]</p>
             <div>
                 <div class="form-group">
                     <div class=" col-md-2">
@@ -113,20 +103,18 @@
             </div>
 
 
-            <div id="hidden2">
+            <div id="hidden">
                 @Html.EditorFor(model => model.TotalSum, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.EditorFor(model => model.Moms, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         }
 
         <div>
-            <input type="button" class="btn btn-danger" value="Avbryt registreringen av denna order " onclick="location.href = '@Url.Action("Delete", "Order", new { id = Model.Id })'" />
+            <input type="button" class="btn btn-danger" value="Avbryt registreringen av denna order " onclick="location.href = '@Url.Action("ActiveHats", "Hat")'" />
         </div>
 
         <style>
-            #hideOnRegOrder, #hidden, #hidden2 {
-                display: none;
-            }
+            #hidden { display: none; }
         </style>
     }
 }

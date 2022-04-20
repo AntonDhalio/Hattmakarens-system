@@ -4,7 +4,7 @@
     ViewBag.Title = "Logga in";
 }
 <div style="padding-left: 250px">
-    <h2>@ViewBag.Title.</h2>
+    <h2>@ViewBag.Title</h2>
                 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()

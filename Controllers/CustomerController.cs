@@ -4,8 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Windows;
 using Hattmakarens_system.Models;
 using Hattmakarens_system.Repositories;
+using Hattmakarens_system.Service;
 using Hattmakarens_system.ViewModels;
 
 namespace Hattmakarens_system.Controllers
@@ -23,18 +25,26 @@ namespace Hattmakarens_system.Controllers
         {
             try
             {
-                var cusRepo = new CustomerRepository();
-                var customer = new CustomerModels
+                if (ModelState.IsValid)
                 {
-                    Adress = customerViewModel.Adress,
-                    Name = customerViewModel.Name,
-                    Email = customerViewModel.Email,
-                    Comment = customerViewModel.Comment,
-                    Phone = customerViewModel.Phone
-                };
-                cusRepo.SaveCostumer(customer);
-                ModelState.Clear();
-                return View();
+                    var cusRepo = new CustomerRepository();
+                    var customer = new CustomerModels
+                    {
+                        Adress = customerViewModel.Adress,
+                        Name = customerViewModel.Name,
+                        Email = customerViewModel.Email,
+                        Comment = customerViewModel.Comment,
+                        Phone = customerViewModel.Phone
+                    };
+                    cusRepo.SaveCostumer(customer);
+                    ModelState.Clear();
+                    return View();
+                }
+                else
+                {
+                    return View(customerViewModel);
+                }
+                
             }
             catch
             {
@@ -49,18 +59,19 @@ namespace Hattmakarens_system.Controllers
         [HttpPost]
         public ActionResult ChangeCustomer(CostumerViewModel model)
         {
-            
-            var status = new Service.Costumer().EditCustomerInfo(model);
-            if(status == true)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("DisplayCustomer", new {id = model.Id});
+                var status = new Service.Costumer().EditCustomerInfo(model);
+                if(status == true)
+                {
+                    return RedirectToAction("DisplayCustomer", new {id = model.Id});
+                }
+                return View();
             }
             else
             {
-                return View();
+                return View(model);
             }
-
-                
         }
 
         public ActionResult DisplayCustomer(int id)
@@ -71,10 +82,49 @@ namespace Hattmakarens_system.Controllers
 
         public ActionResult DeleteCustomer(int id)
         {
+            var customerService = new Costumer();
             if(id != 0)
             {
-                new CustomerRepository().DeleteCostumer(id);
-                return RedirectToAction("Index", "Home");
+                bool activeOrders = false;
+                foreach(var order in customerService.GetCustomerInfo(id).Orders)
+                {
+                    if (order.Status.Equals("Aktiv"))
+                    {
+                        activeOrders = true;
+                    }
+                }
+                if(activeOrders)
+                {
+                    MessageBox.Show("Du kan inte ta bort en kund som har aktiva ordrar, vänligen slutför ordrarna först.");
+                    return new HttpStatusCodeResult(204);
+                } else
+                {
+                    bool emptyExist = false;
+                    var repos = new CustomerRepository();
+                    var orderRepo = new OrderRepository();
+                    foreach (var customer in repos.GetAllCostumers())
+                    {
+                        if(customer.Name.Equals("Kund borttagen"))
+                        {
+                            emptyExist = true;
+                        }
+                    }
+                    if(emptyExist == false)
+                    {
+                        repos.AddEmptyCustomer();
+                    }
+                    var emptyCustomer = repos.GetAllCustomersByName("Kund borttagen").First();
+                    var ordersToChange = repos.GetAllCustomerOrders(id);
+                    foreach(var order in ordersToChange)
+                    {
+                        order.CustomerId = emptyCustomer.Id;
+                        order.Customer = emptyCustomer;
+                        orderRepo.ChangeCustomer(order.Id, emptyCustomer.Id);
+                    }
+                    new CustomerRepository().DeleteCostumer(id);
+                    return RedirectToAction("Index", "Home");
+                }
+                
             }
             else
             {
