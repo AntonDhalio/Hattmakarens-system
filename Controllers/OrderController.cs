@@ -160,7 +160,7 @@ namespace Hattmakarens_system.Controllers
         public ActionResult ViewOrder(int Id)
         {
             var customer = customerRepository.GetCustomerByOrderId(Id);
-            OrderModel order = orderRepository.GetOrderViewModel(Id, customer.Email);
+            OrderModel order = orderRepository.GetOrderViewModel(Id, customer.Email);    
             return View(order);
         }
 
