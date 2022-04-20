@@ -37,11 +37,14 @@ namespace Hattmakarens_system.Controllers
                 };
                 if (file.ContentLength > 0)
                 {
+                    
                     string filename = Path.GetFileName(file.FileName);
-                    string imagePath = Path.Combine(Server.MapPath("~/Images"), filename);
+                    string imagePath = Path.Combine(Server.MapPath("~/NewFolder1"), filename);
+                    //string imagePath = "C:\Users\madel\Source\Repos\AntonDhalio\Hattmakarens-system\UploadedImages\";
+                    file.SaveAs(imagePath);
                     var image = new ImageModels
                     {
-                        Path = imagePath,
+                        Path = Path.Combine(@"~\NewFolder1", filename),
                         HatModels = new List<HatModels>()
                     };
                     var imgRepo = new ImageRepository();               
@@ -103,7 +106,8 @@ namespace Hattmakarens_system.Controllers
                     Description = hatModel.Description,
                     Price = hatModel.Price,
                     OrderId = orderId,
-                    CustomerEmail = customerEmail
+                    CustomerEmail = customerEmail,
+                    Images = hatModel.Images
                 };
                 hatmodelViewModels.Add(newHatmodelViewModel);
             }

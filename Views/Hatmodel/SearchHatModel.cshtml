@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<Hattmakarens_system.ViewModels.HatmodelViewModel>
-
+<link rel="stylesheet" href="~/Content/Site.css" />
 <h2>Sök efter lagerförd hattmodel</h2>
 
 <p>
@@ -20,9 +20,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            @*<th>
+            <th>
                 Bild
-            </th>*@
+                
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
@@ -42,9 +43,13 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Price)
                     </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.Path)
-                    </td>*@
+                    <td>
+                        @*Html.DisplayFor(modelItem => item.Path)*@
+                        @foreach(var image in item.Images)
+                        {
+                        <img src="@Url.Content(@image.Path)" alt="Hatmodel picture" class="img-responsive" />
+                        }
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
@@ -57,3 +62,5 @@
         }
 
     </table>
+
+    
