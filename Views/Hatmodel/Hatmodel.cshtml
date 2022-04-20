@@ -14,7 +14,7 @@
 <body>
     <h1>Lägg till hattmodell</h1>
     <div>
-        @using (Html.BeginForm("Hatmodel", "Hatmodel", FormMethod.Post))
+        @using (Html.BeginForm("Hatmodel", "Hatmodel", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
         <div class="form-horizontal">
             <div class="form-group">
@@ -43,12 +43,21 @@
                 <div class="col-md-10">
                     @Html.TextAreaFor(h => h.Description, new { @class = "form-control" })
                 </div>
+
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="Lägg till hattmodell" />
+                    @Html.Label("Välj bild")
+                    @Html.TextBox("file", "", new { type = "file" })
+                    </div>
                 </div>
-            </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" class="btn btn-default" value="Lägg till hattmodell" />
+                    </div>
+
+                </div>
+            
 
         </div>
         }
