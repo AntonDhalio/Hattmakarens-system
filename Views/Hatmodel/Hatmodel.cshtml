@@ -16,43 +16,35 @@
     <div>
         @using (Html.BeginForm("Hatmodel", "Hatmodel", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-        <div>
-            <div class="form-group">
-                @Html.LabelFor(h => h.Name, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(h => h.Name, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(h => h.Name, "", new { @class = "text-danger" })
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(h => h.Name, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(h => h.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(h => h.Name, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-            <br />
-            <br />
-            <br />
-            <div class="form-group">
-                @Html.LabelFor(h => h.Price, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(h => h.Price, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(h => h.Price, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(h => h.Price, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(h => h.Price, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(h => h.Price, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-            <br />
-            <br />
-            <div class="form-group">
-                @Html.LabelFor(h => h.PickedMaterials, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.ListBoxFor(h => h.PickedMaterials, new MultiSelectList(ViewBag.MaterialsToPickFrom, "Value", "Text"), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(h => h.PickedMaterials, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(h => h.PickedMaterials, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.ListBoxFor(h => h.PickedMaterials, new MultiSelectList(ViewBag.MaterialsToPickFrom, "Value", "Text"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(h => h.PickedMaterials, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <div class="form-group">
-                @Html.LabelFor(h => h.Description, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(h => h.Description, new { @class = "form-control" })
+                <div class="form-group">
+                    @Html.LabelFor(h => h.Description, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(h => h.Description, new { @class = "form-control" })
+                    </div>
                 </div>
+
 
             </div>
             <br />
@@ -62,6 +54,7 @@
                 <div class="col-md-offset-2 col-md-10">
                     @Html.Label("Välj bild")
                     @Html.TextBox("file", "", new { type = "file", multiple = "multiple" })
+
                     </div>
                 </div>
                 <div class="form-group">
@@ -70,9 +63,7 @@
                     </div>
 
                 </div>
-            
-
-        </div>
+            </div>
         }
     </div>
 

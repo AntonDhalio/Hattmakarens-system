@@ -37,7 +37,6 @@ namespace Hattmakarens_system.Services
             element3.AppendChild(purchased);
             element4.AppendChild(taxFromOrders);
             element5.AppendChild(subResult);
-            //string uploadPath = Server.MapPath("~/xmlFile");
             string filename = doc.ToString() + "moms.xml";
             string path = Path.Combine(uploadPath, filename);
             doc.Save(path + filename);

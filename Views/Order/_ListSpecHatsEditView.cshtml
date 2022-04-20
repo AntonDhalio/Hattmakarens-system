@@ -1,0 +1,51 @@
+﻿@model Hattmakarens_system.ViewModels.OrderModel
+
+<table class="table">
+
+    <tr>
+        <th>
+            Namn
+        </th>
+        <th>
+            Storlek
+        </th>
+        <th>
+            Pris
+        </th>
+        <th>
+            Kommentar
+        </th>
+    </tr>
+    @if (Model != null)
+    {
+        if (Model.Hats != null)
+        {
+            foreach (var item in Model.Hats)
+            {
+                if (item.ModelID == 1)/// 1 är ID för specialtillverkad hatt
+                {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Size)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Price)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Comment)
+    </td>
+    <!--<td>
+        Namnet på den som ska tillverka hatten?
+    </td>-->
+    <td>
+        @Html.ActionLink("Redigera", "Edit", "Hat", new { hatId = item.Id }, null)
+    </td>
+</tr>
+                }
+            }
+        }
+    }
+</table>

@@ -35,18 +35,7 @@ namespace Hattmakarens_system.Controllers
         // GET: Hat/Create
         public ActionResult CreateSpec()
         {
-
-            var materials = new List<SelectListItem>();
-            foreach(var material in materialRepository.GetAllMaterials())
-            {
-                var listitem = new SelectListItem
-                {
-                    Value = material.Id.ToString(),
-                    Text = material.Name + ", " + material.Color.Name + ", " + material.Type
-                };
-                materials.Add(listitem);
-            }
-            ViewBag.MaterialsToPickFrom = materials;
+            ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
             ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
             return View();
         }
@@ -57,10 +46,9 @@ namespace Hattmakarens_system.Controllers
         {
             try
             {
-                var SelectedStatuses = new int[100];
-                OrderModel order = (OrderModel)TempData.Peek("order");
-                HatViewModel hat = new HatViewModel()
+                if (ModelState.IsValid)
                 {
+
                     HatModelID = 1,
                     Name = model.Name,
                     Size = model.Size,
@@ -89,12 +77,51 @@ namespace Hattmakarens_system.Controllers
                 TempData["hat"] = hat;
                 TempData.Keep("hat");
                 return RedirectToAction("CreateOrder", "Order", new { customerEmail = order.CustomerEmail });
+
+                    if(PickedMaterials != null)
+                    {
+                        var SelectedStatuses = new int[100];
+                        OrderModel order = (OrderModel)TempData.Peek("order");
+                        HatViewModel hat = new HatViewModel()
+                        {
+                            HatModelID = 1,
+                            Name = model.Name,
+                            Size = model.Size,
+                            Price = model.Price,
+                            Status = "Aktiv",
+                            Comment = model.Comment,
+                            UserId = model.UserId,
+                            UserName = userRepository.GetUser(model.UserId).Name,
+                            Materials = new List<MaterialModels>()
+
+                        };
+                        hat.Materials = materialRepository.GetPickedMaterialInHat(hat.HatModelID, PickedMaterials, SelectedStatuses);
+                        TempData["hat"] = hat;
+                        TempData.Keep("hat");
+                        return RedirectToAction("CreateOrder", "Order", new { customerEmail = order.CustomerEmail });
+                    }
+                    else
+                    {
+                        TempData["message"] = "Fältet Material saknas";
+                        ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
+                        ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
+                        return View(model);
+                    }
+                }
+                else
+                {
+                    ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
+                    ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
+                    return View(model);
+                }
+               
             }
             catch
             {
                 return View();
             }
         }
+
         // GET: Hat/Create
         public ActionResult CreateStored(string hatModelName)
         {
@@ -102,26 +129,9 @@ namespace Hattmakarens_system.Controllers
             HatViewModel model = new HatViewModel();
             if (hatModelName != null)
             {
-                model.Statuses = new List<SelectListItem>();
-                foreach (var material in materialRepository.GetAllMaterials())
-                {
-                    var listitem = new SelectListItem
-                    {
-                        Value = material.Id.ToString(),
-                        Text = material.Name + ", " + material.Color.Name + ", " + material.Type
-                    };
-                    model.Statuses.Add(listitem);
-                }
+                model.HatModelName = hatModelName;
+                model = new Service.Material().SetMaterials(model);
 
-                var SelectedMaterialsId = materialRepository.GetMaterialInHatmodel(hatModelName);
-                model.SelectedStatuses = new int[100];
-
-                int count = 0;
-                foreach(var id in SelectedMaterialsId)
-                {
-                    model.SelectedStatuses[count] = id;
-                    count++;
-                }
 
                 var hatModel = hatModelRepository.GetHatmodelByName(hatModelName);
                 model.Price = hatModel.Price;
@@ -141,27 +151,37 @@ namespace Hattmakarens_system.Controllers
         {
             try
             {
-                OrderModel order = (OrderModel)TempData.Peek("order");
-                HatViewModel hat = new HatViewModel()
+                if (ModelState.IsValid)
                 {
-                    HatModelID = model.HatModelID,
-                    Name = model.Name,
-                    Size = model.Size,
-                    Price = model.Price,
-                    Status = "Aktiv",
-                    Comment = model.Comment,
-                    UserId = model.UserId,
-                    UserName = userRepository.GetUser(model.UserId).Name,
-                    Materials = new List<MaterialModels>()
+                    OrderModel order = (OrderModel)TempData.Peek("order");
+                    HatViewModel hat = new HatViewModel()
+                    {
+                        HatModelID = model.HatModelID,
+                        Name = model.Name,
+                        Size = model.Size,
+                        Price = model.Price,
+                        Status = "Aktiv",
+                        Comment = model.Comment,
+                        UserId = model.UserId,
+                        UserName = userRepository.GetUser(model.UserId).Name,
+                        Materials = new List<MaterialModels>()
 
-                };
-                var hatModel = hatModelRepository.GetHatmodel(model.HatModelID);
-                hat.HatModelName = hatModel.Name;
-                hat.HatModelDescription = hatModel.Description;
-                hat.Materials = materialRepository.GetPickedMaterialInHat(hat.HatModelID, pickedMaterials, SelectedStatuses);
-                TempData["hat"] = hat;
-                TempData.Keep("hat");
-                return RedirectToAction("CreateOrder", "Order", new { customerEmail = order.CustomerEmail });
+                    };
+                    var hatModel = hatModelRepository.GetHatmodel(model.HatModelID);
+                    hat.HatModelName = hatModel.Name;
+                    hat.HatModelDescription = hatModel.Description;
+                    hat.Materials = materialRepository.GetPickedMaterialInHat(hat.HatModelID, pickedMaterials, SelectedStatuses);
+                    TempData["hat"] = hat;
+                    TempData.Keep("hat");
+                    return RedirectToAction("CreateOrder", "Order", new { customerEmail = order.CustomerEmail });
+                }
+                else
+                {
+                    model = new Service.Material().SetMaterials(model);
+                    ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
+                    return View(model);
+                }
+                
             }
             catch
             {
@@ -225,7 +245,7 @@ namespace Hattmakarens_system.Controllers
             {
                 hatRepository.UpdateHat(model, SelectedStatuses);
                 orderRepository.UpdateOrderPrice((int)TempData.Peek("orderId"));
-                return RedirectToAction("ViewOrder", "Order", new { Id = (int)TempData.Peek("orderId")});
+                return RedirectToAction("ModifyOrder", "Order", new { Id = (int)TempData.Peek("orderId")});
             }
             catch
             {
@@ -319,6 +339,13 @@ namespace Hattmakarens_system.Controllers
                 }
             }
             return View(viewModel);
+        }
+
+        //GET
+        public ActionResult ViewHat(int hatId)
+        {
+            var hat = hatRepository.GetHatViewModel(hatId);
+            return View(hat);
         }
 
     }

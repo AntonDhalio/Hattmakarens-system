@@ -36,11 +36,28 @@ namespace Hattmakarens_system.Controllers
                     Material = new List<MaterialModels>(),
                     Images = new List<ImageModels>()
                 };
-
+                //Från Läggtillbilder
                 var path = Server.MapPath("~/Images");
                 var images = new Service.Image().AddImages(file, path);
                 newHatmodel.Images = images;
 
+                 //Från SeBilder-KOPIA
+                if (file != null)
+                {
+                    
+                    string filename = Path.GetFileName(file.FileName);
+                    string imagePath = Path.Combine(Server.MapPath("~/NewFolder1"), filename);
+                    //string imagePath = "C:\Users\madel\Source\Repos\AntonDhalio\Hattmakarens-system\UploadedImages\";
+                    file.SaveAs(imagePath);
+                    var image = new ImageModels
+                    {
+                        Path = Path.Combine(@"~\NewFolder1", filename),
+                        HatModels = new List<HatModels>()
+                    };
+                    var imgRepo = new ImageRepository();               
+                    newHatmodel.Images.Add(imgRepo.SaveImage(image));
+                }
+                //Slut KOPIA
                 using (var context = new ApplicationDbContext())
                 {
                     foreach (var material in PickedMaterials)
@@ -75,7 +92,8 @@ namespace Hattmakarens_system.Controllers
                     Description = hatModel.Description,
                     Price = hatModel.Price,
                     OrderId = orderId,
-                    CustomerEmail = customerEmail
+                    CustomerEmail = customerEmail,
+                    Images = hatModel.Images
                 };
                 hatmodelViewModels.Add(newHatmodelViewModel);
             }

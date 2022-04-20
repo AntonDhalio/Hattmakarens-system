@@ -49,8 +49,9 @@ namespace Hattmakarens_system.Controllers
             {
                 OrderModel orderModel = (OrderModel)TempData.Peek("order");
                 orderModel.UserId = User.Identity.GetUserId();
+                orderModel.CustomerName = customerRepository.GetCustomerByEmail(customerEmail).Name;
                 orderModel.CustomerEmail = customerEmail;
-                orderModel.CustomerId = customerRepository.GetCustomerIdByEmail(customerEmail);
+                orderModel.CustomerId = customerRepository.GetCustomerByEmail(customerEmail).Id;
                 TempData["order"] = orderModel;
                 TempData.Keep("order");
 
@@ -81,20 +82,32 @@ namespace Hattmakarens_system.Controllers
         {
             try 
             {
-                OrderModel order = (OrderModel)TempData["order"];
-                order.Comment = model.Comment;
-                order.Priority = model.Priority;
-                order.TotalSum = model.TotalSum;
-                order.Moms = model.Moms;
-                orderRepository.CreateOrder(order, (List<HatViewModel>)TempData["listOfHats"]);
-                var orderId = orderRepository.GetDBLastAddedOrderId();
-                List<HatViewModel> hats = (List<HatViewModel>)TempData.Peek("listOfHats");
-                foreach(var hat in hats)
+                var listOfHats = (List<HatViewModel>)TempData.Peek("listOfHats");
+                if (listOfHats.Count > 0)
                 {
-                    hatRepository.CreateHat(hat, orderId);
-                }
+                    TempData["message"] = "";
+                    OrderModel order = (OrderModel)TempData["order"];
+                    order.Comment = model.Comment;
+                    order.Priority = model.Priority;
+                    order.TotalSum = model.TotalSum;
+                    order.Moms = model.Moms;
+                    orderRepository.CreateOrder(order, (List<HatViewModel>)TempData["listOfHats"]);
+                    var orderId = orderRepository.GetDBLastAddedOrderId();
+                    List<HatViewModel> hats = (List<HatViewModel>)TempData.Peek("listOfHats");
+                    foreach (var hat in hats)
+                    {
+                        hatRepository.CreateHat(hat, orderId);
+                    }
 
-                return RedirectToAction("ActiveHats", "Hat");
+                    return RedirectToAction("ActiveHats", "Hat");
+                }
+                else
+                {
+                    TempData["message"] = "Order måste innehålla minst en hatt";
+                    var order = (OrderModel)TempData.Peek("order");
+                    return RedirectToAction("CreateOrder", "Order", new { customerEmail = order.CustomerEmail });
+                }
+                
             }
             catch
             {
@@ -160,7 +173,7 @@ namespace Hattmakarens_system.Controllers
         public ActionResult ViewOrder(int Id)
         {
             var customer = customerRepository.GetCustomerByOrderId(Id);
-            OrderModel order = orderRepository.GetOrderViewModel(Id, customer.Email);
+            OrderModel order = orderRepository.GetOrderViewModel(Id, customer.Email);    
             return View(order);
         }
 
@@ -176,6 +189,7 @@ namespace Hattmakarens_system.Controllers
         {
             new Service.Order().ChangeOrderStatus(id, orderStatus);
             new Service.Order().ChangeOrderComment(id, comment);
+            orderRepository.UpdateOrderPrice(id);
             return RedirectToAction("ViewOrder", new {Id = id});
         }
 
