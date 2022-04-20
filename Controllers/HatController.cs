@@ -115,7 +115,7 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Hat/Create
-        public ActionResult CreateStored(string hatModelName)
+        public ActionResult CreateStored(int orderId, string customerEmail, string hatModelName)
         {
 
             HatViewModel model = new HatViewModel()
@@ -124,14 +124,13 @@ namespace Hattmakarens_system.Controllers
                 CustomerEmail = customerEmail,
                 HatModelName = hatModelName
             };
-            if(hatModelName != null)
+            if (hatModelName != null)
             {
-                
                 model.TygMaterial = TygMaterial;
                 model.DekorationMaterial = DekorationMaterial;
                 model.TrådMaterial = TrådMaterial;
+            }
 
-            HatViewModel model = new HatViewModel();
             if (hatModelName != null)
             {
                 model.HatModelName = hatModelName;
