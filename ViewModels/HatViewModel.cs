@@ -49,7 +49,6 @@ namespace Hattmakarens_system.ViewModels
         public IEnumerable<string> PickedMaterials { get; set; }
         public List<SelectListItem> Statuses { get; set; }
         [DisplayName("Välj material")]
-        public List<SelectListItem> PickedMaterials { get; set; }
         public List<ColorMaterialViewModel> TygMaterial { get; set; }
         public List<ColorMaterialViewModel> DekorationMaterial { get; set; }
         public List<ColorMaterialViewModel> TrådMaterial { get; set; }

@@ -50,7 +50,7 @@ namespace Hattmakarens_system.Controllers
             model.TrådMaterial = TrådMaterial;
 
             ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
-            return View();
+            return View(model);
         }
 
         // POST: Hat/Create
@@ -126,16 +126,12 @@ namespace Hattmakarens_system.Controllers
             };
             if (hatModelName != null)
             {
+                model.HatModelName = hatModelName;
+                model = new Service.Material().SetMaterials(model);
+                var SelectedMaterialsId = materialRepository.GetMaterialInHatmodel(hatModelName);
                 model.TygMaterial = TygMaterial;
                 model.DekorationMaterial = DekorationMaterial;
                 model.TrådMaterial = TrådMaterial;
-            }
-
-            if (hatModelName != null)
-            {
-                model.HatModelName = hatModelName;
-                model = new Service.Material().SetMaterials(model);
-
 
                 foreach (var id in SelectedMaterialsId)                   
                 {
@@ -176,7 +172,7 @@ namespace Hattmakarens_system.Controllers
 
         // POST: Hat/Create
         [HttpPost]
-        public ActionResult CreateStored(HatViewModel model, IEnumerable<string> pickedMaterials, int[] SelectedStatuses)
+        public ActionResult CreateStored(HatViewModel model)
         {
             try
             {
@@ -199,7 +195,6 @@ namespace Hattmakarens_system.Controllers
                     var hatModel = hatModelRepository.GetHatmodel(model.HatModelID);
                     hat.HatModelName = hatModel.Name;
                     hat.HatModelDescription = hatModel.Description;
-                    hat.Materials = materialRepository.GetPickedMaterialInHat(hat.HatModelID, pickedMaterials, SelectedStatuses);
                     TempData["hat"] = hat;
                     TempData.Keep("hat");
                     var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();

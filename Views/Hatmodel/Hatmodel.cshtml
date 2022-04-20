@@ -16,9 +16,9 @@
     <div>
         @using (Html.BeginForm("Hatmodel", "Hatmodel", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-             @using (Html.BeginForm())
-        {
-            
+             using (Html.BeginForm())
+             {
+
                 <div class="form-group ">
                     @Html.Label("Välj Tyg", new { @class = "col-md-2 control-label" })
                     <div class="col-md-10 ">
@@ -27,13 +27,13 @@
                             {
                                 if (material.State == true)
                                 {
-                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new {id = material.MaterialId})'">
+                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
                                         <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
                                     </label>
                                 }
                                 else
                                 {
-                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new {id = material.MaterialId})'">
+                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
                                         <input type="checkbox" checked autocomplete="off"> @material.MaterialName
                                     </label>
                                 }
@@ -50,13 +50,13 @@
                             {
                                 if (material.State == true)
                                 {
-                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new {id = material.MaterialId})'">
+                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
                                         <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
                                     </label>
                                 }
                                 else
                                 {
-                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new {id = material.MaterialId})'">
+                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
                                         <input type="checkbox" checked autocomplete="off"> @material.MaterialName
                                     </label>
                                 }
@@ -74,13 +74,13 @@
                             {
                                 if (material.State == true)
                                 {
-                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new {id = material.MaterialId})'">
+                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
                                         <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
                                     </label>
                                 }
                                 else
                                 {
-                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new {id = material.MaterialId})'">
+                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
                                         <input type="checkbox" checked autocomplete="off"> @material.MaterialName
                                     </label>
                                 }
@@ -121,6 +121,7 @@
                     </div>
                 </div>
             </div>
+             }
         }
     </div>
 
