@@ -13,10 +13,8 @@ namespace Hattmakarens_system.Controllers
         PdfService pdfService = new PdfService();
 
         // PRINT: Invoice
-        public ActionResult Invoice(InvoiceViewModel createmodel)
+        public ActionResult Invoice(InvoiceViewModel createmodel, int id)
         {
-            int id = 4;
-
             if (ModelState.IsValid)
             {
                 pdfService.PrintInvoice(createmodel, id);
@@ -27,10 +25,8 @@ namespace Hattmakarens_system.Controllers
         }
 
         // PRINT: Shipping
-        public ActionResult Shipping(ShippingViewModel shipping)
+        public ActionResult Shipping(ShippingViewModel shipping, int id)
         {
-            int id = 4;
-
             if (ModelState.IsValid)
             {
                 pdfService.PrintShipping(shipping, id);
