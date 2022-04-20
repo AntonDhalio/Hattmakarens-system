@@ -7,7 +7,79 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
+<div class="form-horizontal">
+    @using (Html.BeginForm("PickMaterialSpec", "Hat"))
+    {
+    <div class="form-group ">
+        @Html.Label("Välj Tyg", new { @class = "col-md-2 control-label" })
+        <div class="col-md-10 ">
+            <div class="btn-group-toggle" data-toggle="buttons">
+                @foreach (var material in Model.TygMaterial)
+                {
+                    if (material.State == true)
+                    {
+                        <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialSpec", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, id = material.MaterialId})'">
+                            <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
+                        </label>
+                    }
+                    else
+                    {
+                        <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialSpec", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, id = material.MaterialId})'">
+                            <input type="checkbox" checked autocomplete="off"> @material.MaterialName
+                        </label>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group ">
+        @Html.Label("Välj Dekoration", new { @class = "col-md-2 control-label" })
+        <div class="col-md-10 ">
+            <div class="btn-group-toggle" data-toggle="buttons">
+                @foreach (var material in Model.DekorationMaterial)
+                {
+                    if (material.State == true)
+                    {
+                        <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialSpec", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, id = material.MaterialId})'">
+                            <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
+                        </label>
+                    }
+                    else
+                    {
+                        <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialSpec", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, id = material.MaterialId})'">
+                            <input type="checkbox" checked autocomplete="off"> @material.MaterialName
+                        </label>
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group ">
+        @Html.Label("Välj Tråd", new { @class = "col-md-2 control-label" })
+        <div class="col-md-10 ">
+            <div class="btn-group-toggle" data-toggle="buttons">
+                @foreach (var material in Model.TrådMaterial)
+                {
+                    if (material.State == true)
+                    {
+                        <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialSpec", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, id = material.MaterialId})'">
+                            <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
+                        </label>
+                    }
+                    else
+                    {
+                        <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialSpec", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, id = material.MaterialId})'">
+                            <input type="checkbox" checked autocomplete="off"> @material.MaterialName
+                        </label>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    }
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -60,11 +132,10 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserId, new {@class = "col-md-2 control-label" } )
-            <div class="col-md-10">
-                @Html.DropDownList("UserId", new SelectList(ViewBag.UsersToPickFrom, "Value", "Text"), new {@class = "form-control"})
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownList("UserId", new SelectList(ViewBag.UsersToPickFrom, "Value", "Text"), new { @class = "form-control" })
         </div>
 
         <div class="form-group">

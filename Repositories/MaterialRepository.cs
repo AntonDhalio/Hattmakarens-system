@@ -23,6 +23,13 @@ namespace Hattmakarens_system.Repositories
                 return hatCon.Material.Include(m => m.HatModels).Include(m => m.Color).ToList();
             }
         }
+        public List<MaterialModels> GetAllMaterialsOfType(string typ)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                return hatCon.Material.Where(m => m.Type == typ).Include(m => m.HatModels).Include(m => m.Color).ToList();
+            }
+        }
         public MaterialModels SaveMaterial(MaterialModels material)
         {
             using (var hatCon = new ApplicationDbContext())
