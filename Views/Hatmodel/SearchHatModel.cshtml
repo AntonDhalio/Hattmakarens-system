@@ -1,7 +1,4 @@
 ﻿@model IEnumerable<Hattmakarens_system.ViewModels.HatmodelViewModel>
-@{
-    //ViewBag.Title = "SearchIndex";
-}
 
 <h2>Sök efter lagerförd hattmodel</h2>
 
@@ -15,9 +12,6 @@
 }
     <p />
 
-    @*<p>
-        @Html.ActionLink("Create New", "Create")
-    </p>*@
     <table class="table">
         <tr>
             <th>
@@ -39,7 +33,7 @@
 
             foreach (var item in Model)
             {
-                if(item.Id != 1) // Ändra beroende på vad den auto-inlaggda special-hattmodellen får
+                if(item.Id != 1)
                 { 
                 <tr>
                     <td>
@@ -55,7 +49,7 @@
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
-                        <input type="button" class="btn" value="Välj lagrad hatt" onclick="location.href = '@Url.Action("CreateStored", "Hat", new { orderId = item.OrderId, customerEmail = item.CustomerEmail, HatModelName = item.Name })'" />
+                        <input type="button" class="btn" value="Välj lagrad hatt" onclick="location.href = '@Url.Action("CreateStored", "Hat", new { hatModelName = item.Name })'" />
                     </td>
                 </tr>
                 }
@@ -63,7 +57,3 @@
         }
 
     </table>
-
-    <style>
-        #hideOnRegOrder { display: none; }
-    </style>

@@ -17,7 +17,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Hattmakaren", "ActiveHats", "Hat", null, new { @class = "navbar-brand" })
+                    @if (Request.IsAuthenticated)
+                    {
+                        @Html.ActionLink("Hattmakaren", "ActiveHats", "Hat", null, new { @class = "navbar-brand" })
+                    }
+                    else
+                    {
+                        <h4 id="logga">Hattmakaren</h4>
+                    }
                 @*TA BORT NÄR VI HAR DATA*@
                 @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
             </div>
@@ -57,3 +64,7 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<style>
+    #logga { color: gray; margin-top: 15%; }
+</style>

@@ -32,7 +32,7 @@ namespace Hattmakarens_system.Controllers
         public ActionResult Shipping(ShippingViewModel shipping, int id)
         {
             shipping.Languages = PopulateLangList();
-
+            
             if (ModelState.IsValid)
             {
                 pdfService.PrintShipping(shipping, id);
