@@ -35,7 +35,7 @@ namespace Hattmakarens_system.Controllers
                     Material = new List<MaterialModels>(),
                     Images = new List<ImageModels>()
                 };
-                if (file.ContentLength > 0)
+                if (file != null)
                 {
                     string filename = Path.GetFileName(file.FileName);
                     string imagePath = Path.Combine(Server.MapPath("~/Images"), filename);

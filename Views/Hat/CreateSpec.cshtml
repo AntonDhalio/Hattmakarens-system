@@ -37,7 +37,9 @@
     <div class="form-group ">
         @Html.LabelFor(model => model.PickedMaterials, new {@class = "col-md-2 control-label" })
         <div class="col-md-10 ">
-            @Html.ListBoxFor(model => model.PickedMaterials, new MultiSelectList(ViewBag.MaterialsToPickFrom, "Value", "Text"), new {@class = "form-control"})
+            @Html.ListBoxFor(model => model.PickedMaterials, new MultiSelectList(ViewBag.MaterialsToPickFrom, "Value", "Text"), new { @class = "form-control" })
+            @*@Html.ValidationMessageFor(model => model.PickedMaterials, "", new { @class = "text-danger" })*@
+            <p class="text-danger">@TempData["message"]</p>
         </div>
     </div>
 
