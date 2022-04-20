@@ -16,7 +16,7 @@
     <div>
         @using (Html.BeginForm("Hatmodel", "Hatmodel", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-        <div>
+        <div class="form-horizontal">
             <div class="form-group">
                 @Html.LabelFor(h => h.Name, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
@@ -24,9 +24,6 @@
                     @Html.ValidationMessageFor(h => h.Name, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <br />
-            <br />
-            <br />
             <div class="form-group">
                 @Html.LabelFor(h => h.Price, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
@@ -34,8 +31,6 @@
                     @Html.ValidationMessageFor(h => h.Price, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <br />
-            <br />
             <div class="form-group">
                 @Html.LabelFor(h => h.PickedMaterials, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
@@ -43,11 +38,6 @@
                     @Html.ValidationMessageFor(h => h.PickedMaterials, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
             <div class="form-group">
                 @Html.LabelFor(h => h.Description, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
@@ -55,9 +45,6 @@
                 </div>
 
             </div>
-            <br />
-            <br />
-            <br />
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     @Html.Label("Välj bild")
