@@ -59,8 +59,10 @@
             <hr />
             <div>
                 <div class="form-group">
-                    <div class=" col-md-2">
-                        <input type="button" value="Uppdatera beställning" class="btn btn-success" onclick="location.href = '@Url.Action("ModifyOrder", "Order", new {id = Model.Id})'"/>
+                    <div class=" col-md-10">
+                        <input type="button" value="Uppdatera beställning" class="btn btn-success" onclick="location.href = '@Url.Action("ModifyOrder", "Order", new {id = Model.Id})'" />
+                        <input type="button" value="Skapa faktura" class="btn btn-success" onclick="location.href = '@Url.Action("Invoice", "Pdf", new {id = Model.Id})'" />
+                        <input type="button" value="Skapa fraktsedel" class="btn btn-success" onclick="location.href = '@Url.Action("Shipping", "Pdf", new {id = Model.Id})'" />
                         @*<input type="button" class="btn" value="Registrera beställning " onclick="location.href = '@Url.Action("CreateOrderAdd", "Order", new { id = Model.Id, comment = Model.Comment, priority = Model.Priority })'" />*@
                     </div>
                 </div>
