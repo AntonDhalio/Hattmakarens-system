@@ -10,12 +10,13 @@
             if(material.State == true)
                 {
                     <button class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name; ">
+                        @material.MaterialName
                     </button>
                 }
             else
                 {
                     <button class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name; ">
-                        
+                        @material.MaterialName
                     </button>
                 }                
             }
@@ -29,20 +30,20 @@
         <div class="btn-group-toggle" data-toggle="buttons">
             @foreach (var material in Model.DekorationMaterial)
             {
-                if(material.State == true)
+                if (material.State == true)
                 {
-                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name; ">
+                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterial", "Hat", new { model = Model, id = material.MaterialId})'">
                         <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
                     </label>
                 }
                 else
                 {
-                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name; ">
+                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterial", "Hat", new { model = Model,id = material.MaterialId})'">
                         <input type="checkbox" checked autocomplete="off"> @material.MaterialName
                     </label>
-                }                
+                }
             }
-            
+
         </div>
     </div>
 </div>
