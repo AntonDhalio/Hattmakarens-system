@@ -72,7 +72,6 @@ namespace Hattmakarens_system.Controllers
                     }
                     else
                     {
-                        //ViewBag.ErrorMessage = "Fältet Material saknas";
                         TempData["message"] = "Fältet Material saknas";
                         ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
                         ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();

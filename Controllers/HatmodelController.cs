@@ -47,16 +47,6 @@ namespace Hattmakarens_system.Controllers
                     var imgRepo = new ImageRepository();               
                     newHatmodel.Images.Add(imgRepo.SaveImage(image));
                 }
-            //using (var context = new ApplicationDbContext())
-
-            //{
-            //    var newHatmodel = new HatModels
-            //    {
-            //        Name = hatmodel.Name,
-            //        Description = hatmodel.Description,
-            //        Price = hatmodel.Price,
-            //        Material = new List<MaterialModels>()
-            //    };
                 using (var context = new ApplicationDbContext())
                 {
                     foreach (var material in PickedMaterials)
@@ -70,24 +60,12 @@ namespace Hattmakarens_system.Controllers
                 }
 
                 return RedirectToAction("Hatmodel", "Hatmodel");
-                //context.HatModels.Add(newHatmodel);
-                //context.SaveChanges();
             }
             else
             {
                 ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
                 return View(hatmodel);
             }
-
-
-                //context.HatModels.Add(newHatmodel);
-                //context.SaveChanges();
-            //}
-            
-
-            //return RedirectToAction("Hatmodel", "Hatmodel");
-
-
         }
 
         public ActionResult SearchHatModel(int orderId, string customerEmail)
