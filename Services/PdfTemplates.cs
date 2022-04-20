@@ -47,7 +47,7 @@ namespace Hattmakarens_system.Services
             50, 150);
             gfx.DrawString("07455684992", miniFont, XBrushes.Black,
             50, 160);
-            gfx.DrawString(labels.OrganisationNumber + ": 5591433437", miniFont, XBrushes.Black,
+            gfx.DrawString(labels.OrganisationNumber + ": 559143-3437", miniFont, XBrushes.Black,
             50, 170);
             gfx.DrawString(labels.Bankgiro + ": 85938", miniFont, XBrushes.Black,
             50, 180);
