@@ -40,17 +40,17 @@ namespace Hattmakarens_system.Services
                 new XRect(0, 50, page.Width, page.Height), XStringFormats.TopCenter);
 
             gfx.DrawString("Hattmakaren", miniFont, XBrushes.Black,
-            50, 130);
+            400, 130);
             gfx.DrawString("Hattgränd 34", miniFont, XBrushes.Black,
-            50, 140);
+            400, 140);
             gfx.DrawString("876 65 ÖREBRO", miniFont, XBrushes.Black,
-            50, 150);
+            400, 150);
             gfx.DrawString("07455684992", miniFont, XBrushes.Black,
-            50, 160);
+            400, 160);
             gfx.DrawString(labels.OrganisationNumber + ": 559143-3437", miniFont, XBrushes.Black,
-            50, 170);
+            400, 170);
             gfx.DrawString(labels.Bankgiro + ": 85938", miniFont, XBrushes.Black,
-            50, 180);
+            400, 180);
 
             //Skapa Rektangel
             XRect rect = new XRect(30, 200, 300, 180);
@@ -337,7 +337,7 @@ namespace Hattmakarens_system.Services
             50, 150);
             gfx.DrawString("07455684992", miniFont, XBrushes.Black,
             50, 160);
-            gfx.DrawString(labels.OrganisationNumber + ": 5591433437", miniFont, XBrushes.Black,
+            gfx.DrawString(labels.OrganisationNumber + ": 559143-3437", miniFont, XBrushes.Black,
             50, 170);
 
             //Titlar
