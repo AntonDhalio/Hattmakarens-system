@@ -49,36 +49,7 @@ namespace Hattmakarens_system.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    HatModelID = 1,
-                    Name = model.Name,
-                    Size = model.Size,
-                    Price = model.Price,
-                    Status = "Aktiv",
-                    Comment = model.Comment,
-                    UserId = model.UserId,
-                    UserName = userRepository.GetUser(model.UserId).Name,
-                    Materials = new List<MaterialModels>(),
-                    Images = new List<ImageModels>()
-                    
-                };
-
-                var path = Server.MapPath("~/Images");
-                var images = new Service.Image().AddImages(file, path);
-               
-
-                foreach(var item in images)
-                {
-                    var imgRepo = new ImageRepository();
-                    imgRepo.SaveImage(item);
-                }
-
-                hat.Images = images;
-                hat.Materials = materialRepository.GetPickedMaterialInHat(hat.HatModelID, PickedMaterials, SelectedStatuses);
-                TempData["hat"] = hat;
-                TempData.Keep("hat");
-                return RedirectToAction("CreateOrder", "Order", new { customerEmail = order.CustomerEmail });
-
-                    if(PickedMaterials != null)
+                    if (PickedMaterials != null)
                     {
                         var SelectedStatuses = new int[100];
                         OrderModel order = (OrderModel)TempData.Peek("order");
@@ -95,6 +66,17 @@ namespace Hattmakarens_system.Controllers
                             Materials = new List<MaterialModels>()
 
                         };
+                        var path = Server.MapPath("~/Images");
+                        var images = new Service.Image().AddImages(file, path);
+
+
+                        foreach (var item in images)
+                        {
+                            var imgRepo = new ImageRepository();
+                            imgRepo.SaveImage(item);
+                        }
+
+                        hat.Images = images;
                         hat.Materials = materialRepository.GetPickedMaterialInHat(hat.HatModelID, PickedMaterials, SelectedStatuses);
                         TempData["hat"] = hat;
                         TempData.Keep("hat");
@@ -107,14 +89,8 @@ namespace Hattmakarens_system.Controllers
                         ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
                         return View(model);
                     }
-                }
-                else
-                {
-                    ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
-                    ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
-                    return View(model);
-                }
-               
+                } else { return View(); }
+
             }
             catch
             {
