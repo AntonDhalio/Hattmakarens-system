@@ -22,10 +22,11 @@ namespace Hattmakarens_system.Controllers
         }
 
         [HttpPost]
-        public ActionResult Hatmodel(HatmodelViewModel hatmodel, IEnumerable<string> PickedMaterials, HttpPostedFileBase file) 
+        public ActionResult Hatmodel(HatmodelViewModel hatmodel, IEnumerable<string> PickedMaterials, HttpPostedFileBase [] file) 
         {
 
-            if (ModelState.IsValid) { 
+            if (ModelState.IsValid) 
+            { 
 
                 var newHatmodel = new HatModels
                 {
@@ -35,6 +36,12 @@ namespace Hattmakarens_system.Controllers
                     Material = new List<MaterialModels>(),
                     Images = new List<ImageModels>()
                 };
+                //Från Läggtillbilder
+                var path = Server.MapPath("~/Images");
+                var images = new Service.Image().AddImages(file, path);
+                newHatmodel.Images = images;
+
+                 //Från SeBilder-KOPIA
                 if (file != null)
                 {
                     
@@ -50,6 +57,7 @@ namespace Hattmakarens_system.Controllers
                     var imgRepo = new ImageRepository();               
                     newHatmodel.Images.Add(imgRepo.SaveImage(image));
                 }
+                //Slut KOPIA
                 using (var context = new ApplicationDbContext())
                 {
                     foreach (var material in PickedMaterials)

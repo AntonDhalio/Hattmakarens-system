@@ -3,7 +3,7 @@
 
 <h2>Lägg till en specialtillverkad hatt</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("CreateSpec", "Hat", FormMethod.Post, new { enctype = "multipart/form-data" })) 
 {
     @Html.AntiForgeryToken()
     
@@ -52,6 +52,10 @@
                  <p>Priset anges exklusive moms</p>
         </div>
 
+        <p>Priset anges exklusive moms</p>
+    </div>
+
+
         <div class="form-group">
             @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -60,11 +64,19 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserId, new {@class = "col-md-2 control-label" } )
-            <div class="col-md-10">
-                @Html.DropDownList("UserId", new SelectList(ViewBag.UsersToPickFrom, "Value", "Text"), new {@class = "form-control"})
-            </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.Label("Välj bild")
+            @Html.TextBox("file", "", new { type = "file", multiple = "multiple" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownList("UserId", new SelectList(ViewBag.UsersToPickFrom, "Value", "Text"), new { @class = "form-control" })
+
         </div>
 
         <div class="form-group">
