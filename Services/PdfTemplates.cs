@@ -236,10 +236,6 @@ namespace Hattmakarens_system.Services
             XFont contentFontBold = new XFont("Verdana", 10, XFontStyle.Bold);
             XFont miniFont = new XFont("Verdana", 8, XFontStyle.Italic);
 
-            //if (!invoice.Language.Equals("sv") || invoice.Language != null)
-            //{
-            //    labels = ts.TranslatePdf(labels);
-            //}
 
             //Skapa rektangel (bakgrund) 1
             XRect rect = new XRect(150, 120, 300, 140);
@@ -314,12 +310,6 @@ namespace Hattmakarens_system.Services
         //Statistik PDF
         public void StatisticsPDF(StatisticViewModel statistics)
         {
-            TranslateService ts = new TranslateService(statistics.Language);
-
-            if (!statistics.Language.Equals("sv") || statistics.Language != null)
-            {
-                labels = ts.TranslatePdf(labels);
-            }
 
             List<OrderModels> orders = statistics.orders;
             foreach (var order in orders)
