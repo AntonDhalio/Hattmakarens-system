@@ -11,7 +11,7 @@ namespace Hattmakarens_system.ViewModels
 {
     public class StatisticViewModel
     {
-        public string Language { get; set; }    
+        public bool Translate { get; set; } 
         public List<OrderModels> orders { get; set; }
         public String time { get; set; }
         [Required]

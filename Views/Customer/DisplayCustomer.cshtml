@@ -1,4 +1,4 @@
-﻿@model Hattmakarens_system.ViewModels.CostumerViewModel
+﻿@model Hattmakarens_system.Models.CustomerModels
 
 @{
     ViewBag.Title = "DisplayCustomer";
@@ -9,7 +9,7 @@
 <div>
     <ul class="list-group">
         <li class="list-group-item">
-            Kundnummer: @Html.DisplayFor(model => model.Id)
+            KundId: @Html.DisplayFor(model => model.Id)
         </li>
         <li class="list-group-item">
             Namn: @Html.DisplayFor(model => model.Name)

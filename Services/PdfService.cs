@@ -37,14 +37,51 @@ namespace Hattmakarens_system.Services
         {
             var repo = new OrderRepository();
             var orders = repo.GetAllOrders();
+            var year = DateTime.Now.AddYears(-1);
+            var quarter = DateTime.Now.AddMonths(-3);
+            var month = DateTime.Now.AddMonths(-1);
             viewModel.orders = new List<Models.OrderModels>();
             foreach (var order in orders)
             {
-                if(order.Date >= viewModel.fromDate && order.Date <= viewModel.toDate)
+                if(order.Date > viewModel.fromDate && order.Date < viewModel.toDate)
                 {
                     viewModel.orders.Add(order);
                 }
             }
+
+            //if (viewModel.time.Equals("År"))
+            //{
+            //    viewModel.orders = new List<Models.OrderModels>();
+            //    foreach (var order in orders)
+            //    {
+            //        if (order.Date > year)
+            //        {
+            //            viewModel.orders.Add(order);
+            //        }
+            //    }
+            //}
+            //else if (viewModel.time.Equals("Kvartal"))
+            //{
+            //    viewModel.orders = new List<Models.OrderModels>();
+            //    foreach (var order in orders)
+            //    {
+            //        if (order.Date > quarter)
+            //        {
+            //            viewModel.orders.Add(order);
+            //        }
+            //    }
+            //}
+            //else if (viewModel.time.Equals("Månad"))
+            //{
+            //    viewModel.orders = new List<Models.OrderModels>();
+            //    foreach (var order in orders)
+            //    {
+            //        if (order.Date > month)
+            //        {
+            //            viewModel.orders.Add(order);
+            //        }
+            //    }
+            //}
             viewModel.totalOrdersCount = viewModel.orders.Count;
             var hats = 0;
             foreach (var order in viewModel.orders)

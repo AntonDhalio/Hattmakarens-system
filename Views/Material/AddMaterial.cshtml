@@ -24,48 +24,55 @@
 <div>
     @using (Html.BeginForm("AddMaterial", "Material", FormMethod.Post))
     {
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-            <div class="form-group">
-                @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Type, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.DropDownListFor(m => m.Type, new List<SelectListItem>
-                    {
-                    new SelectListItem { Value = "Tyg", Text = "Tyg" },
-                    new SelectListItem { Value = "Dekoration", Text = "Dekoration" },
-                    new SelectListItem { Value = "Tråd", Text = "Tråd" }
-                    }, "Välj materialtyp", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
-                </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(m => m.Type, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.Type, new List<SelectListItem>
+                {
+                new SelectListItem { Value = "Tyg", Text = "Tyg" },
+                new SelectListItem { Value = "Dekoration", Text = "Dekoration" },
+                new SelectListItem { Value = "Tråd", Text = "Tråd" }
+                }, "Välj materialtyp", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ColorId, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.ColorId, new { @class = "jscolor" })
-                    @*<button class="btn btn-outline-primary jscolor" type="button" >Välj färg</button>*@
-                    @Html.ValidationMessageFor(m => m.ColorId, "", new { @class = "text-danger" })
-                </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(m => m.ColorId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.ColorId, new { @class = "jscolor" })
+                @*<button class="btn btn-outline-primary jscolor" type="button" >Välj färg</button>*@
+                @Html.ValidationMessageFor(m => m.ColorId, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
-                </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
             </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="Lägg till material" />
-                </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Lägg till material" />
             </div>
         </div>
     }
 </div>
-    

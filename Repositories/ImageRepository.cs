@@ -13,14 +13,14 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.Pictures.Include(p => p.HatModels).Include(p => p.Hats).FirstOrDefault(p => p.Id == id);
+                return hatCon.Pictures.FirstOrDefault(p => p.Id == id);
             }
         }
         public List<ImageModels> GetAllImages()
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.Pictures.Include(p => p.HatModels).Include(p => p.Hats).ToList();
+                return hatCon.Pictures.ToList();
             }
         }
         public ImageModels SaveImage(ImageModels image)
@@ -37,14 +37,6 @@ namespace Hattmakarens_system.Repositories
                 }
                 hatCon.SaveChanges();
                 return image;
-            }
-        }
-
-        public ImageModels GetLatestAddedImage()
-        {
-            using (var hatCon = new ApplicationDbContext())
-            {
-                return hatCon.Pictures.LastOrDefault();
             }
         }
         public void DeleteImage(int id)
