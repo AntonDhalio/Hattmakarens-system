@@ -12,7 +12,7 @@
 
 <div class="form-horizontal">
 
-    <input type="button" class="btn" value="Välj lagrad hatt" onclick="location.href = '@Url.Action("SearchHatModel", "Hatmodel", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail })'" />
+    @*<input type="button" class="btn btn-primary" value="Välj lagrad hatt" onclick="location.href = '@Url.Action("SearchHatModel", "Hatmodel", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail })'" />*@
     @if (Model.HatModelName != null)
     {
         using (Html.BeginForm("PickMaterial", "Hat"))
@@ -25,13 +25,13 @@
                         {
                             if (material.State == true)
                             {
-                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterial", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, hatModelName = Model.HatModelName, id = material.MaterialId})'">
+                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterial", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, hatModelName = Model.HatModelName, id = material.MaterialId })'">
                                     <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
                                 </label>
                             }
                             else
                             {
-                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterial", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, hatModelName = Model.HatModelName, id = material.MaterialId})'">
+                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterial", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, hatModelName = Model.HatModelName, id = material.MaterialId })'">
                                     <input type="checkbox" checked autocomplete="off"> @material.MaterialName
                                 </label>
                             }
@@ -48,13 +48,13 @@
                         {
                             if (material.State == true)
                             {
-                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterial", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, hatModelName = Model.HatModelName, id = material.MaterialId})'">
+                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterial", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, hatModelName = Model.HatModelName, id = material.MaterialId })'">
                                     <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
                                 </label>
                             }
                             else
                             {
-                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterial", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, hatModelName = Model.HatModelName, id = material.MaterialId})'">
+                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterial", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, hatModelName = Model.HatModelName, id = material.MaterialId })'">
                                     <input type="checkbox" checked autocomplete="off"> @material.MaterialName
                                 </label>
                             }
@@ -72,13 +72,13 @@
                         {
                             if (material.State == true)
                             {
-                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterial", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, hatModelName = Model.HatModelName, id = material.MaterialId})'">
+                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterial", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, hatModelName = Model.HatModelName, id = material.MaterialId })'">
                                     <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
                                 </label>
                             }
                             else
                             {
-                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterial", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, hatModelName = Model.HatModelName, id = material.MaterialId})'">
+                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterial", "Hat", new { orderId = Model.OrderId, customerEmail = Model.CustomerEmail, hatModelName = Model.HatModelName, id = material.MaterialId })'">
                                     <input type="checkbox" checked autocomplete="off"> @material.MaterialName
                                 </label>
                             }
@@ -152,12 +152,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Lägg till lagerförd hatt på beställningen" class="btn btn-default" />
+                <input type="submit" class="btn btn-success" value="Lägg till lagerförd hatt på beställningen" />
             </div>
         </div>
     }
 </div>
 }
+   
+
 
 <style>
     #hidden { display: none; }

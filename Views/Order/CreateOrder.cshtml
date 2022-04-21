@@ -11,7 +11,7 @@
     @if (Model.CustomerEmail == null)
     {
         <div class="col-md-4">
-            <input type="button" class="btn" value="Lägg till kund för beställningen" onclick="location.href = '@Url.Action("SearchCustomer", "Customer")'" />
+            <input type="button" class="btn btn-primary" value="Lägg till kund för beställningen" onclick="location.href = '@Url.Action("SearchCustomer", "Customer")'" />
         </div>
     }
 </div>
@@ -21,51 +21,65 @@
     if (Model.CustomerEmail != null)
     {
         <h4>Vald kund:</h4>
-        <p>Id: @Html.DisplayFor(model => model.CustomerId)</p>
+        <p>Kundnummer: @Html.DisplayFor(model => model.CustomerId)</p>
         <p>Namn: @Html.DisplayFor(model => model.CustomerName)</p>
         <p>E-post: @Html.DisplayFor(model => model.CustomerEmail)</p>
+    }
+    <br />
 
-        <br />
-
-        <h3>Specialtillverkade hattar</h3>
-
+    <h3>Specialtillverkade hattar</h3>
+    if (Model.CustomerEmail != null)
+    {
         <p>
-            <input type="button" class="btn" value="Lägg till specialtillverkad hatt" onclick="location.href = '@Url.Action("CreateSpec", "Hat", new {orderId = Model.Id, customerEmail = Model.CustomerEmail})'" />
+            <input type="button" class="btn btn-primary" value="Lägg till specialtillverkad hatt" onclick="location.href = '@Url.Action("CreateSpec", "Hat", new { orderId = Model.Id, customerEmail = Model.CustomerEmail })'" />
         </p>
-        <div>
-            @Html.Partial("_ListSpecHats")
-        </div>
+    }
+    <div>
+        @Html.Partial("_ListSpecHats")
+    </div>
 
-        <br />
+    <br />
 
-        <h3>Lagerförda hattar</h3>
-
+    <h3>Lagerförda hattar</h3>
+    if (Model.CustomerEmail != null)
+    {
         <p>
-            <input type="button" class="btn" value="Lägg till lagerförd hatt" onclick="location.href = '@Url.Action("CreateStored", "Hat", new { orderId = Model.Id, customerEmail = Model.CustomerEmail})'" />
+            <input type="button" class="btn btn-primary" value="Lägg till lagerförd hatt" onclick="location.href = '@Url.Action("SearchHatModel", "HatModel", new { orderId = Model.Id, customerEmail = Model.CustomerEmail })'" />
         </p>
-        <div>
-            @Html.Partial("_ListStoredHats")
-        </div>
+    }
+    <div>
+        @Html.Partial("_ListStoredHats")
+    </div>
 
-        <br />
+    <br />
 
-        using (Html.BeginForm("CreateOrder", "Order", FormMethod.Post))
+    using (Html.BeginForm("CreateOrder", "Order", FormMethod.Post))
+    {
+
+        if (Model.CustomerEmail != null)
         {
             <div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <p>Tillägg på 20%</p>
                     <div class="col-md-10">
-                        <div class="checkbox">
+                        <div class="checkbox" id="test">
                             @Html.EditorFor(model => model.Priority)
                             @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
                 </div>
+
             </div>
-            <br />
-            <br />
-            <br />
+            <br/>
+            <br/>
+            <br/>
+            <div class="left">
+                <p >Tillägg på 20%</p>
+            </div/>  
+            @*<br />
+            <br />*@
+            @*<br />*@
             <div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -75,25 +89,33 @@
                     </div>
                 </div>
             </div>
-            <br />
-            <br />
-            <br />
-            <div class="form-group">
-                @Html.LabelFor(model => model.TotalSum, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DisplayFor(model => model.TotalSum, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+        }
+        <br />
+        <br />
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(model => model.TotalSum, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.TotalSum, new { htmlAttributes = new { @class = "form-control" } })
             </div>
-            <br />
-            <div class="form-group">
-                @Html.LabelFor(model => model.Moms, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DisplayFor(model => model.Moms, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+        </div>
+        <br />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Moms, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.Moms, new { htmlAttributes = new { @class = "form-control" } })
             </div>
-            <p>Priset för expressleverans är exkluderat i priset ovan </p>
-            <br />
-            <p class="text-danger">@TempData["message"]</p>
+        </div>
+        <br/>
+        <div>
+            <p class="left">Priset för expressleverans är exkluderat i priset ovan </p>
+        </div/>
+ 
+        <br />
+        <p class="text-danger">@TempData["message"]</p>
+
+        if (Model.CustomerEmail != null)
+        {
             <div>
                 <div class="form-group">
                     <div class=" col-md-2">
@@ -101,22 +123,31 @@
                     </div>
                 </div>
             </div>
-
-
-            <div id="hidden">
-                @Html.EditorFor(model => model.TotalSum, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.EditorFor(model => model.Moms, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
         }
 
-        <div>
-            <input type="button" class="btn btn-danger" value="Avbryt registreringen av denna order " onclick="location.href = '@Url.Action("ActiveHats", "Hat")'" />
-        </div>
 
-        <style>
-            #hidden { display: none; }
-        </style>
+        <div id="hidden">
+            @Html.EditorFor(model => model.TotalSum, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Moms, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
     }
+
+
+    <div>
+        <input type="button" class="btn btn-danger" value="Avbryt registreringen av denna order " onclick="location.href = '@Url.Action("ActiveHats", "Hat")'" />
+    </div>
+
+    <style>
+        #hidden {
+            display: none;
+        }
+        .left{
+            margin-left: 2%; padding: 0; border: 0;
+        }
+        #test {margin: 2%; }
+    </style>
+
+
 }
 
 
