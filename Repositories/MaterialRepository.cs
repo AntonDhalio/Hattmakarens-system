@@ -23,6 +23,13 @@ namespace Hattmakarens_system.Repositories
                 return hatCon.Material.Include(m => m.HatModels).Include(m => m.Color).ToList();
             }
         }
+        public List<MaterialModels> GetAllMaterialsOfType(string typ)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                return hatCon.Material.Where(m => m.Type == typ).Include(m => m.HatModels).Include(m => m.Color).ToList();
+            }
+        }
         public MaterialModels SaveMaterial(MaterialModels material)
         {
             using (var hatCon = new ApplicationDbContext())
@@ -103,6 +110,24 @@ namespace Hattmakarens_system.Repositories
                         materials.Add(aMaterial);
                     };
                 };
+                return materials;
+
+            }
+        }
+
+        public List<MaterialModels> GetMaterialById(List<int> materialId)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                List<MaterialModels> materials = new List<MaterialModels>();
+
+                foreach (var id in materialId)
+                {
+                    var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
+                    materials.Add(aMaterial);
+                };
+                
+                
                 return materials;
 
             }

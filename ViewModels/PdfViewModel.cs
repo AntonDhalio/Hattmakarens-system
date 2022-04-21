@@ -11,6 +11,7 @@ namespace Hattmakarens_system.ViewModels
     public class InvoiceViewModel
     {
         public List<SelectListItem> Languages { get; set; }
+        [Required]
         public string Language { get; set; }
         public OrderModels Order { get; set; }
         public CustomerModels Customer { get; set; }
