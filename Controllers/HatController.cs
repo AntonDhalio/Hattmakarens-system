@@ -63,6 +63,7 @@ namespace Hattmakarens_system.Controllers
                 {
                     if(PickedMaterials != null)
                     {
+                        var SelectedStatuses = new int[100];
                         OrderModel order = (OrderModel)TempData.Peek("order");
                         HatViewModel hat = new HatViewModel()
                         {
