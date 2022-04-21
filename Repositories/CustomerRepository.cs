@@ -84,15 +84,15 @@ namespace Hattmakarens_system.Repositories
             }
 
         }
-        //public int GetCustomerIdByEmail(string email)
-        //{
-        //    using (var hatCon = new ApplicationDbContext())
-        //    {
-        //        CustomerModels customer = hatCon.Customer.FirstOrDefault(c => c.Email == email);
-        //        int customerId = customer.Id;
-        //        return customerId;
-        //    }
-        //}
+        public int GetCustomerIdByEmail(string email)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                CustomerModels customer = hatCon.Customer.FirstOrDefault(c => c.Email == email);
+                int customerId = customer.Id;
+                return customerId;
+            }
+        }
 
         public string GetCustomerNameById(int Id)
         {
@@ -111,25 +111,6 @@ namespace Hattmakarens_system.Repositories
                 OrderRepository orderRepository = new OrderRepository();
                 var order = orderRepository.GetOrder(orderId);
                 return GetCustomer(order.CustomerId);
-            }
-        }
-
-        public CustomerModels AddEmptyCustomer()
-        {
-            using (var context = new ApplicationDbContext())
-            {
-                var customer = new CustomerModels
-                {
-                    Name = "Kund borttagen",
-                    Adress = "",
-                    Phone = 0,
-                    Comment = "När du tar bort en kund kommer alla dess tidigare ordrar att hamna på denna 'kund'",
-                    Email = "",
-                    Orders = new List<OrderModels>()
-                };
-                context.Customer.Add(customer);
-                context.SaveChanges();
-                return customer;
             }
         }
 

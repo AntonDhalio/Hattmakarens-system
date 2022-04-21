@@ -1,7 +1,6 @@
 ﻿using Hattmakarens_system.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Web;
@@ -10,15 +9,9 @@ namespace Hattmakarens_system.Services
 {
     public class TranslateService
     {
-        public string Lang;
-
-        public TranslateService (string lang)
-        {
-            Lang = lang;
-        }
         public String Translate(String word)
         {
-            var toLanguage = Lang;
+            var toLanguage = "en";
             var fromLanguage = "sv";
             var url = $"https://translate.googleapis.com/translate_a/single?client=gtx&sl={fromLanguage}&tl={toLanguage}&dt=t&q={HttpUtility.UrlEncode(word)}";
             var webClient = new WebClient
@@ -39,9 +32,9 @@ namespace Hattmakarens_system.Services
 
         public PdfLabelsViewModel TranslatePdf(PdfLabelsViewModel swedish)
         {
-            PdfLabelsViewModel translated = new PdfLabelsViewModel
+            PdfLabelsViewModel english = new PdfLabelsViewModel
             {
-                Invoice = Translate(swedish.Invoice),
+                Invoice = Translate(swedish.Shipping),
                 To = Translate(swedish.To),
                 From = Translate(swedish.From),
                 Customer = Translate(swedish.Customer),
@@ -68,10 +61,9 @@ namespace Hattmakarens_system.Services
                 HatAmount = Translate(swedish.HatAmount),
                 OrderAmount = Translate(swedish.OrderAmount),
                 OrderDate = Translate(swedish.OrderDate),
-                Status = Translate(swedish.Status),
             };
 
-            return translated;
+            return english;
         }
     }
 }
