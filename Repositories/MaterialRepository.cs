@@ -114,5 +114,23 @@ namespace Hattmakarens_system.Repositories
 
             }
         }
+
+        public List<MaterialModels> GetMaterialById(List<int> materialId)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+                List<MaterialModels> materials = new List<MaterialModels>();
+
+                foreach (var id in materialId)
+                {
+                    var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
+                    materials.Add(aMaterial);
+                };
+                
+                
+                return materials;
+
+            }
+        }
     }
 }

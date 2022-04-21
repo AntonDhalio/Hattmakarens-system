@@ -63,7 +63,6 @@ namespace Hattmakarens_system.Controllers
                 {
                     if(PickedMaterials != null)
                     {
-                        var SelectedStatuses = new int[100];
                         OrderModel order = (OrderModel)TempData.Peek("order");
                         HatViewModel hat = new HatViewModel()
                         {
@@ -78,11 +77,11 @@ namespace Hattmakarens_system.Controllers
                             Materials = new List<MaterialModels>()
 
                         };
-                        hat.Materials = materialRepository.GetPickedMaterialInHat(hat.HatModelID, PickedMaterials, SelectedStatuses);
+                        var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
+                        hat.Materials = materialRepository.GetMaterialById(valdMaterial);
                         TempData["hat"] = hat;
                         TempData.Keep("hat");
                         model.HatModelID = 1; //Hårdkodat värde för att representera specialltillverkad hatt
-                        var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
 
                         hatRepository.CreateHat(model, valdMaterial);
 
