@@ -411,21 +411,24 @@ namespace Hattmakarens_system.Controllers
                 allHats = context.Hats.Include(h => h.Order).Include(h => h.Models).ToList();
             }
             var hatstoShow = allHats.Where(h => h.UserId.Equals(User.Identity.GetUserId())).Where(h => h.Status == "Aktiv");
+            var sortedList = hatstoShow.OrderBy(h => h.Order.Priority==false).ToList();
             var viewModel = new ActiveHatsViewModel
             {
-                hats = hatstoShow.ToList(),
+                hats = sortedList.ToList(),
                 Orders = new List<OrderModels>()
             };
 
             var repos = new OrderRepository();
             var allOrders = repos.GetAllOrders();
-            foreach (var order in allOrders)
+            var sortedOrderList = allOrders.OrderBy(h => h.Priority==false).ToList();
+            foreach (var order in sortedOrderList)
             {
                 if (order.Status.Equals("Aktiv"))
                 {
                     viewModel.Orders.Add(order);
                 }
             }
+            
             return View(viewModel);
         }
 
