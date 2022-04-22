@@ -55,6 +55,15 @@ namespace Hattmakarens_system.Controllers
 
             foreach (CultureInfo cul in cu)
             {
+                if (cul.TwoLetterISOLanguageName == "sv")
+                {
+                    languages.Add(new SelectListItem
+                    {
+                        Value = cul.TwoLetterISOLanguageName,
+                        Text = cul.EnglishName,
+                        Selected = true
+                    });
+                }
                 new SelectListItem { Value = cul.TwoLetterISOLanguageName, Text = cul.EnglishName };
                 languages.Add(new SelectListItem
                 {

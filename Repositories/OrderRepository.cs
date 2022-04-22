@@ -24,7 +24,8 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.Order.Include(o => o.Hats).Include(o => o.Customer).ToList();
+                return hatCon.Order.Include(o => o.Hats).Include(o => o.Customer).
+                    Include(o => o.User).ToList();
             }
         }
         //public OrderModels SaveOrder(OrderModels order)
