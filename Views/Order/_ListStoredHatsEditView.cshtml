@@ -52,6 +52,10 @@
                     <td>
                         @Html.ActionLink("Redigera", "Edit", "Hat", new { hatId = item.Id }, null)
                     </td>
+                    <td>
+                        @Html.ActionLink("Ta bort", "Delete", "Hat", new { orderId = item.OrderId, hatId = item.Id },
+                     new { onclick = "return confirm('Är du säker på att du vill ta bort den här hatten?');" })
+                    </td>
                 </tr>
                 }
             }
