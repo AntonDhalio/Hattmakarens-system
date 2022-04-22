@@ -28,81 +28,164 @@ namespace Hattmakarens_system.Controllers
                 TrådMaterial = TrådMaterial,
                 IsAdded = isAdded
             };
+            if((HatmodelViewModel)TempData.Peek("hatmodel") != null)
+            {
+                var tempModel = (HatmodelViewModel)TempData["hatmodel"];
+                model.Name = tempModel.Name;
+                model.Price = tempModel.Price;
+                model.Description = tempModel.Description;
+                TempData["hatmodel"] = null;
+            }
             
             ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Hatmodel(HatmodelViewModel hatmodel, HttpPostedFileBase file) 
+        public ActionResult Hatmodel(HatmodelViewModel hatmodel, HttpPostedFileBase file, string submitBtn) 
         {
-            hatmodel.TygMaterial = TygMaterial;
-            hatmodel.TrådMaterial = TrådMaterial;
-            hatmodel.DekorationMaterial = DekorationMaterial;
-            //hatmodel.IsAdded = false;
-
-            
-            var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
-
-            if (valdMaterial.Count != 0)
+            switch (submitBtn)
             {
-                if (hatModelRepository.ExistingHatModelName(hatmodel.Name) == false)
-                {
-                    if (ModelState.IsValid)
+                case "Lägg till nytt material":
+                    TempData["hatmodel"] = hatmodel;
+                    TempData.Keep("hatmodel");
+                    return RedirectToAction("AddMaterial", "Material", new { isAdded = false});
+                case "Lägg till hattmodell":
+                    hatmodel.TygMaterial = TygMaterial;
+                    hatmodel.TrådMaterial = TrådMaterial;
+                    hatmodel.DekorationMaterial = DekorationMaterial;
+                    //hatmodel.IsAdded = false;
+
+
+                    var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
+
+                    if (valdMaterial.Count != 0)
                     {
-                        var newHatmodel = new HatModels
+                        if (hatModelRepository.ExistingHatModelName(hatmodel.Name) == false)
                         {
-                            Name = hatmodel.Name,
-                            Description = hatmodel.Description,
-                            Price = hatmodel.Price,
-                            Material = new List<MaterialModels>(),
-                            Images = new List<ImageModels>()
-                        };
-                        if (file != null)
-                        {
-                            string filename = Path.GetFileName(file.FileName);
-                            string imagePath = Path.Combine(Server.MapPath("~/Images"), filename);
-                            var image = new ImageModels
+                            if (ModelState.IsValid)
                             {
-                                Path = imagePath,
-                                HatModels = new List<HatModels>()
-                            };
-                            var imgRepo = new ImageRepository();
-                            newHatmodel.Images.Add(imgRepo.SaveImage(image));
-                        }
-                        using (var context = new ApplicationDbContext())
-                        {
-                            foreach (var Id in valdMaterial)
-                            {
-                                newHatmodel.Material.Add(MaterialRepository.GetMaterial(Id));
+                                var newHatmodel = new HatModels
+                                {
+                                    Name = hatmodel.Name,
+                                    Description = hatmodel.Description,
+                                    Price = hatmodel.Price,
+                                    Material = new List<MaterialModels>(),
+                                    Images = new List<ImageModels>()
+                                };
+                                if (file != null)
+                                {
+                                    string filename = Path.GetFileName(file.FileName);
+                                    string imagePath = Path.Combine(Server.MapPath("~/Images"), filename);
+                                    var image = new ImageModels
+                                    {
+                                        Path = imagePath,
+                                        HatModels = new List<HatModels>()
+                                    };
+                                    var imgRepo = new ImageRepository();
+                                    newHatmodel.Images.Add(imgRepo.SaveImage(image));
+                                }
+                                using (var context = new ApplicationDbContext())
+                                {
+                                    foreach (var Id in valdMaterial)
+                                    {
+                                        newHatmodel.Material.Add(MaterialRepository.GetMaterial(Id));
+                                    }
+                                    context.HatModels.Add(newHatmodel);
+                                    context.SaveChanges();
+                                    TygMaterial = new Service.Material().ResetTygList(TygMaterial);
+                                    DekorationMaterial = new Service.Material().ResetDecorationList(DekorationMaterial);
+                                    TrådMaterial = new Service.Material().ResetTradList(TrådMaterial);
+                                }
+                                return RedirectToAction("Hatmodel", "Hatmodel", new { IsAdded = true });
                             }
-                            context.HatModels.Add(newHatmodel);
-                            context.SaveChanges();
-                            TygMaterial = new Service.Material().ResetTygList(TygMaterial);
-                            DekorationMaterial = new Service.Material().ResetDecorationList(DekorationMaterial);
-                            TrådMaterial = new Service.Material().ResetTradList(TrådMaterial);
+                            else
+                            {
+                                ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
+                                return View(hatmodel);
+                            }
                         }
-                        return RedirectToAction("Hatmodel", "Hatmodel", new { IsAdded = true });
+                        else
+                        {
+                            ViewBag.Message = "Det finns redan en hatmodell med detta namn";
+                            return View(hatmodel);
+                        }
                     }
                     else
                     {
+                        TempData["materialError"] = "Du måste välja minst 1 material";
                         ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
                         return View(hatmodel);
                     }
-                }
-                else
-                {
-                    ViewBag.Message = "Det finns redan en hatmodell med detta namn";
-                    return View(hatmodel);
-                }
+                default:
+                    return View();
             }
-            else
-            {
-                TempData["materialError"] = "Du måste välja minst 1 material";
-                ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
-                return View(hatmodel);
-            }
-            
+            //hatmodel.TygMaterial = TygMaterial;
+            //hatmodel.TrådMaterial = TrådMaterial;
+            //hatmodel.DekorationMaterial = DekorationMaterial;
+            ////hatmodel.IsAdded = false;
+
+
+            //var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
+
+            //if (valdMaterial.Count != 0)
+            //{
+            //    if (hatModelRepository.ExistingHatModelName(hatmodel.Name) == false)
+            //    {
+            //        if (ModelState.IsValid)
+            //        {
+            //            var newHatmodel = new HatModels
+            //            {
+            //                Name = hatmodel.Name,
+            //                Description = hatmodel.Description,
+            //                Price = hatmodel.Price,
+            //                Material = new List<MaterialModels>(),
+            //                Images = new List<ImageModels>()
+            //            };
+            //            if (file != null)
+            //            {
+            //                string filename = Path.GetFileName(file.FileName);
+            //                string imagePath = Path.Combine(Server.MapPath("~/Images"), filename);
+            //                var image = new ImageModels
+            //                {
+            //                    Path = imagePath,
+            //                    HatModels = new List<HatModels>()
+            //                };
+            //                var imgRepo = new ImageRepository();
+            //                newHatmodel.Images.Add(imgRepo.SaveImage(image));
+            //            }
+            //            using (var context = new ApplicationDbContext())
+            //            {
+            //                foreach (var Id in valdMaterial)
+            //                {
+            //                    newHatmodel.Material.Add(MaterialRepository.GetMaterial(Id));
+            //                }
+            //                context.HatModels.Add(newHatmodel);
+            //                context.SaveChanges();
+            //                TygMaterial = new Service.Material().ResetTygList(TygMaterial);
+            //                DekorationMaterial = new Service.Material().ResetDecorationList(DekorationMaterial);
+            //                TrådMaterial = new Service.Material().ResetTradList(TrådMaterial);
+            //            }
+            //            return RedirectToAction("Hatmodel", "Hatmodel", new { IsAdded = true });
+            //        }
+            //        else
+            //        {
+            //            ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
+            //            return View(hatmodel);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        ViewBag.Message = "Det finns redan en hatmodell med detta namn";
+            //        return View(hatmodel);
+            //    }
+            //}
+            //else
+            //{
+            //    TempData["materialError"] = "Du måste välja minst 1 material";
+            //    ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
+            //    return View(hatmodel);
+            //}
         }
 
         public ActionResult SearchHatModel(int orderId, string customerEmail)
