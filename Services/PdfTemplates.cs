@@ -16,6 +16,7 @@ namespace Hattmakarens_system.Services
         OrderRepository orderRepository = new OrderRepository();
         CustomerRepository customerRepository = new CustomerRepository();
         PdfLabelsViewModel labels = new PdfLabelsViewModel();
+        HatRepository hatRepository = new HatRepository();
 
         //Faktura PDF
         public void InvoicePDF(InvoiceViewModel invoice)
@@ -223,6 +224,7 @@ namespace Hattmakarens_system.Services
         {
             var order = orderRepository.GetOrder(id);
             var customer = customerRepository.GetCustomer(order.CustomerId);
+            var hats = hatRepository.GetAllHats().FindAll(h => h.OrderId == id);
 
             //Skapandet av dokumentet
             PdfDocument document = new PdfDocument();
@@ -284,7 +286,7 @@ namespace Hattmakarens_system.Services
 
             int x = 320;
 
-            foreach (var hat in order.Hats)
+            foreach (var hat in hats)
             {
                 gfx.DrawString(hat.Name, contentFont, XBrushes.Black,
                 50, x);
