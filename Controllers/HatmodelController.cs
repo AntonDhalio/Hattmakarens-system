@@ -59,8 +59,8 @@ namespace Hattmakarens_system.Controllers
                     if (file != null)
                     {
                         var path = Server.MapPath(@"~\NewFolder1");
-                    var images = new Service.Image().AddImages(file, path);
-                    newHatmodel.Images = images;
+                        var images = new Service.Image().AddImages(file, path);
+                        newHatmodel.Images = images;
                     }
                     using (var context = new ApplicationDbContext())
                     {
@@ -75,7 +75,8 @@ namespace Hattmakarens_system.Controllers
                         TrådMaterial = new Service.Material().ResetTradList(TrådMaterial);
                     }
                     return RedirectToAction("Hatmodel", "Hatmodel", new { IsAdded = true });
-                
+                }
+
                 else
                 {
                     ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();

@@ -115,10 +115,15 @@
     }
     @if (Model.Images != null)
     {
-        foreach (var image in Model.Images)
-        {
+    <div class="form-group">
+    @foreach (var image in Model.Images)
+    {
+        <div class="col-md-10">
             <img src="@Url.Content(@image.Path)" alt="Hatmodel picture" class="img-responsive" />
-        }
+        </div>
+    }
+    </div>
+        
     }
 
 

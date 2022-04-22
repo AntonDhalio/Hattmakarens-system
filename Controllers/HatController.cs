@@ -213,8 +213,8 @@ namespace Hattmakarens_system.Controllers
                         Comment = model.Comment,
                         UserId = model.UserId,
                         UserName = userRepository.GetUser(model.UserId).Name,
-                        Materials = new List<MaterialModels>()
-
+                        Materials = new List<MaterialModels>(),
+                        Images = model.Images
                     };
                     var hatModel = hatModelRepository.GetHatmodel(model.HatModelID);
                     hat.HatModelName = hatModel.Name;

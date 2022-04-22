@@ -69,7 +69,7 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.HatModels.FirstOrDefault(h => h.Name == hatModelName);
+                return hatCon.HatModels.Include(h => h.Images).FirstOrDefault(h => h.Name == hatModelName);
             }
         }
     }
