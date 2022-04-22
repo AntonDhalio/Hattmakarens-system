@@ -27,8 +27,12 @@ namespace Hattmakarens_system.ViewModels
         public virtual ICollection<ImageModels> Images { get; set; }
         public virtual ICollection<MaterialModels> Material { get; set; }
         public List<SelectListItem> MaterialsToPickFrom { get; set; }
-        [Required]
+        public List<ColorMaterialViewModel> TygMaterial { get; set; }
+        public List<ColorMaterialViewModel> DekorationMaterial { get; set; }
+        public List<ColorMaterialViewModel> TrådMaterial { get; set; }
+        
         [DisplayName("Välj material")]
         public IEnumerable<string> PickedMaterials { get; set; }
+        public bool IsAdded { get; set; }
     }
 }
