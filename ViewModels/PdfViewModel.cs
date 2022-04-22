@@ -37,7 +37,7 @@ namespace Hattmakarens_system.ViewModels
         public CustomerModels Customer { get; set; }
         public int OrderId { get; set; }
         [Required]
-        [RegularExpression(@"^[0-9]\d*(\.\d+)?$")]
+        [RegularExpression(@"^[0-9]\d*(\.\d+)?$", ErrorMessage = "Fältet får endast innehålla siffror")]
         [Display(Name = "Vikt  (kg)")]
         public string Weight { get; set; }
         [Required]
