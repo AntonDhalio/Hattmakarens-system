@@ -388,6 +388,7 @@ namespace Hattmakarens_system.Controllers
         }
         public ActionResult ActiveHats()
         {
+            userRepository.addNoUser();
             //Lägger till specialtillverkad hattmodell första gången man går in på denna view
             HatmodelRepository hatmodelRepository = new HatmodelRepository();
             var hatmodels = hatmodelRepository.GetAllHatmodels();
