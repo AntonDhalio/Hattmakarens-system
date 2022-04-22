@@ -49,7 +49,7 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.Hats.Include(h => h.Order).ToList();
+                return hatCon.Hats.Include(h => h.Order).Include(h => h.User).ToList();
             }
         }
         //public Hats SaveHats(Hats hat)
