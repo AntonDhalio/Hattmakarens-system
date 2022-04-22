@@ -38,7 +38,7 @@ namespace Hattmakarens_system.Controllers
                     };
                     cusRepo.SaveCostumer(customer);
                     ModelState.Clear();
-                    return View();
+                    return RedirectToAction("SearchCustomer", "Customer");
                 }
                 else
                 {
