@@ -270,7 +270,7 @@ namespace Hattmakarens_system.Services
             gfx.DrawString(labels.CustomerNumber, contentFontBold, XBrushes.Black,
             180, 230);
             gfx.DrawString(customer.Id.ToString(), contentFont, XBrushes.Black,
-            240, 230);
+            265, 230);
 
             //Titlar
             gfx.DrawString(labels.HatName, contentFontBold, XBrushes.Black,
