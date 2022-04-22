@@ -19,14 +19,16 @@ namespace Hattmakarens_system.Controllers
         static List<ColorMaterialViewModel> TrådMaterial = new Service.Material().GetTrad();
 
         // GET: Hatmodel
-        public ActionResult Hatmodel()
+        public ActionResult Hatmodel(bool isAdded)
         {
             var model = new HatmodelViewModel()
             {
                 TygMaterial = TygMaterial,
                 DekorationMaterial = DekorationMaterial,
-                TrådMaterial = TrådMaterial
+                TrådMaterial = TrådMaterial,
+                IsAdded = isAdded
             };
+            
             ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
             return View(model);
         }
@@ -35,49 +37,58 @@ namespace Hattmakarens_system.Controllers
         public ActionResult Hatmodel(HatmodelViewModel hatmodel, HttpPostedFileBase[] file) 
 
         {
-            //if (ModelState.IsValid)
-            //{
-                hatmodel.TygMaterial = TygMaterial;
-                hatmodel.TrådMaterial = TrådMaterial;
-                hatmodel.DekorationMaterial = DekorationMaterial;
+            hatmodel.TygMaterial = TygMaterial;
+            hatmodel.TrådMaterial = TrådMaterial;
+            hatmodel.DekorationMaterial = DekorationMaterial;
+            //hatmodel.IsAdded = false;
+            
+            var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
 
-                var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
-
-                var newHatmodel = new HatModels
+            if (valdMaterial.Count != 0)
+            {
+                if (ModelState.IsValid)
                 {
-                    Name = hatmodel.Name,
-                    Description = hatmodel.Description,
-                    Price = hatmodel.Price,
-                    Material = new List<MaterialModels>(),
-                    Images = new List<ImageModels>()
-                };
-
-                if (file != null)
-                {
-                    var path = Server.MapPath(@"~\NewFolder1");
+                    var newHatmodel = new HatModels
+                    {
+                        Name = hatmodel.Name,
+                        Description = hatmodel.Description,
+                        Price = hatmodel.Price,
+                        Material = new List<MaterialModels>(),
+                        Images = new List<ImageModels>()
+                    };
+                    if (file != null)
+                    {
+                        var path = Server.MapPath(@"~\NewFolder1");
                     var images = new Service.Image().AddImages(file, path);
                     newHatmodel.Images = images;
-                }
-                using (var context = new ApplicationDbContext())
-                {
-                    foreach (var Id in valdMaterial)
-                    {                        
-                        newHatmodel.Material.Add(MaterialRepository.GetMaterial(Id));
                     }
-                    context.HatModels.Add(newHatmodel);
-                    context.SaveChanges();
-                    TygMaterial = new Service.Material().ResetTygList(TygMaterial);
-                    DekorationMaterial = new Service.Material().ResetDecorationList(DekorationMaterial);
-                    TrådMaterial = new Service.Material().ResetTradList(TrådMaterial);
+                    using (var context = new ApplicationDbContext())
+                    {
+                        foreach (var Id in valdMaterial)
+                        {
+                            newHatmodel.Material.Add(MaterialRepository.GetMaterial(Id));
+                        }
+                        context.HatModels.Add(newHatmodel);
+                        context.SaveChanges();
+                        TygMaterial = new Service.Material().ResetTygList(TygMaterial);
+                        DekorationMaterial = new Service.Material().ResetDecorationList(DekorationMaterial);
+                        TrådMaterial = new Service.Material().ResetTradList(TrådMaterial);
+                    }
+                    return RedirectToAction("Hatmodel", "Hatmodel", new { IsAdded = true });
+                
+                else
+                {
+                    ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
+                    return View(hatmodel);
                 }
-
-                return RedirectToAction("Hatmodel", "Hatmodel");
-            //}
-            //else
-            //{
-            //    ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
-            //    return View(hatmodel);
-            //}
+            }
+            else
+            {
+                TempData["materialError"] = "Du måste välja minst 1 material";
+                ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
+                return View(hatmodel);
+            }
+            
         }
 
         public ActionResult SearchHatModel(int orderId, string customerEmail)
@@ -125,7 +136,7 @@ namespace Hattmakarens_system.Controllers
                 }
             }
 
-            return RedirectToAction("Hatmodel");
+            return RedirectToAction("Hatmodel", new { IsAdded = false });
         }
     }
 }

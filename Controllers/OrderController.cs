@@ -15,6 +15,7 @@ namespace Hattmakarens_system.Controllers
         CustomerRepository customerRepository = new CustomerRepository();
         OrderRepository orderRepository = new OrderRepository();
         HatRepository hatRepository = new HatRepository();
+        UserRepository userRepository = new UserRepository();
 
         // GET: Order
         public ActionResult Index()
@@ -174,7 +175,8 @@ namespace Hattmakarens_system.Controllers
         public ActionResult ViewOrder(int Id)
         {
             var customer = customerRepository.GetCustomerByOrderId(Id);
-            OrderModel order = orderRepository.GetOrderViewModel(Id, customer.Email);    
+            OrderModel order = orderRepository.GetOrderViewModel(Id, customer.Email);
+            ViewBag.Users = userRepository.DictionaryUsers();
             return View(order);
         }
 
@@ -182,6 +184,7 @@ namespace Hattmakarens_system.Controllers
         {
             var customer = customerRepository.GetCustomerByOrderId(Id);
             OrderModel order = orderRepository.GetOrderViewModel(Id, customer.Email);
+            ViewBag.Users = userRepository.DictionaryUsers();
             return View(order);
         }
 

@@ -367,15 +367,26 @@ namespace Hattmakarens_system.Controllers
         {
             try
             {
-                HatViewModel hat = new HatViewModel();
-                foreach(HatViewModel item in (List<HatViewModel>)TempData.Peek("listOfHats"))
+                //HatViewModel hat = new HatViewModel();
+                //foreach(HatViewModel item in (List<HatViewModel>)TempData.Peek("listOfHats"))
+                //{
+                //    if(item.Id == id)
+                //    {
+                //        hat = item;
+                //    }
+                //}
+                List<HatViewModel> listOfHats = new List<HatViewModel>();
+                foreach (HatViewModel hat in (List<HatViewModel>)TempData.Peek("listOfHats"))
                 {
-                    if(item.Id == id)
+                    if (hat.Id != id)
                     {
-                        hat = item;
+                        listOfHats.Add(hat);
                     }
                 }
-                return View(hat);
+                TempData["listOfHats"] = listOfHats;
+                TempData.Keep("listOfHats");
+                var order = (OrderModel)TempData.Peek("order");
+                return RedirectToAction("CreateOrder", "Order", new { customerEmail = order.CustomerEmail });
             }
             catch
             {
@@ -384,31 +395,38 @@ namespace Hattmakarens_system.Controllers
         }
 
         // POST: Hat/Delete/5
-        [HttpPost]
-        public ActionResult DeleteInRegOrder(HatViewModel model)
+        //[HttpPost]
+        //public ActionResult DeleteInRegOrder(HatViewModel model)
+        //{
+        //    try
+        //    {
+        //        List<HatViewModel> listOfHats = new List<HatViewModel>();
+        //        foreach(HatViewModel hat in (List<HatViewModel>)TempData.Peek("listOfHats"))
+        //        {
+        //            if(hat.Id != model.Id)
+        //            {
+        //                listOfHats.Add(hat);
+        //            }
+        //        }
+        //        TempData["listOfHats"] = listOfHats;
+        //        TempData.Keep("listOfHats");
+        //        OrderModel currentOrder = (OrderModel)TempData.Peek("order");
+        //        return RedirectToAction("CreateOrder", "Order", new { customerEmail = currentOrder.CustomerEmail });
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
+
+        public ActionResult Delete(int orderId, int hatId)
         {
-            try
-            {
-                List<HatViewModel> listOfHats = new List<HatViewModel>();
-                foreach(HatViewModel hat in (List<HatViewModel>)TempData.Peek("listOfHats"))
-                {
-                    if(hat.Id != model.Id)
-                    {
-                        listOfHats.Add(hat);
-                    }
-                }
-                TempData["listOfHats"] = listOfHats;
-                TempData.Keep("listOfHats");
-                OrderModel currentOrder = (OrderModel)TempData.Peek("order");
-                return RedirectToAction("CreateOrder", "Order", new { customerEmail = currentOrder.CustomerEmail });
-            }
-            catch
-            {
-                return View();
-            }
+            hatRepository.DeleteHat(hatId);
+            return RedirectToAction("ModifyOrder", "Order", new { Id = orderId });
         }
         public ActionResult ActiveHats()
         {
+            userRepository.addNoUser();
             //Lägger till specialtillverkad hattmodell första gången man går in på denna view
             HatmodelRepository hatmodelRepository = new HatmodelRepository();
             var hatmodels = hatmodelRepository.GetAllHatmodels();
@@ -432,21 +450,24 @@ namespace Hattmakarens_system.Controllers
                 allHats = context.Hats.Include(h => h.Order).Include(h => h.Models).ToList();
             }
             var hatstoShow = allHats.Where(h => h.UserId.Equals(User.Identity.GetUserId())).Where(h => h.Status == "Aktiv");
+            var sortedList = hatstoShow.OrderBy(h => h.Order.Priority==false).ToList();
             var viewModel = new ActiveHatsViewModel
             {
-                hats = hatstoShow.ToList(),
+                hats = sortedList.ToList(),
                 Orders = new List<OrderModels>()
             };
 
             var repos = new OrderRepository();
             var allOrders = repos.GetAllOrders();
-            foreach (var order in allOrders)
+            var sortedOrderList = allOrders.OrderBy(h => h.Priority==false).ToList();
+            foreach (var order in sortedOrderList)
             {
                 if (order.Status.Equals("Aktiv"))
                 {
                     viewModel.Orders.Add(order);
                 }
             }
+            
             return View(viewModel);
         }
 

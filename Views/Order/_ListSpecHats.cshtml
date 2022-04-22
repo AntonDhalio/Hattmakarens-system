@@ -18,6 +18,9 @@
         <th>
             Tillverkare
         </th>
+      <th>
+        Bilder
+      </th>
     </tr>
     @if (Model != null)
     {
@@ -41,14 +44,23 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.UserName)
                     </td>
-                    <td>
-                        @foreach (var image in item.Images)
+                  <td>
+                     @foreach (var image in item.Images)
                         {
                             <img src="@Url.Content(@image.Path)" alt="Hatmodel picture" class="img-responsive" />
                         }
+                  </td>
+                    <td>
+
+                        @*@Html.ActionLink("Ta bort", "DeleteInRegOrder", "Hat", new { id = item.Id}, null)*@
+                        @Html.ActionLink("Ta bort", "DeleteInRegOrder", "Hat", new { id = item.Id },
+                     new { onclick = "return confirm('Är du säker på att du vill ta bort den här hatten?');" })
+
+                       
                     </td>
                     <td>
                         @Html.ActionLink("Ta bort", "DeleteInRegOrder", "Hat", new { id = item.Id}, null)
+
                     </td>
                 </tr>
             }
