@@ -1,7 +1,7 @@
 ﻿@model Hattmakarens_system.ViewModels.InvoiceViewModel
 
 @{
-    ViewBag.Title = "Fyll i";
+    ViewBag.Title = "Ange fakturauppgifter";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -33,7 +33,7 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             @Html.DropDownListFor(m => m.Language, Model.Languages, "Välj språk")
-            <input type="submit" class="btn btn-default" value="Skriv ut" />
+           <div style="padding-top: 10px"><input type="submit" class="btn btn-default" value="Skriv ut" /></div> 
         </div>
     </div>
 }
