@@ -40,11 +40,11 @@
 
                         <li>@Html.ActionLink("Se statistik", "Index", "Statistic")</li>
 
-                    <li>@Html.ActionLink("Lägg till hattmodell", "Hatmodel", "Hatmodel")</li>
+                    <li>@Html.ActionLink("Lägg till hattmodell", "Hatmodel", "Hatmodel", new { IsAdded = false }, null)</li>
 
                    @*<li>@Html.ActionLink("Lägg till färg", "AddColor", "Color")</li>*@
 
-                    <li>@Html.ActionLink("Lägg till material", "AddMaterial", "Material")</li>
+                    <li>@Html.ActionLink("Lägg till material", "AddMaterial", "Material", new { IsAdded = false }, null)</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

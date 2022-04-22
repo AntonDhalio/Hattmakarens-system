@@ -13,10 +13,14 @@ namespace Hattmakarens_system.Controllers
     public class MaterialController : Controller
     {
         // GET: Material
-        public ActionResult AddMaterial()
+        public ActionResult AddMaterial(bool isAdded)
         {
+            var model = new MaterialViewModel()
+            {
+                IsAdded = isAdded
+            };
             ViewBag.ColorsToPickFrom = new Service.Color().GetSelectListColors();
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -43,7 +47,7 @@ namespace Hattmakarens_system.Controllers
                         ColorId = colorId
                     };
                     matRepo.SaveMaterial(material);
-                    return RedirectToAction("AddMaterial", "Material");
+                    return RedirectToAction("AddMaterial", "Material", new { IsAdded = true });
                 }
                 else
                 {

@@ -28,6 +28,7 @@ namespace Hattmakarens_system.ViewModels
         public virtual ICollection<HatModels> HatModels { get; set; }
         public virtual List<SelectListItem> ColorsToPickFrom { get; set; }
         public string PickedColor { get; set; }
+        public bool IsAdded { get; set; }
 
     }
 }

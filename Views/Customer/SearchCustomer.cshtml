@@ -7,8 +7,9 @@
     @using (Html.BeginForm())
     {
     <p>
-        Kundens namn: @Html.TextBox("searchString") <br />
-        <input type="submit" value="Sök" />
+        Kundens namn: @Html.TextBox("searchString") 
+        <input type="submit" class="btn btn-primary" value="Sök" />
+        <br />
     </p>
 }
     <p />
@@ -16,19 +17,19 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Namn
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Phone)
+                Telefonnummer
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                E-post
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Adress)
+                Adress
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Comment)
+                Kommentar
             </th>
             <th></th>
         </tr>
@@ -55,7 +56,7 @@
                         @Html.DisplayFor(modelItem => item.Comment)
                     </td>
                     <td>
-                        <input type="button" class="btn" value="Välj kund" onclick="location.href = '@Url.Action("CreateOrder", "Order", new { customerEmail = item.Email})'" />
+                        <input type="button" class="btn btn-primary" value="Välj kund" onclick="location.href = '@Url.Action("CreateOrder", "Order", new { customerEmail = item.Email})'" />
                     </td>
                 </tr>
             }
@@ -63,5 +64,7 @@
 
     </table>
 
-    @Html.ActionLink("Registrera ny kund", "AddCustomer", "Customer")
+    <div>
+        <input type="button" class="btn btn-primary" value="Registrera ny kund" onclick="location.href = '@Url.Action("AddCustomer", "Customer")'" />
+    </div>
 
