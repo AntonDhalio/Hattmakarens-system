@@ -104,5 +104,15 @@ namespace Hattmakarens_system.Repositories
                 }
             }
         }
+
+        public Dictionary<string, string> DictionaryUsers()
+        {
+            var users = new Dictionary<string, string>();
+            foreach(var user in GetAllUsers())
+            {
+                users.Add(user.Id.ToString(), user.Name);
+            }
+            return users;
+        }
     }
 }
