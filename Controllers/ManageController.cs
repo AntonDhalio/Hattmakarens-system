@@ -50,6 +50,55 @@ namespace Hattmakarens_system.Controllers
             }
         }
 
+        public ActionResult UpdateUserInfo(bool passwordIsChanged, bool usernameIsChanged)
+        {
+            var model = new UpdateUserInfoViewModel()
+            {
+                CurrentUserName = User.Identity.Name,
+                PasswordIsChanged = passwordIsChanged,
+                UsernameIsChanged = usernameIsChanged
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UpdateUserInfo(UpdateUserInfoViewModel model, string btnOption)
+        {
+            if(btnOption.Equals("Ändra användarnamn"))
+            {
+                if (model.NewUserName != null)
+                {
+                    //Valideringen fungerar inte på användarnamn kontrollerar alltid modelstate för lösen så kommer ej genom med enbart användarnamn
+                    //Lägg in kod för att uppdatera användarnamet
+                    return RedirectToAction("UpdateUserInfo", new { PasswordIsChanged = false, UsernameIsChanged = true });
+                }
+                TempData["ErrorMsg"] = "Fältet Nytt användarnamn krävs";
+                return View(model);
+            }
+
+            if (btnOption.Equals("Ändra lösenord"))
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+                var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+                if (result.Succeeded)
+                {
+                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                    if (user != null)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    }
+                    return RedirectToAction("UpdateUserInfo", new { PasswordIsChanged = true, UsernameIsChanged = false });
+                }
+                AddErrors(result);
+                return View(model);
+            }
+            return View(model);
+        }
+
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
@@ -238,7 +287,7 @@ namespace Hattmakarens_system.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("UpdateUserInfo", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
             return View(model);

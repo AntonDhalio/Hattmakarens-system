@@ -40,12 +40,13 @@
 
                         <li>@Html.ActionLink("Se statistik", "Index", "Statistic")</li>
 
-                    <li>@Html.ActionLink("Lägg till hattmodell", "Hatmodel", "Hatmodel", new { IsAdded = false }, null)</li>
+                        <li>@Html.ActionLink("Lägg till hattmodell", "Hatmodel", "Hatmodel", new { IsAdded = false }, null)</li>
 
-                   @*<li>@Html.ActionLink("Lägg till färg", "AddColor", "Color")</li>*@
+                        @*<li>@Html.ActionLink("Lägg till färg", "AddColor", "Color")</li>*@
 
-                    <li>@Html.ActionLink("Lägg till material", "AddMaterial", "Material", new { IsAdded = false }, null)</li>
-                </ul>
+                        <li>@Html.ActionLink("Lägg till material", "AddMaterial", "Material", new { IsAdded = false }, null)</li>
+                        <li>@Html.ActionLink("Uppdatera användare", "UpdateUserInfo", "Manage", new { PasswordIsChanged = false, UsernameIsChanged = false }, null)</li>
+                    </ul>
                 @Html.Partial("_LoginPartial")
             </div>
             }
