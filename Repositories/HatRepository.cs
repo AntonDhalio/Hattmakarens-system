@@ -86,7 +86,7 @@ namespace Hattmakarens_system.Repositories
                     ModelID = hat.HatModelID,
                     OrderId = hat.OrderId,
                     Materials = new List<MaterialModels>(),
-                    Images = hat.Images
+                    Images = new List<ImageModels>()
                 };
                 if (hat.HatModelID == 1)
                 {
@@ -102,6 +102,13 @@ namespace Hattmakarens_system.Repositories
                     {
                         var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
                         hats.Materials.Add(aMaterial);
+                    }
+                }
+                if(hat.Images != null)
+                {
+                    foreach(var image in hat.Images)
+                    {
+                        hats.Images.Add(image);
                     }
                 }
 
@@ -184,7 +191,8 @@ namespace Hattmakarens_system.Repositories
                     UserId = model.UserId,
                     ModelID = model.HatModelID,
                     OrderId = orderId,
-                    Materials = model.Materials
+                    Materials = model.Materials,
+                    Images = model.Images
                 };
                 //hatCon.Hats.Add(hat); // Materialet läggs in i material.
                 hatCon.Hats.Attach(hat);
