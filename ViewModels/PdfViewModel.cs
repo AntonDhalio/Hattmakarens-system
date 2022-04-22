@@ -40,6 +40,8 @@ namespace Hattmakarens_system.ViewModels
         [Display(Name = "Vikt  (kg)")]
         public double? Weight { get; set; }
         [Required]
+        [MinLength(8, ErrorMessage = "Koden måste innehålla 8 siffror")]
+        [StringLength(8, ErrorMessage = "Koden måste innehålla 8 siffror")]
         [Display(Name = "Kod (8 siffror)")]
         public int? ShippingCode { get; set; }
 
