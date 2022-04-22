@@ -34,13 +34,13 @@ namespace Hattmakarens_system.Controllers
         }
 
         [HttpPost]
-        public ActionResult Hatmodel(HatmodelViewModel hatmodel, HttpPostedFileBase file) 
+        public ActionResult Hatmodel(HatmodelViewModel hatmodel, HttpPostedFileBase[] file) 
+
         {
             hatmodel.TygMaterial = TygMaterial;
             hatmodel.TrådMaterial = TrådMaterial;
             hatmodel.DekorationMaterial = DekorationMaterial;
             //hatmodel.IsAdded = false;
-
             
             var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
 
@@ -58,15 +58,9 @@ namespace Hattmakarens_system.Controllers
                     };
                     if (file != null)
                     {
-                        string filename = Path.GetFileName(file.FileName);
-                        string imagePath = Path.Combine(Server.MapPath("~/Images"), filename);
-                        var image = new ImageModels
-                        {
-                            Path = imagePath,
-                            HatModels = new List<HatModels>()
-                        };
-                        var imgRepo = new ImageRepository();
-                        newHatmodel.Images.Add(imgRepo.SaveImage(image));
+                        var path = Server.MapPath(@"~\NewFolder1");
+                    var images = new Service.Image().AddImages(file, path);
+                    newHatmodel.Images = images;
                     }
                     using (var context = new ApplicationDbContext())
                     {
@@ -81,7 +75,7 @@ namespace Hattmakarens_system.Controllers
                         TrådMaterial = new Service.Material().ResetTradList(TrådMaterial);
                     }
                     return RedirectToAction("Hatmodel", "Hatmodel", new { IsAdded = true });
-                }
+                
                 else
                 {
                     ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
@@ -110,7 +104,8 @@ namespace Hattmakarens_system.Controllers
                     Description = hatModel.Description,
                     Price = hatModel.Price,
                     OrderId = orderId,
-                    CustomerEmail = customerEmail
+                    CustomerEmail = customerEmail,
+                    Images = hatModel.Images
                 };
                 hatmodelViewModels.Add(newHatmodelViewModel);
             }

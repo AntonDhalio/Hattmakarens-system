@@ -41,3 +41,6 @@ td {
     float: left;
     display: inline;
 }
+.img-responsive {
+    height: 100px;
+}

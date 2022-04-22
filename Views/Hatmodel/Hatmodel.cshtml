@@ -114,11 +114,26 @@
                             @Html.ValidationMessageFor(h => h.Price, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
                     <div class="form-group">
                         @Html.LabelFor(h => h.Description, new { @class = "col-md-2 control-label" })
                         <div class="col-md-10">
                             @Html.TextAreaFor(h => h.Description, new { @class = "form-control" })
                         </div>
+
+                </div>
+
+
+            </div>
+            <br />
+            <br />
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @Html.Label("Välj bild")
+                    @Html.TextBox("file", "", new { type = "file", multiple = "multiple" })
+
+
                     </div>
 
                     <div class="form-group">
@@ -140,7 +155,12 @@
                         </div>
                     </div>
                 </div>
+
             }
+
+             }
+
+
         }
     </div>
 
