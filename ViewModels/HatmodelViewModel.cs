@@ -30,8 +30,9 @@ namespace Hattmakarens_system.ViewModels
         public List<ColorMaterialViewModel> TygMaterial { get; set; }
         public List<ColorMaterialViewModel> DekorationMaterial { get; set; }
         public List<ColorMaterialViewModel> TrådMaterial { get; set; }
-        [Required]
+        
         [DisplayName("Välj material")]
         public IEnumerable<string> PickedMaterials { get; set; }
+        public bool IsAdded { get; set; }
     }
 }
