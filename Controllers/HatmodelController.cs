@@ -19,14 +19,16 @@ namespace Hattmakarens_system.Controllers
         static List<ColorMaterialViewModel> TrådMaterial = new Service.Material().GetTrad();
 
         // GET: Hatmodel
-        public ActionResult Hatmodel()
+        public ActionResult Hatmodel(bool isAdded)
         {
             var model = new HatmodelViewModel()
             {
                 TygMaterial = TygMaterial,
                 DekorationMaterial = DekorationMaterial,
-                TrådMaterial = TrådMaterial
+                TrådMaterial = TrådMaterial,
+                IsAdded = isAdded
             };
+            
             ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
             return View(model);
         }
@@ -37,12 +39,14 @@ namespace Hattmakarens_system.Controllers
             hatmodel.TygMaterial = TygMaterial;
             hatmodel.TrådMaterial = TrådMaterial;
             hatmodel.DekorationMaterial = DekorationMaterial;
+            //hatmodel.IsAdded = false;
 
-            if (ModelState.IsValid)
+            
+            var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
+
+            if (valdMaterial.Count != 0)
             {
-                var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
-
-                if (valdMaterial.Count != 0)
+                if (ModelState.IsValid)
                 {
                     var newHatmodel = new HatModels
                     {
@@ -76,23 +80,21 @@ namespace Hattmakarens_system.Controllers
                         DekorationMaterial = new Service.Material().ResetDecorationList(DekorationMaterial);
                         TrådMaterial = new Service.Material().ResetTradList(TrådMaterial);
                     }
-
-                    return RedirectToAction("Hatmodel", "Hatmodel");
-                    //ViewBag.MaterialAdded = "Materialet är tillagt!";
-                    //return View();
+                    return RedirectToAction("Hatmodel", "Hatmodel", new { IsAdded = true });
                 }
                 else
                 {
-                    TempData["materialError"] = "Du måste välja minst 1 material";
                     ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
                     return View(hatmodel);
                 }
             }
             else
             {
+                TempData["materialError"] = "Du måste välja minst 1 material";
                 ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
                 return View(hatmodel);
             }
+            
         }
 
         public ActionResult SearchHatModel(int orderId, string customerEmail)
@@ -139,7 +141,7 @@ namespace Hattmakarens_system.Controllers
                 }
             }
 
-            return RedirectToAction("Hatmodel");
+            return RedirectToAction("Hatmodel", new { IsAdded = false });
         }
     }
 }

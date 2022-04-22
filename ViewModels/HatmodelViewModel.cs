@@ -33,5 +33,6 @@ namespace Hattmakarens_system.ViewModels
         
         [DisplayName("Välj material")]
         public IEnumerable<string> PickedMaterials { get; set; }
+        public bool IsAdded { get; set; }
     }
 }

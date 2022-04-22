@@ -13,12 +13,18 @@
 </head>
 <body>
     <h1>Lägg till hattmodell</h1>
+    @if (Model.IsAdded)
+    {
+        <div class="alert alert-success" role="alert">
+            Hattmodellen är tillagd!
+        </div>
+    }
     <hr />
     <div>
         @using (Html.BeginForm("Hatmodel", "Hatmodel", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-             using (Html.BeginForm())
-             {
+            using (Html.BeginForm())
+            {
                 <div class="form-horizontal">
                     <div class="form-group ">
                         @Html.Label("Välj Tyg", new { @class = "col-md-2 control-label" })
@@ -92,7 +98,6 @@
                     <div class="form-group ">
                         <div class="col-md-offset-2 col-md-10">
                             <p class="text-danger">@TempData["materialError"]</p>
-                            @*<p class="text-danger">@ViewBag.MaterialError</p>*@
                         </div>
                     </div>
                     <div class="form-group">
@@ -115,33 +120,27 @@
                             @Html.TextAreaFor(h => h.Description, new { @class = "form-control" })
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
-                        @Html.Label("Välj bild", new { @class = "col-md-2 control-label" }) 
+                        @Html.Label("Välj bild", new { @class = "col-md-2 control-label" })
                         <div class="col-md-10">
                             @Html.TextBox("file", "", new { type = "file" })
                         </div>
                     </div>
                     @*<div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            @Html.Label("Välj bild")
-                            @Html.TextBox("file", "", new { type = "file" })
-                        </div>
-                    </div>*@
+                            <div class="col-md-offset-2 col-md-10">
+                                @Html.Label("Välj bild")
+                                @Html.TextBox("file", "", new { type = "file" })
+                            </div>
+                        </div>*@
                     <br />
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <input type="submit" class="btn btn-primary" value="Lägg till hattmodell" />
                         </div>
                     </div>
-                    @*<div class="form-group ">
-                        <div class="col-md-offset-2 col-md-10">
-                            <p class="text-success">@TempData["materialAdded"]</p>
-                            <p class="text-success">@ViewBag.MaterialAdded</p>
-                        </div>
-                    </div>*@
                 </div>
-             }
+            }
         }
     </div>
 
