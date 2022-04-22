@@ -32,7 +32,8 @@ namespace Hattmakarens_system.Controllers
         }
 
         [HttpPost]
-        public ActionResult Hatmodel(HatmodelViewModel hatmodel, HttpPostedFileBase file) 
+        public ActionResult Hatmodel(HatmodelViewModel hatmodel, HttpPostedFileBase[] file) 
+
         {
             //if (ModelState.IsValid)
             //{
@@ -41,6 +42,7 @@ namespace Hattmakarens_system.Controllers
                 hatmodel.DekorationMaterial = DekorationMaterial;
 
                 var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
+
                 var newHatmodel = new HatModels
                 {
                     Name = hatmodel.Name,
@@ -49,17 +51,12 @@ namespace Hattmakarens_system.Controllers
                     Material = new List<MaterialModels>(),
                     Images = new List<ImageModels>()
                 };
+
                 if (file != null)
                 {
-                    string filename = Path.GetFileName(file.FileName);
-                    string imagePath = Path.Combine(Server.MapPath("~/Images"), filename);
-                    var image = new ImageModels
-                    {
-                        Path = imagePath,
-                        HatModels = new List<HatModels>()
-                    };
-                    var imgRepo = new ImageRepository();               
-                    newHatmodel.Images.Add(imgRepo.SaveImage(image));
+                    var path = Server.MapPath(@"~\NewFolder1");
+                    var images = new Service.Image().AddImages(file, path);
+                    newHatmodel.Images = images;
                 }
                 using (var context = new ApplicationDbContext())
                 {
@@ -96,7 +93,8 @@ namespace Hattmakarens_system.Controllers
                     Description = hatModel.Description,
                     Price = hatModel.Price,
                     OrderId = orderId,
-                    CustomerEmail = customerEmail
+                    CustomerEmail = customerEmail,
+                    Images = hatModel.Images
                 };
                 hatmodelViewModels.Add(newHatmodelViewModel);
             }

@@ -221,6 +221,7 @@
     <Compile Include="Services\TranslateService.cs" />
     <Compile Include="Services\XmlService.cs" />
     <Compile Include="Service\Calculate.cs" />
+    <Compile Include="Service\Image.cs" />
     <Compile Include="Service\Material.cs" />
     <Compile Include="Service\Color.cs" />
     <Compile Include="Service\Order.cs" />
@@ -340,6 +341,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="NewFolder1\" />
     <Folder Include="UploadedImages\" />
     <Folder Include="xmlFile\" />
   </ItemGroup>
