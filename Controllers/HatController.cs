@@ -64,7 +64,6 @@ namespace Hattmakarens_system.Controllers
 
                     //if(PickedMaterials != null)
                     //{
-
                         var SelectedStatuses = new int[100];
                         OrderModel order = (OrderModel)TempData.Peek("order");
                         HatViewModel hat = new HatViewModel()
@@ -81,7 +80,9 @@ namespace Hattmakarens_system.Controllers
                             Images = new List<ImageModels>()
 
                         };
-                        var path = Server.MapPath("~/Images");
+                    if(file != null)
+                    {
+                        var path = Server.MapPath(@"~\NewFolder1");
                         var images = new Service.Image().AddImages(file, path);
 
 
@@ -92,10 +93,10 @@ namespace Hattmakarens_system.Controllers
                         }
 
                         hat.Images = images;
-                        hat.Materials = materialRepository.GetPickedMaterialInHat(hat.HatModelID, PickedMaterials, SelectedStatuses);
-                        TempData["hat"] = hat;
-                        TempData.Keep("hat");
-                        return RedirectToAction("CreateOrder", "Order", new { customerEmail = order.CustomerEmail });
+                    }
+                        
+                        //hat.Materials = materialRepository.GetPickedMaterialInHat(hat.HatModelID, PickedMaterials, SelectedStatuses);
+
 
                         var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
                         
@@ -104,7 +105,6 @@ namespace Hattmakarens_system.Controllers
                         //TempData.Keep("valdaMaterial");
                         TempData["hat"] = hat;
                         TempData.Keep("hat");
-                        model.HatModelID = 1; //Hårdkodat värde för att representera specialltillverkad hatt
 
                         //hatRepository.CreateHat(model, valdMaterial);
 
@@ -128,10 +128,7 @@ namespace Hattmakarens_system.Controllers
                     ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
                     return View(model);
                 }
-                
-               
-                   
-       
+
             }
             catch
             {
@@ -157,6 +154,7 @@ namespace Hattmakarens_system.Controllers
                 model.TygMaterial = TygMaterial;
                 model.DekorationMaterial = DekorationMaterial;
                 model.TrådMaterial = TrådMaterial;
+                
 
                 foreach (var id in SelectedMaterialsId)                   
                 {
@@ -188,6 +186,7 @@ namespace Hattmakarens_system.Controllers
                 model.HatModelName = hatModel.Name;
                 model.HatModelID = hatModel.Id;
                 model.HatModelDescription = hatModel.Description;
+                model.Images = hatModel.Images;
                 TempData["hat"] = model;
                 TempData.Keep("hat");
             }

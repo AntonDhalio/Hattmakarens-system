@@ -42,6 +42,12 @@
                         @Html.DisplayFor(modelItem => item.UserName)
                     </td>
                     <td>
+                        @foreach (var image in item.Images)
+                        {
+                            <img src="@Url.Content(@image.Path)" alt="Hatmodel picture" class="img-responsive" />
+                        }
+                    </td>
+                    <td>
                         @Html.ActionLink("Ta bort", "DeleteInRegOrder", "Hat", new { id = item.Id}, null)
                     </td>
                 </tr>

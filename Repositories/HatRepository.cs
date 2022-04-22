@@ -25,7 +25,7 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                Hats hat = hatCon.Hats.Include(h => h.Materials).FirstOrDefault(h => h.Id == id);
+                Hats hat = hatCon.Hats.Include(h => h.Materials).Include(h => h.Images).FirstOrDefault(h => h.Id == id);
                 HatViewModel model = new HatViewModel()
                 {
                     Name = hat.Name,
@@ -39,7 +39,8 @@ namespace Hattmakarens_system.Repositories
                     HatModelID = hat.ModelID,
                     HatModelName = hatmodelRepository.GetHatmodel(hat.ModelID).Name,
                     HatModelDescription = hatmodelRepository.GetHatmodel(hat.ModelID).Description,
-                    OrderId = hat.OrderId
+                    OrderId = hat.OrderId,
+                    Images = hat.Images
                 };
                 return model;
             }
@@ -84,7 +85,8 @@ namespace Hattmakarens_system.Repositories
                     UserId = hat.UserId,
                     ModelID = hat.HatModelID,
                     OrderId = hat.OrderId,
-                    Materials = new List<MaterialModels>()
+                    Materials = new List<MaterialModels>(),
+                    Images = hat.Images
                 };
                 if (hat.HatModelID == 1)
                 {
@@ -125,7 +127,7 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.Hats.Where(h => h.OrderId == id).ToList();
+                return hatCon.Hats.Include(h => h.Images).Where(h => h.OrderId == id).ToList();
             }
         }
 
