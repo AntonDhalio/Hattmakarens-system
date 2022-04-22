@@ -133,5 +133,19 @@ namespace Hattmakarens_system.Repositories
             }
         }
 
+        public bool ExistingCustomerEmail(string customerEmail)
+        {
+            bool existingCustomerEmail = false;
+            var customers = GetAllCostumers();
+            foreach(var customer in customers)
+            {
+                if (customer.Email.Equals(customerEmail))
+                {
+                    existingCustomerEmail = true;
+                }
+            }
+            return existingCustomerEmail;
+        }
+
     }
 }

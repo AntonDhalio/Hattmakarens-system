@@ -22,12 +22,13 @@
                         @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
                         @Html.ValidationMessageFor(c => c.Name, "", new { @class = "text-danger" })
                     </div>
-                </div>
+                </div>          
                 <div class="form-group">
                     @Html.LabelFor(c => c.Email, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
                         @Html.TextBoxFor(c => c.Email, new { @class = "form-control" })
                         @Html.ValidationMessageFor(c => c.Email, "", new { @class = "text-danger" })
+                        <p id="unique" class="text-danger"> @ViewBag.Message </p>
                     </div>
                 </div>
                 <div class="form-group">
@@ -66,3 +67,7 @@
 </body>
         
 </html>
+
+<style>
+    #unique { margin-left: 0%}
+</style>
