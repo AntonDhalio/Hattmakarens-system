@@ -18,6 +18,7 @@ namespace Hattmakarens_system.Controllers
         public ActionResult Invoice(InvoiceViewModel invoice, int id)
         {
             invoice.Languages = PopulateLangList();
+            
 
             if (ModelState.IsValid)
             {

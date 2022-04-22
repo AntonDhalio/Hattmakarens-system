@@ -69,45 +69,45 @@ namespace Hattmakarens_system.Repositories
         //    }
         //}
 
-        //public Hats CreateHat(HatViewModel hat, IEnumerable<string> PickedMaterials, int[] SelectedStatuses)
-        //{
-        //    using (var hatCon = new ApplicationDbContext())
-        //    {
-                
-        //        Hats hats = new Hats()
-        //        {
-        //            Name = hat.Name,
-        //            Size = hat.Size,
-        //            Price = hat.Price,
-        //            Comment = hat.Comment,
-        //            UserId = hat.UserId,
-        //            ModelID = hat.HatModelID,
-        //            OrderId = hat.OrderId,
-        //            Materials = new List<MaterialModels>()
-        //        };
-        //        if(hat.HatModelID == 1)
-        //        {
-        //            foreach (var material in PickedMaterials)
-        //            {
-        //                var id = int.Parse(material);
-        //                var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
-        //                hats.Materials.Add(aMaterial);
-        //            }
-        //        } else
-        //        {
-        //            foreach (var material in SelectedStatuses)
-        //            {
-        //                var id = material;
-        //                var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
-        //                hats.Materials.Add(aMaterial);
-        //            }
-        //        }
-            
-        //        hatCon.Hats.Add(hats);
-        //        hatCon.SaveChanges();
-        //        return hats;
-        //    }
-        //}
+        public Hats CreateHat(HatViewModel hat, List<int> valdMaterial)
+        {
+            using (var hatCon = new ApplicationDbContext())
+            {
+
+                Hats hats = new Hats()
+                {
+                    Name = hat.Name,
+                    Size = hat.Size,
+                    Price = hat.Price,
+                    Status = "Aktiv",
+                    Comment = hat.Comment,
+                    UserId = hat.UserId,
+                    ModelID = hat.HatModelID,
+                    OrderId = hat.OrderId,
+                    Materials = new List<MaterialModels>()
+                };
+                if (hat.HatModelID == 1)
+                {
+                    foreach (var id in valdMaterial)
+                    {
+                        var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
+                        hats.Materials.Add(aMaterial);
+                    }
+                } 
+                else
+                {
+                    foreach (var id in valdMaterial)
+                    {
+                        var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
+                        hats.Materials.Add(aMaterial);
+                    }
+                }
+
+                hatCon.Hats.Add(hats);
+                hatCon.SaveChanges();
+                return hats;
+            }
+        }
         public void DeleteHat(int id)
         {
             using (var hatCon = new ApplicationDbContext())
@@ -134,7 +134,7 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                Hats existingHat = GetHat(hat.Id); 
+                Hats existingHat = GetHat(hat.Id);
                 hatCon.Hats.Attach(existingHat);
 
                 existingHat.Id = hat.Id;
@@ -152,7 +152,7 @@ namespace Hattmakarens_system.Repositories
                     var aMaterial = hatCon.Material.Include(m => m.Hats).FirstOrDefault(m => m.Id == materialId);
                     existingHat.Materials.Add(aMaterial);
                 }
-               
+
                 hatCon.Entry(existingHat).State = EntityState.Modified;
                 hatCon.SaveChanges();
             }
@@ -190,6 +190,6 @@ namespace Hattmakarens_system.Repositories
                 hatCon.SaveChanges();
             }
         }
-
     }
 }
+    

@@ -6,8 +6,9 @@
     @using (Html.BeginForm())
     {
     <p>
-        Hattmodellens namn: @Html.TextBox("searchString") <br />
-        <input type="submit" value="Sök" />
+        Hattmodellens namn: @Html.TextBox("searchString") 
+        <input type="submit" class="btn btn-primary" value="Sök" />
+        <br />
     </p>
 }
     <p />
@@ -54,7 +55,7 @@
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
-                        <input type="button" class="btn" value="Välj lagrad hatt" onclick="location.href = '@Url.Action("CreateStored", "Hat", new { hatModelName = item.Name })'" />
+                        <input type="button" class="btn btn-primary" value="Välj lagrad hatt" onclick="location.href = '@Url.Action("CreateStored", "Hat", new { OrderId = item.OrderId, customerEmail = item.CustomerEmail, hatModelName = item.Name })'" />
                     </td>
                 </tr>
                 }

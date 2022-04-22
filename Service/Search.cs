@@ -35,7 +35,7 @@ namespace Hattmakarens_system.Service
 
                     foreach (var material in materialList)
                     {
-                        if (material.Type.ToLower().Contains(searchString.ToLower()))
+                        if (material.Type.ToLower().Contains(searchString.ToLower()) || material.Name.ToLower().Contains(searchString.ToLower()))
                         {
                             searchMaterialList.Add(material);
                         }
@@ -108,12 +108,12 @@ namespace Hattmakarens_system.Service
                 else if (statusOption.Equals("active"))
                 {
                     //söklistan ska filtreras på aktiva ordrar
-                    finalList = searchOrderList.Where(c => c.Status == "aktiv").ToList();
+                    finalList = searchOrderList.Where(c => c.Status == "Aktiv").ToList();
                 }
                 else if (statusOption.Equals("inactive"))
                 {
                     //Söklistan ska filtreras på inaktiva ordrar
-                    finalList = searchOrderList.Where(c => c.Status == "inaktiv").ToList();
+                    finalList = searchOrderList.Where(c => c.Status == "Inaktiv").ToList();
 
                 }
 

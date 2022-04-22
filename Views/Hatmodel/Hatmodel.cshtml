@@ -16,6 +16,78 @@
     <div>
         @using (Html.BeginForm("Hatmodel", "Hatmodel", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
+             using (Html.BeginForm())
+             {
+
+                <div class="form-group ">
+                    @Html.Label("Välj Tyg", new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10 ">
+                        <div class="btn-group-toggle" data-toggle="buttons">
+                            @foreach (var material in Model.TygMaterial)
+                            {
+                                if (material.State == true)
+                                {
+                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
+                                        <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
+                                        <input type="checkbox" checked autocomplete="off"> @material.MaterialName
+                                    </label>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    @Html.Label("Välj Dekoration", new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10 ">
+                        <div class="btn-group-toggle" data-toggle="buttons">
+                            @foreach (var material in Model.DekorationMaterial)
+                            {
+                                if (material.State == true)
+                                {
+                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
+                                        <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
+                                        <input type="checkbox" checked autocomplete="off"> @material.MaterialName
+                                    </label>
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    @Html.Label("Välj Tråd", new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10 ">
+                        <div class="btn-group-toggle" data-toggle="buttons">
+                            @foreach (var material in Model.TrådMaterial)
+                            {
+                                if (material.State == true)
+                                {
+                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
+                                        <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
+                                        <input type="checkbox" checked autocomplete="off"> @material.MaterialName
+                                    </label>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
             <div class="form-horizontal">
                 <div class="form-group">
                     @Html.LabelFor(h => h.Name, new { @class = "col-md-2 control-label" })
@@ -30,14 +102,7 @@
                         @Html.TextBoxFor(h => h.Price, new { @class = "form-control" })
                         @Html.ValidationMessageFor(h => h.Price, "", new { @class = "text-danger" })
                     </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(h => h.PickedMaterials, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.ListBoxFor(h => h.PickedMaterials, new MultiSelectList(ViewBag.MaterialsToPickFrom, "Value", "Text"), new { @class = "form-control" })
-                        @Html.ValidationMessageFor(h => h.PickedMaterials, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                </div>               
                 <div class="form-group">
                     @Html.LabelFor(h => h.Description, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
@@ -61,9 +126,10 @@
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" class="btn btn-default" value="Lägg till hattmodell" />
                     </div>
-
                 </div>
-            
+            </div>
+             }
+
         }
     </div>
 

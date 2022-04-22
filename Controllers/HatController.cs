@@ -19,6 +19,10 @@ namespace Hattmakarens_system.Controllers
         HatmodelRepository hatModelRepository = new HatmodelRepository();
         MaterialRepository materialRepository = new MaterialRepository();
         UserRepository userRepository = new UserRepository();
+        static List<ColorMaterialViewModel> TygMaterial = new Service.Material().GetTyg();
+        static List<ColorMaterialViewModel> DekorationMaterial = new Service.Material().GetDecoration();
+        static List<ColorMaterialViewModel> TrådMaterial = new Service.Material().GetTrad();
+
 
         // GET: Hat
         public ActionResult Index()
@@ -33,11 +37,20 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Hat/Create
-        public ActionResult CreateSpec()
-        {
-            ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
+
+        public ActionResult CreateSpec(int orderId, string customerEmail)
+        {   
+            HatViewModel model = new HatViewModel()
+            {
+                OrderId = orderId,
+                CustomerEmail = customerEmail
+            };
+            model.TygMaterial = TygMaterial;
+            model.DekorationMaterial = DekorationMaterial;
+            model.TrådMaterial = TrådMaterial;
+
             ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
-            return View();
+            return View(model);
         }
 
         // POST: Hat/Create
@@ -49,8 +62,9 @@ namespace Hattmakarens_system.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    if (PickedMaterials != null)
-                    {
+                    //if(PickedMaterials != null)
+                    //{
+
                         var SelectedStatuses = new int[100];
                         OrderModel order = (OrderModel)TempData.Peek("order");
                         HatViewModel hat = new HatViewModel()
@@ -63,7 +77,8 @@ namespace Hattmakarens_system.Controllers
                             Comment = model.Comment,
                             UserId = model.UserId,
                             UserName = userRepository.GetUser(model.UserId).Name,
-                            Materials = new List<MaterialModels>()
+                            Materials = new List<MaterialModels>(),
+                            Images = new List<ImageModels>()
 
                         };
                         var path = Server.MapPath("~/Images");
@@ -81,16 +96,42 @@ namespace Hattmakarens_system.Controllers
                         TempData["hat"] = hat;
                         TempData.Keep("hat");
                         return RedirectToAction("CreateOrder", "Order", new { customerEmail = order.CustomerEmail });
-                    }
-                    else
-                    {
-                        TempData["message"] = "Fältet Material saknas";
-                        ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
-                        ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
-                        return View(model);
-                    }
-                } else { return View(); }
 
+                        var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
+                        
+                        hat.Materials = materialRepository.GetMaterialById(valdMaterial);
+                        //TempData["valdaMaterial"] = materialRepository.GetMaterialById(valdMaterial);
+                        //TempData.Keep("valdaMaterial");
+                        TempData["hat"] = hat;
+                        TempData.Keep("hat");
+                        model.HatModelID = 1; //Hårdkodat värde för att representera specialltillverkad hatt
+
+                        //hatRepository.CreateHat(model, valdMaterial);
+
+                        TygMaterial = new Service.Material().ResetTygList(TygMaterial);
+                        DekorationMaterial = new Service.Material().ResetDecorationList(DekorationMaterial);
+                        TrådMaterial = new Service.Material().ResetTradList(TrådMaterial);
+
+                        return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = model.CustomerEmail });
+                    //}
+                    //else
+                    //{
+                        //TempData["message"] = "Fältet Material saknas";
+                        //ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
+                        //ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
+                        //return View(model);
+                    //}
+                }
+                else
+                {
+                    ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
+                    ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
+                    return View(model);
+                }
+                
+               
+                   
+       
             }
             catch
             {
@@ -99,16 +140,49 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Hat/Create
-        public ActionResult CreateStored(string hatModelName)
+        public ActionResult CreateStored(int orderId, string customerEmail, string hatModelName)
         {
 
-            HatViewModel model = new HatViewModel();
+            HatViewModel model = new HatViewModel()
+            {
+                OrderId = orderId,
+                CustomerEmail = customerEmail,
+                HatModelName = hatModelName
+            };
             if (hatModelName != null)
             {
                 model.HatModelName = hatModelName;
                 model = new Service.Material().SetMaterials(model);
+                var SelectedMaterialsId = materialRepository.GetMaterialInHatmodel(hatModelName);
+                model.TygMaterial = TygMaterial;
+                model.DekorationMaterial = DekorationMaterial;
+                model.TrådMaterial = TrådMaterial;
 
-
+                foreach (var id in SelectedMaterialsId)                   
+                {
+                    foreach (var material in model.TygMaterial)
+                    {
+                        if(material.MaterialId == id)
+                        {
+                            material.State = true;
+                        }
+                    }
+                    foreach (var material in model.DekorationMaterial)
+                    {
+                        if (material.MaterialId == id)
+                        {
+                            material.State = true;
+                        }
+                    }
+                    foreach (var material in model.TrådMaterial)
+                    {
+                        if (material.MaterialId == id)
+                        {
+                            material.State = true;
+                        }
+                    }
+                }
+                
                 var hatModel = hatModelRepository.GetHatmodelByName(hatModelName);
                 model.Price = hatModel.Price;
                 model.HatModelName = hatModel.Name;
@@ -123,7 +197,7 @@ namespace Hattmakarens_system.Controllers
 
         // POST: Hat/Create
         [HttpPost]
-        public ActionResult CreateStored(HatViewModel model, IEnumerable<string> pickedMaterials, int[] SelectedStatuses)
+        public ActionResult CreateStored(HatViewModel model)
         {
             try
             {
@@ -146,10 +220,18 @@ namespace Hattmakarens_system.Controllers
                     var hatModel = hatModelRepository.GetHatmodel(model.HatModelID);
                     hat.HatModelName = hatModel.Name;
                     hat.HatModelDescription = hatModel.Description;
-                    hat.Materials = materialRepository.GetPickedMaterialInHat(hat.HatModelID, pickedMaterials, SelectedStatuses);
+                    
+                    var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
+                    hat.Materials = materialRepository.GetMaterialById(valdMaterial);
+                    //hatRepository.CreateHat(model, valdMaterial);
+
                     TempData["hat"] = hat;
                     TempData.Keep("hat");
-                    return RedirectToAction("CreateOrder", "Order", new { customerEmail = order.CustomerEmail });
+                    TygMaterial = new Service.Material().ResetTygList(TygMaterial);
+                    DekorationMaterial = new Service.Material().ResetDecorationList(DekorationMaterial);
+                    TrådMaterial = new Service.Material().ResetTradList(TrådMaterial);
+
+                    return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = model.CustomerEmail });
                 }
                 else
                 {
@@ -157,12 +239,64 @@ namespace Hattmakarens_system.Controllers
                     ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
                     return View(model);
                 }
-                
             }
             catch
             {
                 return View();
             }
+        }
+        public ActionResult PickMaterial(int orderId, string customerEmail, string hatModelName, int Id)
+        {
+            foreach(var item in TygMaterial)
+            {
+                if (item.MaterialId.Equals(Id))
+                {
+                    item.State = !item.State;
+                }
+            }
+            foreach (var item in DekorationMaterial)
+            {
+                if (item.MaterialId.Equals(Id))
+                {
+                    item.State = !item.State;
+                }
+            }
+            foreach (var item in TrådMaterial)
+            {
+                if (item.MaterialId.Equals(Id))
+                {
+                    item.State = !item.State;
+                }
+            }
+            
+            return RedirectToAction("CreateStored", new{ orderId, customerEmail, hatModelName});
+        }
+
+        public ActionResult PickMaterialSpec(int orderId, string customerEmail, int Id)
+        {
+            foreach (var item in TygMaterial)
+            {
+                if (item.MaterialId.Equals(Id))
+                {
+                    item.State = !item.State;
+                }
+            }
+            foreach (var item in DekorationMaterial)
+            {
+                if (item.MaterialId.Equals(Id))
+                {
+                    item.State = !item.State;
+                }
+            }
+            foreach (var item in TrådMaterial)
+            {
+                if (item.MaterialId.Equals(Id))
+                {
+                    item.State = !item.State;
+                }
+            }
+
+            return RedirectToAction("CreateSpec", new { orderId, customerEmail});
         }
 
         // GET: Hat/Edit/5

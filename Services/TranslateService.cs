@@ -41,7 +41,7 @@ namespace Hattmakarens_system.Services
         {
             PdfLabelsViewModel translated = new PdfLabelsViewModel
             {
-                Invoice = Translate(swedish.Shipping),
+                Invoice = Translate(swedish.Invoice),
                 To = Translate(swedish.To),
                 From = Translate(swedish.From),
                 Customer = Translate(swedish.Customer),
