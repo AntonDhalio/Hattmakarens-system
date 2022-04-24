@@ -129,5 +129,33 @@ namespace Hattmakarens_system.Controllers
 
             return RedirectToAction("Hatmodel");
         }
+
+        [HttpPost]
+        public ActionResult CheckMaterial(int Id)
+        {
+            foreach (var item in TygMaterial)
+            {
+                if (item.MaterialId.Equals(Id))
+                {
+                    item.State = !item.State;
+                }
+            }
+            foreach (var item in DekorationMaterial)
+            {
+                if (item.MaterialId.Equals(Id))
+                {
+                    item.State = !item.State;
+                }
+            }
+            foreach (var item in TrådMaterial)
+            {
+                if (item.MaterialId.Equals(Id))
+                {
+                    item.State = !item.State;
+                }
+            }
+
+            return RedirectToAction("Hatmodel");
+        }
     }
 }

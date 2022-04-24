@@ -16,8 +16,8 @@
     <div>
         @using (Html.BeginForm("Hatmodel", "Hatmodel", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-             using (Html.BeginForm())
-             {
+            using (Html.BeginForm())
+            {
 
                 <div class="form-group ">
                     @Html.Label("Välj Tyg", new { @class = "col-md-2 control-label" })
@@ -27,13 +27,13 @@
                             {
                                 if (material.State == true)
                                 {
-                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
+                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick="CheckMaterial(@material.MaterialId)">
                                         <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
                                     </label>
                                 }
                                 else
                                 {
-                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
+                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick="CheckMaterial(@material.MaterialId)">
                                         <input type="checkbox" checked autocomplete="off"> @material.MaterialName
                                     </label>
                                 }
@@ -88,6 +88,7 @@
                         </div>
                     </div>
                 </div>
+            }
             <div class="form-horizontal">
                 <div class="form-group">
                     @Html.LabelFor(h => h.Name, new { @class = "col-md-2 control-label" })
@@ -102,7 +103,7 @@
                         @Html.TextBoxFor(h => h.Price, new { @class = "form-control" })
                         @Html.ValidationMessageFor(h => h.Price, "", new { @class = "text-danger" })
                     </div>
-                </div>               
+                </div>
                 <div class="form-group">
                     @Html.LabelFor(h => h.Description, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
@@ -121,9 +122,27 @@
                     </div>
                 </div>
             </div>
-             }
         }
     </div>
 
 </body>
 </html>
+@section scripts{
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.13.0.min.js"></script>
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+}
+
+<script type="text/javascript">
+    function CheckMaterial(id) {
+        $.ajax({
+            url: "@Url.Action("CheckMaterial", "HatModel")",
+            type: "POST",
+            async: true,
+            dataType: "json",
+            data: {
+                Id: id
+            }
+        })
+    }
+</script>
