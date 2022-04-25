@@ -60,38 +60,13 @@ namespace Hattmakarens_system.Controllers
             };
             return View(model);
         }
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> UpdateUserInfo(UpdateUserInfoViewModel model, string btnOption)
+        public async Task<ActionResult> UpdatePassword(UpdateUserInfoViewModel model)
         {
-            TempData["ErrorMsg"] = "";
-            if (btnOption.Equals("Ändra användarnamn"))
+            if (ModelState.IsValid)
             {
-                if (model.NewUserName == null)
-                {
-                    TempData["ErrorMsg"] = "Fältet Nytt användarnamn krävs";
-                    return View(model);
-                }
-
-                var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                using (var applicationDbContext = new ApplicationDbContext())
-                {
-                    var users = applicationDbContext.Users.FirstOrDefault(x => x.Id == currentUser.Id);
-                    users.UserName = model.NewUserName;
-                    var user = applicationDbContext.User.FirstOrDefault(x => x.Id == currentUser.Id);
-                    user.Name = model.NewUserName;
-                    applicationDbContext.SaveChanges();
-                }
-                return RedirectToAction("UpdateUserInfo", new { PasswordIsChanged = false, UsernameIsChanged = true });
-            }
-
-            if (btnOption.Equals("Ändra lösenord"))
-            {
-                if (!ModelState.IsValid)
-                {
-                    return View(model);
-                }
                 var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
                 if (result.Succeeded)
                 {
@@ -110,11 +85,30 @@ namespace Hattmakarens_system.Controllers
                     return RedirectToAction("UpdateUserInfo", new { PasswordIsChanged = true, UsernameIsChanged = false });
                 }
                 AddErrors(result);
-                return View(model);
+                return View("UpdateUserInfo", model);
             }
-            return View();
+            return View("UpdateUserInfo", model);
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UpdateUsername(UpdateUserInfoViewModel model)
+        {
+            if (model.NewUserName != null)
+            {
+                var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                using (var applicationDbContext = new ApplicationDbContext())
+                {
+                    var users = applicationDbContext.Users.FirstOrDefault(x => x.Id == currentUser.Id);
+                    users.UserName = model.NewUserName;
+                    var user = applicationDbContext.User.FirstOrDefault(x => x.Id == currentUser.Id);
+                    user.Name = model.NewUserName;
+                    applicationDbContext.SaveChanges();
+                }
+                return RedirectToAction("UpdateUserInfo", new { PasswordIsChanged = false, UsernameIsChanged = true });
+            }
+            TempData["ErrorMsg"] = "Fältet Nytt användarnamn krävs";
+            return View("UpdateUserInfo", model);
+        }
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)

@@ -7,7 +7,9 @@ namespace Hattmakarens_system.Models
 {
     public class UpdateUserInfoViewModel
     {
+        [Display(Name = "Användarnamn")]
         public string CurrentUserName { get; set; }
+        [Display(Name = "Nytt användarnamn")]
         public string NewUserName { get; set; }
         [Required]
         [DataType(DataType.Password)]
