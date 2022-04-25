@@ -21,11 +21,15 @@ namespace Hattmakarens_system.Controllers
         PdfTemplates pdfTemplates = new PdfTemplates();
         public ActionResult Index()
         {
-            return View();
+            var viewModel = new StatisticViewModel();
+            viewModel.customers = StatisticCustomers();
+            viewModel.hatmodels = StatisticHatModels();
+            return View(viewModel);
         }
-        public ActionResult _GetStatistics()
-        {
-            return View();
+
+        public ActionResult _GetStatistics(StatisticViewModel viewModel)
+        { 
+            return View(viewModel);
         }
         [HttpPost]
         // GET: Statistic
@@ -56,7 +60,7 @@ namespace Hattmakarens_system.Controllers
             };
 
             pdfTemplates.StatisticsPDF(aViewModel);
-            return View("Index");
+            return new HttpStatusCodeResult(204);
         }
         [HttpPost]
         public ActionResult CountTax(StatisticViewModel viewModel)
@@ -69,6 +73,34 @@ namespace Hattmakarens_system.Controllers
             var xml = new XmlService();
             xml.TaxXml(inTax, taxFromOrdersCount, result, uploadPath);
             return new HttpStatusCodeResult(204);
+        }
+        public List<SelectListItem> StatisticCustomers()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            var custRepo = new CustomerRepository();
+            foreach(var customer in custRepo.GetAllCostumers())
+            {
+                list.Add(new SelectListItem
+                {
+                    Value = customer.Id.ToString(),
+                    Text = customer.Name
+                });
+            }
+            return list;
+        }
+        public List<SelectListItem> StatisticHatModels()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            var modelRepo = new HatmodelRepository();
+            foreach (var hatmodel in modelRepo.GetAllHatmodels())
+            {
+                list.Add(new SelectListItem
+                {
+                    Value = hatmodel.Id.ToString(),
+                    Text = hatmodel.Name
+                });
+            }
+            return list;
         }
     }
 }

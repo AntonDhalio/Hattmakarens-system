@@ -40,7 +40,7 @@ namespace Hattmakarens_system.Services
             viewModel.orders = new List<Models.OrderModels>();
             foreach (var order in orders)
             {
-                if(order.Date >= viewModel.fromDate && order.Date <= viewModel.toDate)
+                if(order.Date >= viewModel.fromDate && order.Date <= viewModel.toDate || order.CustomerId.Equals(viewModel.customerId.Value))
                 {
                     viewModel.orders.Add(order);
                 }
