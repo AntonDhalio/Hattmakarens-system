@@ -15,12 +15,13 @@
 <body>
     <div>
         <br />
-        <p>Statistik för tidsperioden: @Model.fromDate.ToShortDateString() - @Model.toDate.ToShortDateString()</p>
+        @*<p>Statistik för tidsperioden: @Model.fromDate.ToShortDateString() - @Model.toDate.ToShortDateString()</p>*@
         <table class="statistik-tabell">
-            
+
             <thead>
                 <tr>
                     <td><h3 lang="sv">Beställningsnummer</h3></td>
+                    <td><h3>Kund</h3></td>
                     <td><h3>Antal hattar</h3></td>
                     <td><h3>Beställningsdatum</h3></td>
                     <td><h3>Summa</h3></td>
@@ -31,6 +32,7 @@
                 {
                     <tr>
                         <td>@order.Id</td>
+                        <td>@order.Customer.Name</td>
                         <td>@order.Hats.Count</td>
                         <td>@order.Date.ToShortDateString()</td>
                         <td>@order.TotalSum</td>
@@ -43,15 +45,20 @@
                     <td></td>
                 </tr>
             </tbody>
-            <tfoot>
-                <tr>
-                    <td><h4>Totalt antal beställingar: @Model.totalOrdersCount</h4></td>
-                    <td><h4>Totalt antal hattar: @Model.totalHatsCount</h4></td>
-                    <td></td>
-                    <td><h4>Total summa: @Model.totalSum</h4></td>
-                </tr>
-            </tfoot>
+            @*<tfoot>
+                    <tr>
+                        <td><h4>Totalt antal beställingar: @Model.totalOrdersCount</h4></td>
+                        <td><h4>Totalt antal hattar: @Model.totalHatsCount</h4></td>
+                        <td></td>
+                        <td><h4>Total summa: @Model.totalSum</h4></td>
+                    </tr>
+                </tfoot>*@
         </table>
+        <br />
+        <h4>Totalt antal beställingar: @Model.totalOrdersCount</h4>
+        <h4>Totalt antal hattar: @Model.totalHatsCount</h4>
+        <h4>Total summa: @Model.totalSum</h4>
+
     </div>
     @using (Html.BeginForm("PrintStatistics", "Statistic"))
     {
@@ -68,6 +75,7 @@
         @Html.HiddenFor(x => x.time)
         @Html.HiddenFor(x => x.fromDate)
         @Html.HiddenFor(x => x.toDate)
+        <br />
         <input type="submit" value="Skriv ut statistik" />
     }
     <br />
@@ -85,12 +93,14 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input  type="submit" class="btn btn-default" value="Räkna ut moms"/>
-                    
+                    <br />
+                    <input type="submit" @*class="btn btn-default"*@ value="Räkna ut moms" />
+                    <br />
                 </div>
             </div>
         }
     </div>
+
 </body>
 </html>
 

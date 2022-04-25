@@ -24,8 +24,8 @@ textarea {
 }
 .statistik-tabell {
     width: 100%;
-    empty-cells:show;
-    font-size:small;
+    empty-cells: show;
+    font-size: small;
     border-right: 1px solid black;
     border-left: 1px solid black;
 }
@@ -36,8 +36,34 @@ td {
     color: red;
     font-style: oblique;
 }
-.halv {
+.högra {
     width: 50%;
     float: left;
     display: inline;
 }
+
+.vänstra {
+    width: 50%;
+    float: left;
+    display: inline;
+}
+.linjeHögra {
+    width: 100%;
+    empty-cells: show;
+    font-size: small;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}
+.linjeVänstra {
+    width: 100%;
+    empty-cells: show;
+    font-size: small;
+    border-left: 1px solid black;
+}
+
+.tredjedel {
+    width: 30%;
+    float: left;
+}
+
+

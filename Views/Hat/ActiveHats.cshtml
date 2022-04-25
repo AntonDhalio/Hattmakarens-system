@@ -5,44 +5,43 @@
 }
 
 
-<div class="halv">
+<div class="vänstra">
     <h1>Dina pågående hattprojekt</h1>
-    <table class="statistik-tabell">
-        <thead><tr><td>Beställningsnummer</td><td>Hattnamn</td><td>Beställningsdatum</td><td>Prioriterad</td></tr></thead>
+    <table class="linjeVänstra" cellspacing="0">
+        <thead><tr><td><b>Beställningsnummer</b></td><td><b>Hattnamn</b></td><td><b>Beställningsdatum</b></td><td><b>Prioriterad</b></td></tr></thead>
         <tbody>
             @foreach (var hat in Model.hats)
             {
                 <tr>
                     <td>@hat.OrderId</td>
-                    <td>@hat.Name</td>
+                    <td>@Html.ActionLink(hat.Name, "ViewHat", "Hat", new { hatId = hat.Id }, null)</td>
                     <td>@hat.Order.Date.ToShortDateString()</td>
-                    <td>@if(hat.Order.Priority)
-                    {
-                        <p class="ja">Ja</p>
-                    }else { <p class="nej">Nej</p> }
+                    <td>
+                        @if (hat.Order.Priority)
+                        {
+                            <p class="ja">Ja</p>
+                        }
+                        else
+                        { <p class="nej">Nej</p>}
                     </td>
                 </tr>
             }
             <tr><td></td><td></td><td></td><td></td></tr>
         </tbody>
-        <tfoot>
-            <tr>
-                <td><p><strong>Totalt antal aktiva hattar: @Model.hats.Count</strong></p></td>
-                <td></td>
-            </tr>
-        </tfoot>
     </table>
+    <br />
+    <p><strong>Totalt antal aktiva hattar: @Model.hats.Count</strong></p>
 </div>
-<div class="halv">
+<div class="högra">
     <h1>Aktiva beställningar</h1>
-    <table class="statistik-tabell">
+    <table class="linjeHögra" >
         <thead>
             <tr>
-                <td>Beställningsnummer</td>
-                <td>Antal hattar</td>
-                <td>Datum</td>
-                <td>Kund</td>
-                <td>Prioriterad</td>
+                <td><b>Beställningsnummer</b></td>
+                <td><b>Antal hattar</b></td>
+                <td><b>Datum</b></td>
+                <td><b>Kund</b></td>
+                <td><b>Prioriterad</b></td>
             </tr>
         </thead>
         <tbody>
@@ -65,4 +64,6 @@
             }
         </tbody>
     </table>
+    <br />
+    <br />
 </div>
