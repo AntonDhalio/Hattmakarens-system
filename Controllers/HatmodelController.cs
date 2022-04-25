@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace Hattmakarens_system.Controllers
 {
@@ -64,12 +65,15 @@ namespace Hattmakarens_system.Controllers
                     }
                     using (var context = new ApplicationDbContext())
                     {
+                        List<MaterialModels> materials = new List<MaterialModels>();
                         foreach (var Id in valdMaterial)
                         {
-                            newHatmodel.Material.Add(MaterialRepository.GetMaterial(Id));
+                            var material = context.Material.FirstOrDefault(m => m.Id == Id);
+                            materials.Add(material);
                         }
-                        //context.HatModels.Add(newHatmodel);
-                        context.HatModels.Attach(newHatmodel);
+                        newHatmodel.Material = materials;
+
+                        context.HatModels.Add(newHatmodel);
                         context.SaveChanges();
                         TygMaterial = new Service.Material().ResetTygList(TygMaterial);
                         DekorationMaterial = new Service.Material().ResetDecorationList(DekorationMaterial);
