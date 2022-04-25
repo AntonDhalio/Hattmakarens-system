@@ -177,7 +177,7 @@ namespace Hattmakarens_system.Services
             //Vikt
             gfx.DrawString(labels.Weight, contentFontBold, XBrushes.Black,
             180, 570);
-            gfx.DrawString(shipping.Weight.ToString() + "(kg)", contentFont, XBrushes.Black,
+            gfx.DrawString(shipping.Weight + " (kg)", contentFont, XBrushes.Black,
             300, 570);
             //Pris
             gfx.DrawString(labels.Price, contentFontBold, XBrushes.Black,
@@ -187,7 +187,7 @@ namespace Hattmakarens_system.Services
             //Pris
             gfx.DrawString(labels.ShippingCode, contentFontBold, XBrushes.Black,
             180, 610);
-            gfx.DrawString(shipping.ShippingCode.ToString(), contentFont, XBrushes.Black,
+            gfx.DrawString(shipping.ShippingCode, contentFont, XBrushes.Black,
             300, 610);
 
             //Titlar
