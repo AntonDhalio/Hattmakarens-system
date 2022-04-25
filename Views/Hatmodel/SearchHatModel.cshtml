@@ -36,23 +36,27 @@
             {
                 if(item.Id != 1)
                 { 
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.Path)
-                    </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        <input type="button" class="btn btn-primary" value="Välj lagrad hatt" onclick="location.href = '@Url.Action("CreateStored", "Hat", new { OrderId = item.OrderId, customerEmail = item.CustomerEmail, hatModelName = item.Name })'" />
-                    </td>
-                </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @*Html.DisplayFor(modelItem => item.Path)*@
+            @foreach (var image in item.Images)
+            {
+                <img src="@Url.Content(@image.Path)" alt="Hatmodel picture" class="img-responsive" />
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            <input type="button" class="btn btn-primary" value="Välj lagrad hatt" onclick="location.href = '@Url.Action("CreateStored", "Hat", new { OrderId = item.OrderId, customerEmail = item.CustomerEmail, hatModelName = item.Name })'" />
+        </td>
+    </tr>
                 }
             }
         }

@@ -110,7 +110,8 @@ namespace Hattmakarens_system.Controllers
                     Description = hatModel.Description,
                     Price = hatModel.Price,
                     OrderId = orderId,
-                    CustomerEmail = customerEmail
+                    CustomerEmail = customerEmail,
+                    Images = hatModel.Images
                 };
                 hatmodelViewModels.Add(newHatmodelViewModel);
             }
