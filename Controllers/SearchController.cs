@@ -105,7 +105,7 @@ namespace Hattmakarens_system.Controllers
             {
                 foreach (var customer in customerList)
                 {
-                    if (customer.Name.ToLower().Contains(searchString.ToLower()))
+                    if (customer.Name.ToLower().Contains(searchString.ToLower()) && !customer.Name.Equals("Kund borttagen"))
                     {
                         searchList.Add(customer);
                     }

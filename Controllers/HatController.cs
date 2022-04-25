@@ -55,12 +55,13 @@ namespace Hattmakarens_system.Controllers
 
         // POST: Hat/Create
         [HttpPost]
-        public ActionResult CreateSpec(HatViewModel model, IEnumerable<string> PickedMaterials)
+        public ActionResult CreateSpec(HatViewModel model, IEnumerable<string> PickedMaterials, HttpPostedFileBase[] file)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+
                     //if(PickedMaterials != null)
                     //{
                         var SelectedStatuses = new int[100];
@@ -75,9 +76,28 @@ namespace Hattmakarens_system.Controllers
                             Comment = model.Comment,
                             UserId = model.UserId,
                             UserName = userRepository.GetUser(model.UserId).Name,
-                            Materials = new List<MaterialModels>()
+                            Materials = new List<MaterialModels>(),
+                            Images = new List<ImageModels>()
 
                         };
+                    if(file != null)
+                    {
+                        var path = Server.MapPath(@"~\NewFolder1");
+                        var images = new Service.Image().AddImages(file, path);
+
+
+                        foreach (var item in images)
+                        {
+                            var imgRepo = new ImageRepository();
+                            imgRepo.SaveImage(item);
+                        }
+
+                        hat.Images = images;
+                    }
+                        
+                        //hat.Materials = materialRepository.GetPickedMaterialInHat(hat.HatModelID, PickedMaterials, SelectedStatuses);
+
+
                         var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
                         
                         hat.Materials = materialRepository.GetMaterialById(valdMaterial);
@@ -85,7 +105,6 @@ namespace Hattmakarens_system.Controllers
                         //TempData.Keep("valdaMaterial");
                         TempData["hat"] = hat;
                         TempData.Keep("hat");
-                        model.HatModelID = 1; //Hårdkodat värde för att representera specialltillverkad hatt
 
                         //hatRepository.CreateHat(model, valdMaterial);
 
@@ -109,7 +128,7 @@ namespace Hattmakarens_system.Controllers
                     ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
                     return View(model);
                 }
-                
+
             }
             catch
             {
@@ -135,6 +154,7 @@ namespace Hattmakarens_system.Controllers
                 model.TygMaterial = TygMaterial;
                 model.DekorationMaterial = DekorationMaterial;
                 model.TrådMaterial = TrådMaterial;
+                
 
                 foreach (var id in SelectedMaterialsId)                   
                 {
@@ -166,6 +186,12 @@ namespace Hattmakarens_system.Controllers
                 model.HatModelName = hatModel.Name;
                 model.HatModelID = hatModel.Id;
                 model.HatModelDescription = hatModel.Description;
+                model.Images = new List<ImageModels>();
+                //model.Images = hatModel.Images;
+                foreach(var image in hatModel.Images)
+                {
+                    model.Images.Add(image);
+                }
                 TempData["hat"] = model;
                 TempData.Keep("hat");
             }
@@ -192,8 +218,8 @@ namespace Hattmakarens_system.Controllers
                         Comment = model.Comment,
                         UserId = model.UserId,
                         UserName = userRepository.GetUser(model.UserId).Name,
-                        Materials = new List<MaterialModels>()
-
+                        Materials = new List<MaterialModels>(),
+                        Images = model.Images
                     };
                     var hatModel = hatModelRepository.GetHatmodel(model.HatModelID);
                     hat.HatModelName = hatModel.Name;

@@ -92,6 +92,7 @@ namespace Hattmakarens_system.Controllers
                     order.Priority = model.Priority;
                     order.TotalSum = model.TotalSum;
                     order.Moms = model.Moms;
+                    
                     orderRepository.CreateOrder(order, (List<HatViewModel>)TempData["listOfHats"]);
                     var orderId = orderRepository.GetDBLastAddedOrderId();
                     List<HatViewModel> hats = (List<HatViewModel>)TempData.Peek("listOfHats");
