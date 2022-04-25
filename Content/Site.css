@@ -41,6 +41,7 @@ td {
     float: left;
     display: inline;
 }
+
 .vänstra {
     width: 50%;
     float: left;
@@ -59,3 +60,10 @@ td {
     font-size: small;
     border-left: 1px solid black;
 }
+
+.tredjedel {
+    width: 30%;
+    float: left;
+}
+
+
