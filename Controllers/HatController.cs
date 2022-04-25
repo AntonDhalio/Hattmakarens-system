@@ -441,7 +441,7 @@ namespace Hattmakarens_system.Controllers
             var sortedOrderList = allOrders.OrderBy(h => h.Priority==false).ToList();
             foreach (var order in sortedOrderList)
             {
-                if (order.Status.Equals("Aktiv"))
+                if (order.Status != null && order.Status.Equals("Aktiv"))
                 {
                     viewModel.Orders.Add(order);
                 }
