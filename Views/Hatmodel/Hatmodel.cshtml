@@ -16,79 +16,9 @@
     <div>
         @using (Html.BeginForm("Hatmodel", "Hatmodel", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            using (Html.BeginForm())
-            {
-
-                <div class="form-group ">
-                    @Html.Label("Välj Tyg", new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10 ">
-                        <div class="btn-group-toggle" data-toggle="buttons">
-                            @foreach (var material in Model.TygMaterial)
-                            {
-                                if (material.State == true)
-                                {
-                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick="CheckMaterial(@material.MaterialId)">
-                                        <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
-                                    </label>
-                                }
-                                else
-                                {
-                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick="CheckMaterial(@material.MaterialId)">
-                                        <input type="checkbox" checked autocomplete="off"> @material.MaterialName
-                                    </label>
-                                }
-                            }
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group ">
-                    @Html.Label("Välj Dekoration", new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10 ">
-                        <div class="btn-group-toggle" data-toggle="buttons">
-                            @foreach (var material in Model.DekorationMaterial)
-                            {
-                                if (material.State == true)
-                                {
-                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
-                                        <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
-                                    </label>
-                                }
-                                else
-                                {
-                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
-                                        <input type="checkbox" checked autocomplete="off"> @material.MaterialName
-                                    </label>
-                                }
-                            }
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group ">
-                    @Html.Label("Välj Tråd", new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10 ">
-                        <div class="btn-group-toggle" data-toggle="buttons">
-                            @foreach (var material in Model.TrådMaterial)
-                            {
-                                if (material.State == true)
-                                {
-                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
-                                        <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
-                                    </label>
-                                }
-                                else
-                                {
-                                    <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick=" location.href='@Url.Action("PickMaterialModel", "HatModel", new { id = material.MaterialId })'">
-                                        <input type="checkbox" checked autocomplete="off"> @material.MaterialName
-                                    </label>
-                                }
-                            }
-                        </div>
-                    </div>
-                </div>
-            }
+        <div id="partial">
+            @Html.Partial("~/Views/Material/_PickMaterial.cshtml", Model)
+        </div>
             <div class="form-horizontal">
                 <div class="form-group">
                     @Html.LabelFor(h => h.Name, new { @class = "col-md-2 control-label" })
@@ -134,7 +64,10 @@
 }
 
 <script type="text/javascript">
-    function CheckMaterial(id) {
+
+    $('#partial').load('@Url.Action("CheckMaterial", "HatmodelController", new { Id = Model.Id })');
+
+    @*function CheckMaterial(id) {
         $.ajax({
             url: "@Url.Action("CheckMaterial", "HatModel")",
             type: "POST",
@@ -142,7 +75,11 @@
             dataType: "json",
             data: {
                 Id: id
+            },
+            success: function (result) {
+                $('#partial').html(result);
             }
         })
-    }
+
+    }*@
 </script>

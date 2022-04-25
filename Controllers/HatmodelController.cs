@@ -130,7 +130,7 @@ namespace Hattmakarens_system.Controllers
             return RedirectToAction("Hatmodel");
         }
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult CheckMaterial(int Id)
         {
             foreach (var item in TygMaterial)
@@ -155,7 +155,14 @@ namespace Hattmakarens_system.Controllers
                 }
             }
 
-            return RedirectToAction("Hatmodel");
+            HatmodelViewModel model = new HatmodelViewModel
+            {
+                TygMaterial = TygMaterial,
+                TrådMaterial = TrådMaterial,
+                DekorationMaterial = DekorationMaterial
+            };
+
+            return PartialView("~/Views/Material/_PickMaterial.cshtml", model);
         }
     }
 }
