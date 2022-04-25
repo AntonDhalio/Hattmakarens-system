@@ -1,7 +1,7 @@
 ﻿@model Hattmakarens_system.ViewModels.StatisticViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Orders";
+    ViewBag.Title = "Customers";
 }
 
 <!DOCTYPE html>
@@ -24,7 +24,7 @@
                     <thead><tr><td><b>Från</b></td><td style="padding-left: 20px;"><b>Till</b></td></tr></thead>
                     <tbody>
                         <tr>
-                            <td>@Html.EditorFor(m => m.fromDate, new { htmlAttributes = new { @class = "datepicker" } }) 
+                            <td>@Html.EditorFor(m => m.fromDate,  new { htmlAttributes = new { @class = "datepicker" } }) 
                                 @Html.ValidationMessageFor(m => m.fromDate, "", new { @class = "text-danger" })</td>
                             <td style="padding-left: 20px;">
                                 @Html.EditorFor(m => m.toDate, new { htmlAttributes = new { @class = "datepicker" } }) 
@@ -39,11 +39,8 @@
                     <thead><tr><td><b>Välj&nbsp;kund</b></td></tr></thead>
                     <tbody>
                         <tr>
-                            @if(Model.customers != null)
-                            {
-                            <td>@Html.DropDownListFor(m => m.customerId, Model.customers, "Välj kund")</td>
-                             }
-                            
+                            <td>@Html.DropDownList("customerId", Model.customers, "Välj kund", new { @class = "form-control" })</td>
+
                         </tr>
                     </tbody>
                 </table>
@@ -54,7 +51,7 @@
                     <thead><tr><td><b>Välj&nbsp;hattmodell</b></td></tr></thead>
                     <tbody>
                         <tr>
-                            <td>@*@Html.DropDownListFor(m => m.hatmodelId, Model.hatmodels, "Välj hattmodell")*@</td>
+                            <td>@Html.DropDownList("hatmodelId", Model.hatmodels, "Välj hattmodell", new { @class = "form-control" })</td>
                         </tr>
                     </tbody>
                 </table>

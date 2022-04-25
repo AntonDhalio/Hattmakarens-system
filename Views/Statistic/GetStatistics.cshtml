@@ -21,6 +21,7 @@
             <thead>
                 <tr>
                     <td><h3 lang="sv">Beställningsnummer</h3></td>
+                    <td><h3>Kund</h3></td>
                     <td><h3>Antal hattar</h3></td>
                     <td><h3>Beställningsdatum</h3></td>
                     <td><h3>Summa</h3></td>
@@ -31,6 +32,7 @@
                 {
                     <tr>
                         <td>@order.Id</td>
+                        <td>@order.Customer.Name</td>
                         <td>@order.Hats.Count</td>
                         <td>@order.Date.ToShortDateString()</td>
                         <td>@order.TotalSum</td>

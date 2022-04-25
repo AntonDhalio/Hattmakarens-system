@@ -32,10 +32,10 @@ namespace Hattmakarens_system.ViewModels
 
 
         public List<SelectListItem> customers { get; set; }
-        public SelectListItem customerId { get; set; }
+        public string customerId { get; set; }
         
         public List<SelectListItem> hatmodels { get; set; }
-        public IEnumerable<SelectListItem> hatmodelId { get; set; }
+        public string hatmodelId { get; set; }
         
 
     }

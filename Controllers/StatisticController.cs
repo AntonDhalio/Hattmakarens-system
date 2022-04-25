@@ -28,13 +28,21 @@ namespace Hattmakarens_system.Controllers
         }
 
         public ActionResult _GetStatistics(StatisticViewModel viewModel)
-        { 
+        {
+            viewModel.customers = StatisticCustomers();
+            viewModel.hatmodels = StatisticHatModels();
+            ViewBag.Customers = StatisticCustomers();
             return View(viewModel);
         }
         [HttpPost]
         // GET: Statistic
         public ActionResult GetStatistics(StatisticViewModel viewModel)
         {
+
+            viewModel.customers = StatisticCustomers();
+            viewModel.hatmodels = StatisticHatModels();
+            viewModel.customerId = Request.Form["customerId"];
+            viewModel.hatmodelId = Request.Form["hatmodelId"];
             if (ModelState.IsValid)
             {
                 pdfService.GetStatistics(viewModel);
@@ -80,11 +88,15 @@ namespace Hattmakarens_system.Controllers
             var custRepo = new CustomerRepository();
             foreach(var customer in custRepo.GetAllCostumers())
             {
-                list.Add(new SelectListItem
+                if(!customer.Name.Equals("Kund borttagen"))
                 {
-                    Value = customer.Id.ToString(),
-                    Text = customer.Name
-                });
+                    list.Add(new SelectListItem
+                    {
+                        Value = customer.Id.ToString(),
+                        Text = customer.Name
+                    });
+                }
+                
             }
             return list;
         }

@@ -36,14 +36,34 @@ namespace Hattmakarens_system.Services
         public StatisticViewModel GetStatistics(StatisticViewModel viewModel)
         {
             var repo = new OrderRepository();
-            var orders = repo.GetAllOrders();
             viewModel.orders = new List<Models.OrderModels>();
+            var orders = repo.GetAllOrders();
+
             foreach (var order in orders)
             {
-                if(order.Date >= viewModel.fromDate && order.Date <= viewModel.toDate || order.CustomerId.Equals(viewModel.customerId.Value))
+                bool hatmodelExist = false;
+                foreach (var hat in order.Hats)
+                {
+                    if (viewModel.hatmodelId != null && hat.ModelID.ToString().Equals(viewModel.hatmodelId))
+                    {
+                        hatmodelExist = true;
+                    }
+                }
+
+                if (order.Date >= viewModel.fromDate && order.Date <= viewModel.toDate)
                 {
                     viewModel.orders.Add(order);
                 }
+                else if (viewModel.customerId != null && order.CustomerId.ToString().Equals(viewModel.customerId))
+                {
+                    viewModel.orders.Add(order);
+                } 
+                else if(hatmodelExist)
+                {
+                    viewModel.orders.Add(order);
+                }
+
+
             }
             viewModel.totalOrdersCount = viewModel.orders.Count;
             var hats = 0;
