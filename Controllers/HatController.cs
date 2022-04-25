@@ -137,14 +137,15 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Hat/Create
-        public ActionResult CreateStored(int orderId, string customerEmail, string hatModelName)
+        public ActionResult CreateStored(int orderId, string customerEmail, string hatModelName, List<ImageModels> images)
         {
 
             HatViewModel model = new HatViewModel()
             {
                 OrderId = orderId,
                 CustomerEmail = customerEmail,
-                HatModelName = hatModelName
+                HatModelName = hatModelName,
+                Images = images
             };
             if (hatModelName != null)
             {
@@ -186,12 +187,6 @@ namespace Hattmakarens_system.Controllers
                 model.HatModelName = hatModel.Name;
                 model.HatModelID = hatModel.Id;
                 model.HatModelDescription = hatModel.Description;
-                model.Images = new List<ImageModels>();
-                //model.Images = hatModel.Images;
-                foreach(var image in hatModel.Images)
-                {
-                    model.Images.Add(image);
-                }
                 TempData["hat"] = model;
                 TempData.Keep("hat");
             }
