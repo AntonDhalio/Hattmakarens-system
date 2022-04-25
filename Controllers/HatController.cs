@@ -186,7 +186,12 @@ namespace Hattmakarens_system.Controllers
                 model.HatModelName = hatModel.Name;
                 model.HatModelID = hatModel.Id;
                 model.HatModelDescription = hatModel.Description;
-                model.Images = hatModel.Images;
+                model.Images = new List<ImageModels>();
+                //model.Images = hatModel.Images;
+                foreach(var image in hatModel.Images)
+                {
+                    model.Images.Add(image);
+                }
                 TempData["hat"] = model;
                 TempData.Keep("hat");
             }
