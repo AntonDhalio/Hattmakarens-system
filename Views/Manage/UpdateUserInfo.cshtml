@@ -46,7 +46,11 @@
 {
     @Html.AntiForgeryToken()
     <h3>Ändra lösenord</h3>
-    @Html.ValidationSummary("", new { @class = "text-danger" })
+    //if (TempData["ErrorMsg"] == null || TempData["ErrorMsg"].Equals(""))
+    //{
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        //}
+
     <div class="form-group">
         @Html.LabelFor(m => m.OldPassword, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">

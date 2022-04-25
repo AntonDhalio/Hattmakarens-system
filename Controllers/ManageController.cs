@@ -65,16 +65,25 @@ namespace Hattmakarens_system.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> UpdateUserInfo(UpdateUserInfoViewModel model, string btnOption)
         {
-            if(btnOption.Equals("Ändra användarnamn"))
+            TempData["ErrorMsg"] = "";
+            if (btnOption.Equals("Ändra användarnamn"))
             {
-                if (model.NewUserName != null)
+                if (model.NewUserName == null)
                 {
-                    //Valideringen fungerar inte på användarnamn kontrollerar alltid modelstate för lösen så kommer ej genom med enbart användarnamn
-                    //Lägg in kod för att uppdatera användarnamet
-                    return RedirectToAction("UpdateUserInfo", new { PasswordIsChanged = false, UsernameIsChanged = true });
+                    TempData["ErrorMsg"] = "Fältet Nytt användarnamn krävs";
+                    return View(model);
                 }
-                TempData["ErrorMsg"] = "Fältet Nytt användarnamn krävs";
-                return View(model);
+
+                var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                using (var applicationDbContext = new ApplicationDbContext())
+                {
+                    var users = applicationDbContext.Users.FirstOrDefault(x => x.Id == currentUser.Id);
+                    users.UserName = model.NewUserName;
+                    var user = applicationDbContext.User.FirstOrDefault(x => x.Id == currentUser.Id);
+                    user.Name = model.NewUserName;
+                    applicationDbContext.SaveChanges();
+                }
+                return RedirectToAction("UpdateUserInfo", new { PasswordIsChanged = false, UsernameIsChanged = true });
             }
 
             if (btnOption.Equals("Ändra lösenord"))
@@ -90,13 +99,20 @@ namespace Hattmakarens_system.Controllers
                     if (user != null)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        using (var applicationDbContext = new ApplicationDbContext())
+                        {
+                            var updateUser = applicationDbContext.User.FirstOrDefault(x => x.Id == user.Id);
+                            updateUser.Password = model.NewPassword;
+                            applicationDbContext.SaveChanges();
+                        }
                     }
                     return RedirectToAction("UpdateUserInfo", new { PasswordIsChanged = true, UsernameIsChanged = false });
                 }
                 AddErrors(result);
                 return View(model);
             }
-            return View(model);
+            return View();
         }
 
         //
