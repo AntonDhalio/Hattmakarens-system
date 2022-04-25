@@ -130,7 +130,6 @@ namespace Hattmakarens_system.Controllers
             return RedirectToAction("Hatmodel");
         }
 
-        [HttpGet]
         public ActionResult CheckMaterial(int Id)
         {
             foreach (var item in TygMaterial)

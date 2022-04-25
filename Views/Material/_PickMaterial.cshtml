@@ -9,13 +9,21 @@
                 {
                     if (material.State == true)
                     {
-                        <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick="CheckMaterial(@material.MaterialId)">
+                        <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId Badge" style="background-color: @material.Name;" onclick="CheckMaterial(@material.MaterialId)">
                             <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
+                        </label>
+
+                        <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId NoBadge" style="background-color: @material.Name; display: none;" onclick="CheckMaterial(@material.MaterialId)">
+                            <input type="checkbox" checked autocomplete="off"> @material.MaterialName
                         </label>
                     }
                     else
                     {
-                        <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick="CheckMaterial(@material.MaterialId)">
+                        <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId Badge" style="background-color: @material.Name; display: none;" onclick="CheckMaterial(@material.MaterialId)">
+                            <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
+                        </label>
+
+                        <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId NoBadge" style="background-color: @material.Name;" onclick="CheckMaterial(@material.MaterialId)">
                             <input type="checkbox" checked autocomplete="off"> @material.MaterialName
                         </label>
                     }
@@ -78,15 +86,22 @@
 }
 
 <script type="text/javascript">
+
+        @*$('#partial').load('@Url.Action("CheckMaterial", "HatmodelController", new { Id = Model.Id })');*@
+
+        @*setInterval($('#partial').load('@Url.Action("CheckMaterial", "HatmodelController", new { Id = Model.Id })'), 2000);*@
+
     function CheckMaterial(id) {
         $.ajax({
             url: "@Url.Action("CheckMaterial", "HatModel")",
-            type: "GET",
+            type: "POST",
             async: true,
             dataType: "json",
             data: {
                 Id: id
             }
         })
+        document.getElementById(id + "Badge").style.display = 'block';
+        document.getElementById(id + "NoBadge").style.display = 'none';
     }
 </script>
