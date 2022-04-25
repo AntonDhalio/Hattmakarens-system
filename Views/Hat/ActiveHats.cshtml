@@ -34,11 +34,11 @@
 </div>
 <div class="högra">
     <h1>Aktiva beställningar</h1>
-    <table class="linjeHögra" >
+    <table class="linjeHögra">
         <thead>
             <tr>
                 <td><b>Beställningsnummer</b></td>
-                <td><b>Antal hattar</b></td>
+                <td><b>Antal&nbsp;hattar</b></td>
                 <td><b>Datum</b></td>
                 <td><b>Kund</b></td>
                 <td><b>Prioriterad</b></td>
@@ -64,6 +64,8 @@
             }
         </tbody>
     </table>
+    <b />
+    <p><strong>Totalt antal aktiva hattar: @Model.Orders.Count</strong></p>
     <br />
     <br />
 </div>
