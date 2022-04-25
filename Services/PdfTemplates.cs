@@ -368,11 +368,11 @@ namespace Hattmakarens_system.Services
             gfx.DrawString(labels.OrderNr, contentFontBold, XBrushes.Black,
             50, 310);
             gfx.DrawString(labels.HatAmount, contentFontBold, XBrushes.Black,
-            200, 310);
+            190, 310);
             gfx.DrawString(labels.OrderDate, contentFontBold, XBrushes.Black,
-            350, 310);
+            330, 310);
             gfx.DrawString(labels.Total + " (SEK)", contentFontBold, XBrushes.Black,
-            500, 310);
+            470, 310);
 
             int x = 340;
 
@@ -381,11 +381,11 @@ namespace Hattmakarens_system.Services
                 gfx.DrawString(order.Id.ToString(), contentFont, XBrushes.Black,
                 50, x);
                 gfx.DrawString(order.Hats.Count.ToString(), contentFont, XBrushes.Black,
-                200, x);
+                190, x);
                 gfx.DrawString(order.Date.ToShortDateString(), contentFont, XBrushes.Black,
-                350, x);
+                330, x);
                 gfx.DrawString(order.TotalSum.ToString(), contentFont, XBrushes.Black,
-                500, x);
+                470, x);
 
                 x += 20;
             }
