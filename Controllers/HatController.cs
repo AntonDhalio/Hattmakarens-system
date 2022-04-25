@@ -137,7 +137,7 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Hat/Create
-        public ActionResult CreateStored(int orderId, string customerEmail, string hatModelName, List<ImageModels> images)
+        public ActionResult CreateStored(int orderId, string customerEmail, string hatModelName, ICollection<ImageModels> images)
         {
 
             HatViewModel model = new HatViewModel()
@@ -145,7 +145,7 @@ namespace Hattmakarens_system.Controllers
                 OrderId = orderId,
                 CustomerEmail = customerEmail,
                 HatModelName = hatModelName,
-                Images = images
+                //Images = images
             };
             if (hatModelName != null)
             {
@@ -187,6 +187,7 @@ namespace Hattmakarens_system.Controllers
                 model.HatModelName = hatModel.Name;
                 model.HatModelID = hatModel.Id;
                 model.HatModelDescription = hatModel.Description;
+                model.Images = hatModel.Images;
                 TempData["hat"] = model;
                 TempData.Keep("hat");
             }
@@ -202,6 +203,7 @@ namespace Hattmakarens_system.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    var tempHat = (HatViewModel)TempData.Peek("hat");
                     OrderModel order = (OrderModel)TempData.Peek("order");
                     HatViewModel hat = new HatViewModel()
                     {
@@ -214,7 +216,7 @@ namespace Hattmakarens_system.Controllers
                         UserId = model.UserId,
                         UserName = userRepository.GetUser(model.UserId).Name,
                         Materials = new List<MaterialModels>(),
-                        Images = model.Images
+                        Images = tempHat.Images
                     };
                     var hatModel = hatModelRepository.GetHatmodel(model.HatModelID);
                     hat.HatModelName = hatModel.Name;
