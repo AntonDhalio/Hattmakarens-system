@@ -197,8 +197,9 @@ namespace Hattmakarens_system.Controllers
 
         // POST: Hat/Create
         [HttpPost]
-        public ActionResult CreateStored(HatViewModel model)
+        public ActionResult CreateStored(HatViewModel model, HttpPostedFileBase[] file)
         {
+            
             try
             {
                 if (ModelState.IsValid)
@@ -218,6 +219,22 @@ namespace Hattmakarens_system.Controllers
                         Materials = new List<MaterialModels>(),
                         Images = tempHat.Images
                     };
+                    if(file != null)
+                    {
+                        var path = Server.MapPath(@"~\NewFolder1");
+                        var images = new Service.Image().AddImages(file, path);
+
+
+                        foreach (var item in images)
+                        {
+                            var imgRepo = new ImageRepository();
+                            imgRepo.SaveImage(item);
+                        }
+                        foreach (var image in images)
+                        {
+                            hat.Images.Add(image);
+                        }
+                    }
                     var hatModel = hatModelRepository.GetHatmodel(model.HatModelID);
                     hat.HatModelName = hatModel.Name;
                     hat.HatModelDescription = hatModel.Description;
