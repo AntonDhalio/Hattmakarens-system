@@ -20,10 +20,10 @@
 
             <thead>
                 <tr>
-                    <td><h3 lang="sv">Beställningsnummer</h3></td>
+                    <td><h3 lang="sv">Best&auml;llningsnummer</h3></td>
                     <td><h3>Kund</h3></td>
                     <td><h3>Antal hattar</h3></td>
-                    <td><h3>Beställningsdatum</h3></td>
+                    <td><h3>Best&auml;llningsdatum</h3></td>
                     <td><h3>Summa</h3></td>
                 </tr>
             </thead>
@@ -55,7 +55,7 @@
                 </tfoot>*@
         </table>
         <br />
-        <h4>Totalt antal beställingar: @Model.totalOrdersCount</h4>
+        <h4>Totalt antal best&auml;llingar: @Model.totalOrdersCount</h4>
         <h4>Totalt antal hattar: @Model.totalHatsCount</h4>
         <h4>Total summa: @Model.totalSum</h4>
 
@@ -80,7 +80,7 @@
     }
     <br />
     <br />
-    <h2>Räkna ut moms baserat på inköp</h2>
+    <h2>R&auml;kna ut moms baserat p&aring; ink&ouml;p</h2>
     <div>
         @using (Html.BeginForm("CountTax", "Statistic", FormMethod.Post))
         {
@@ -94,7 +94,7 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <br />
-                    <input type="submit" @*class="btn btn-default"*@ value="Räkna ut moms" />
+                    <input type="submit" @*class="btn btn-default"*@ value="R&auml;kna ut moms" />
                     <br />
                 </div>
             </div>
