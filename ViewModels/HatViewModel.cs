@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using Hattmakarens_system.Models;
 
@@ -54,5 +55,7 @@ namespace Hattmakarens_system.ViewModels
         public List<ColorMaterialViewModel> TrådMaterial { get; set; }
         public int[] SelectedStatuses { get; set; }
         public virtual List<SelectListItem> UsersToPickFrom { get; set; }
+        [DisplayName("Välj bild")]
+        public HttpPostedFileBase Images2 { get; set; }
     }
 }

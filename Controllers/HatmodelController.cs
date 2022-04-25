@@ -28,6 +28,11 @@ namespace Hattmakarens_system.Controllers
                 TrådMaterial = TrådMaterial,
                 IsAdded = isAdded
             };
+            if (!Request.UrlReferrer.ToString().Contains("Material/AddMaterial") && !Request.UrlReferrer.ToString().Contains("Hatmodel/Hatmodel"))
+            {
+                TempData["hatmodel"] = null;
+                TempData["image"] = null;
+            }
             if((HatmodelViewModel)TempData.Peek("hatmodel") != null)
             {
                 var tempModel = (HatmodelViewModel)TempData["hatmodel"];
@@ -36,6 +41,7 @@ namespace Hattmakarens_system.Controllers
                 model.Description = tempModel.Description;
                 TempData["hatmodel"] = null;
             }
+            
             
             ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
             return View(model);
