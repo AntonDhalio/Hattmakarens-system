@@ -19,6 +19,8 @@ namespace Hattmakarens_system.Controllers
     {
         PdfService pdfService = new PdfService();
         PdfTemplates pdfTemplates = new PdfTemplates();
+        CustomerRepository customerRepository = new CustomerRepository();
+        HatmodelRepository hatmodelRepository = new HatmodelRepository();
         public ActionResult Index()
         {
             var viewModel = new StatisticViewModel();
@@ -36,24 +38,23 @@ namespace Hattmakarens_system.Controllers
         }
         [HttpPost]
         // GET: Statistic
-        public ActionResult GetStatistics(StatisticViewModel viewModel, DateTime fromDate, DateTime toDate)
+        public ActionResult GetStatistics(StatisticViewModel viewModel)
         {
-
-            viewModel.customers = StatisticCustomers();
-            viewModel.hatmodels = StatisticHatModels();
-            viewModel.customerId = Request.Form["customerId"];
-            viewModel.hatmodelId = Request.Form["hatmodelId"];
-            viewModel.fromDate = fromDate;
-            viewModel.toDate = toDate;
+                viewModel.customers = StatisticCustomers();
+                viewModel.hatmodels = StatisticHatModels();
+                viewModel.customerId = Request.Form["customerId"];
+                viewModel.hatmodelId = Request.Form["hatmodelId"];
+            
+            ModelState.Clear();
             if (ModelState.IsValid)
-            {
-                pdfService.GetStatistics(viewModel);
-                return View(viewModel);
-            }
-            else
-            {
-                return View("Index", viewModel);
-            }
+                {
+                    pdfService.GetStatistics(viewModel);
+                    return View(viewModel);
+                }
+                else
+                {
+                    return View("Index", viewModel);
+                }
         }
         [HttpPost]
         public ActionResult PrintStatistics(StatisticViewModel viewModel)
