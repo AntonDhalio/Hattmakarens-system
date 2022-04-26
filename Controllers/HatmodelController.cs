@@ -16,6 +16,7 @@ namespace Hattmakarens_system.Controllers
         HatmodelRepository hatModelRepository = new HatmodelRepository();
         MaterialRepository MaterialRepository = new MaterialRepository();
         ColorRepository colorRepository = new ColorRepository();
+        HatController hatController = new HatController();
         static List<ColorMaterialViewModel> TygMaterial = new Service.Material().GetTyg();
         static List<ColorMaterialViewModel> DekorationMaterial = new Service.Material().GetDecoration();
         static List<ColorMaterialViewModel> TrådMaterial = new Service.Material().GetTrad();
@@ -39,14 +40,17 @@ namespace Hattmakarens_system.Controllers
                 if (newMaterial.Type.Equals("Tyg"))
                 {
                     TygMaterial.Add(newMat);
+                    hatController.UpdateMaterialList(newMat);
                 }
                 if (newMaterial.Type.Equals("Dekoration"))
                 {
                     DekorationMaterial.Add(newMat);
+                    hatController.UpdateMaterialList(newMat);
                 }
                 if (newMaterial.Type.Equals("Tråd"))
                 {
                     TrådMaterial.Add(newMat);
+                    hatController.UpdateMaterialList(newMat);
                 }
             }
             var model = new HatmodelViewModel()

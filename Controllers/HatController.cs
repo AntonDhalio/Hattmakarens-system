@@ -536,5 +536,22 @@ namespace Hattmakarens_system.Controllers
             return View(hat);
         }
 
+        public ActionResult UpdateMaterialList(ColorMaterialViewModel model)
+        {
+            if (model.Type.Equals("Tyg"))
+            {
+                TygMaterial.Add(model);
+            }
+            if (model.Type.Equals("Dekoration"))
+            {
+                DekorationMaterial.Add(model);
+            }
+            if (model.Type.Equals("Tråd"))
+            {
+                TrådMaterial.Add(model);
+            }
+            return null;
+        }
+
     }
 }
