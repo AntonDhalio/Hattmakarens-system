@@ -7,9 +7,10 @@
 
 <ul class="nav navbar-nav navbar-right">
     <li>
-        @Html.ActionLink("Hej " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+        @Html.ActionLink("Hej " + User.Identity.GetUserName() + "!", "UpdateUserInfo", "Manage", new {PasswordIsChanged = false, UsernameIsChanged = false }, null )
+    </li>
     <li>@Html.ActionLink("Registrera ny användare", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-    
+
     <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a></li>
 </ul>
     }

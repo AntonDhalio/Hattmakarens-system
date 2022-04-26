@@ -1,9 +1,7 @@
-﻿
-
-@model Hattmakarens_system.ViewModels.StatisticViewModel
+﻿@model Hattmakarens_system.ViewModels.StatisticViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Orders";
+    ViewBag.Title = "Customers";
 }
 
 <!DOCTYPE html>
@@ -20,29 +18,106 @@
         <h1>Se statistik</h1>
         @using (Html.BeginForm("GetStatistics", "Statistic", FormMethod.Post))
         {
+            <div class="tredjedel">
+                <h3>Välj datum</h3>
+                <table >
+                    <thead><tr><td><b>Från</b></td><td style="padding-left: 20px;"><b>Till</b></td></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                            <input type="date" asp-for="fromDate" name="fromDate" />
+                                @Html.ValidationMessageFor(m => m.fromDate, "", new { @class = "text-danger" })</td>
+                            <td style="padding-left: 20px;">
+                                <input type="date" asp-for="toDate" name="toDate" />
+                                @Html.ValidationMessageFor(m => m.toDate, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tredjedel" style="padding-left: 120px;">
+                <h3>Välj kund</h3>
+                <table>
+                    <thead><tr><td><b>Välj&nbsp;kund</b></td></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>@Html.DropDownList("customerId", Model.customers, "Välj kund", new { @class = "form-control" })</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tredjedel" style="padding-left: 120px;">
+                <h3>Välj hattmodell</h3>
+                <table>
+                    <thead><tr><td><b>Välj&nbsp;hattmodell</b></td></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>@Html.DropDownList("hatmodelId", Model.hatmodels, "Välj hattmodell", new { @class = "form-control" })</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <br />
-            <table>
-                <tr>
-                    <td>@Html.LabelFor(m => m.fromDate, "Från ")</td>
-                    <td style="padding-left:10px;">
-                        @Html.EditorFor(m => m.fromDate, new { htmlAttributes = new { @class = "datepicker" } })
-                        @Html.ValidationMessageFor(m => m.fromDate, "", new { @class = "text-danger" })
-                    </td>
-                </tr>
-                <tr>
-                    <td>@Html.LabelFor(m => m.toDate, "Till  ")</td>
-                    <td style="padding-left:10px;">
-                        @Html.EditorFor(m => m.toDate, new { htmlAttributes = new { @class = "datepicker" } })
-                        @Html.ValidationMessageFor(m => m.toDate, "", new { @class = "text-danger" })
-                    </td>
-                </tr>
-            </table>
             <br />
-            <input type="submit" class="btn btn-default" value="Se statistik">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <input type="submit" class="btn btn-primary" value="Se statistik" />
         }
     </div>
     @RenderBody()
 
-
 </body>
 </html>
+
+<script>
+    //$(function () {
+    //    $(".datepicker").val('');
+    //});
+    $('selector').datepicker('setDate', null);
+</script>
+
+
+
+
+@*<br />
+    <table>
+        <tr>
+            <td>@Html.LabelFor(m => m.fromDate, "Från             ")</td>
+            <td style="padding-left:50px;">
+                @Html.EditorFor(m => m.fromDate, new { htmlAttributes = new { @class = "datepicker" } })
+                @Html.ValidationMessageFor(m => m.fromDate, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.toDate, "Till             ")</td>
+            <td style="padding-left:50px;">
+                @Html.EditorFor(m => m.toDate, new { htmlAttributes = new { @class = "datepicker" } })
+                @Html.ValidationMessageFor(m => m.toDate, "", new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.customerId, "Välj kund        ")</td>
+            <td style="padding-left:50px;">
+                @Html.DropDownListFor(m => m.customerId, Model.customers, "Välj kund")
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.LabelFor(m => m.hatmodelId, "Välj hattmodell  ")</td>
+            <td style="padding-left:50px;">
+                @Html.DropDownListFor(m => m.hatmodelId, Model.hatmodels, "Välj hattmodell")
+            </td>
+        </tr>
+    </table>
+    <br />
+    <input type="submit" class="btn btn-default" value="Se statistik">
+            }
+        </div>
+    @RenderBody()
+
+    </body>
+    </html>*@

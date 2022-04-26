@@ -221,6 +221,7 @@
     <Compile Include="Services\TranslateService.cs" />
     <Compile Include="Services\XmlService.cs" />
     <Compile Include="Service\Calculate.cs" />
+    <Compile Include="Service\Image.cs" />
     <Compile Include="Service\Material.cs" />
     <Compile Include="Service\Color.cs" />
     <Compile Include="Service\Order.cs" />
@@ -274,6 +275,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jscolor.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="UploadedImages\Hattmakaren_1_ccexpress.png" />
+    <Content Include="UploadedImages\Hattmakaren_1_FIX.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -337,9 +340,11 @@
     <Content Include="Views\Order\_ListStoredHatsEditView.cshtml" />
     <Content Include="Views\Hat\ViewHat.cshtml" />
     <Content Include="Views\Hat\_ListMaterials.cshtml" />
+    <Content Include="Views\Manage\UpdateUserInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="NewFolder1\" />
     <Folder Include="UploadedImages\" />
     <Folder Include="xmlFile\" />
   </ItemGroup>

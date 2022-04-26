@@ -20,7 +20,6 @@
         </div>
     }
     <hr />
-    <div>
         @using (Html.BeginForm("Hatmodel", "Hatmodel", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             using (Html.BeginForm())
@@ -95,18 +94,27 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group ">
+
+                    <div class="form-group " id="materialError">
                         <div class="col-md-offset-2 col-md-10">
                             <p class="text-danger">@TempData["materialError"]</p>
                         </div>
                     </div>
+
+                    <div id="material">
+                         <input   type="submit" name="submitBtn" value="Lägg till nytt material" class="btn btn-primary"/>
+                    </div>
+            
+                    <br/>
                     <div class="form-group">
                         @Html.LabelFor(h => h.Name, new { @class = "col-md-2 control-label" })
                         <div class="col-md-10">
                             @Html.TextBoxFor(h => h.Name, new { @class = "form-control" })
                             @Html.ValidationMessageFor(h => h.Name, "", new { @class = "text-danger" })
+                            <p class="text-danger"> @ViewBag.Message </p>
                         </div>
                     </div>
+
                     <div class="form-group">
                         @Html.LabelFor(h => h.Price, new { @class = "col-md-2 control-label" })
                         <div class="col-md-10">
@@ -114,35 +122,38 @@
                             @Html.ValidationMessageFor(h => h.Price, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
                     <div class="form-group">
                         @Html.LabelFor(h => h.Description, new { @class = "col-md-2 control-label" })
                         <div class="col-md-10">
                             @Html.TextAreaFor(h => h.Description, new { @class = "form-control" })
                         </div>
-                    </div>
 
+                    </div>
+                
                     <div class="form-group">
-                        @Html.Label("Välj bild", new { @class = "col-md-2 control-label" })
+                        @Html.Label("Välj bild", new { @class = "col-md-2 contol-label", @id="test" })
                         <div class="col-md-10">
-                            @Html.TextBox("file", "", new { type = "file" })
+                            @Html.TextBox("file", "", new { type = "file", multiple = "multiple" })
                         </div>
                     </div>
-                    @*<div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                @Html.Label("Välj bild")
-                                @Html.TextBox("file", "", new { type = "file" })
-                            </div>
-                        </div>*@
-                    <br />
+
+                    
+                 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" class="btn btn-primary" value="Lägg till hattmodell" />
+                            <input type="submit" class="btn btn-success" value="Lägg till hattmodell" name="submitBtn" />
                         </div>
                     </div>
                 </div>
             }
         }
-    </div>
 
 </body>
 </html>
+
+<style>
+    #material { margin-left: 17.1%; margin-top:0; }
+    #materialError {margin: 0;}
+    #test {padding-left: 10.6%; }
+</style>
