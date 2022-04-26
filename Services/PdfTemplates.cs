@@ -148,12 +148,12 @@ namespace Hattmakarens_system.Services
             gfx.DrawString(labels.Customer, contentFontBold, XBrushes.Black,
             180, 170);
             gfx.DrawString(shipping.Customer.Name, contentFont, XBrushes.Black,
-            240, 170);
+            300, 170);
             //Adress
             gfx.DrawString(labels.Address, contentFontBold, XBrushes.Black,
             180, 190);
             gfx.DrawString(shipping.Customer.Adress, contentFont, XBrushes.Black,
-            240, 190);
+            300, 190);
 
             //Företagsinfo
             gfx.DrawString(labels.From, contentFontItalic, XBrushes.Black,
@@ -162,14 +162,14 @@ namespace Hattmakarens_system.Services
             gfx.DrawString(labels.Company, contentFontBold, XBrushes.Black,
             180, 370);
             gfx.DrawString("Hattmakaren AB", contentFont, XBrushes.Black,
-            240, 370);
+            300, 370);
             //Adress
             gfx.DrawString(labels.Address, contentFontBold, XBrushes.Black,
             180, 390);
             gfx.DrawString("Hattmakargatan 32", contentFont, XBrushes.Black,
-            240, 390);
+            300, 390);
             gfx.DrawString("702-19 ÖREBRO", contentFont, XBrushes.Black,
-            240, 410);
+            300, 410);
 
             //Paketinfo
             gfx.DrawString(labels.Content, contentFontItalic, XBrushes.Black,
@@ -368,11 +368,11 @@ namespace Hattmakarens_system.Services
             gfx.DrawString(labels.OrderNr, contentFontBold, XBrushes.Black,
             50, 310);
             gfx.DrawString(labels.HatAmount, contentFontBold, XBrushes.Black,
-            200, 310);
+            190, 310);
             gfx.DrawString(labels.OrderDate, contentFontBold, XBrushes.Black,
-            350, 310);
+            330, 310);
             gfx.DrawString(labels.Total + " (SEK)", contentFontBold, XBrushes.Black,
-            500, 310);
+            470, 310);
 
             int x = 340;
 
@@ -381,11 +381,11 @@ namespace Hattmakarens_system.Services
                 gfx.DrawString(order.Id.ToString(), contentFont, XBrushes.Black,
                 50, x);
                 gfx.DrawString(order.Hats.Count.ToString(), contentFont, XBrushes.Black,
-                200, x);
+                190, x);
                 gfx.DrawString(order.Date.ToShortDateString(), contentFont, XBrushes.Black,
-                350, x);
+                330, x);
                 gfx.DrawString(order.TotalSum.ToString(), contentFont, XBrushes.Black,
-                500, x);
+                470, x);
 
                 x += 20;
             }
