@@ -25,7 +25,7 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                Hats hat = hatCon.Hats.Include(h => h.Materials).FirstOrDefault(h => h.Id == id);
+                Hats hat = hatCon.Hats.Include(h => h.Materials).Include(h => h.Images).FirstOrDefault(h => h.Id == id);
                 HatViewModel model = new HatViewModel()
                 {
                     Name = hat.Name,
@@ -39,7 +39,8 @@ namespace Hattmakarens_system.Repositories
                     HatModelID = hat.ModelID,
                     HatModelName = hatmodelRepository.GetHatmodel(hat.ModelID).Name,
                     HatModelDescription = hatmodelRepository.GetHatmodel(hat.ModelID).Description,
-                    OrderId = hat.OrderId
+                    OrderId = hat.OrderId,
+                    Images = hat.Images
                 };
                 return model;
             }
@@ -49,7 +50,7 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.Hats.Include(h => h.Order).ToList();
+                return hatCon.Hats.Include(h => h.Order).Include(h => h.User).ToList();
             }
         }
         //public Hats SaveHats(Hats hat)
@@ -84,7 +85,8 @@ namespace Hattmakarens_system.Repositories
                     UserId = hat.UserId,
                     ModelID = hat.HatModelID,
                     OrderId = hat.OrderId,
-                    Materials = new List<MaterialModels>()
+                    Materials = new List<MaterialModels>(),
+                    Images = new List<ImageModels>()
                 };
                 if (hat.HatModelID == 1)
                 {
@@ -100,6 +102,13 @@ namespace Hattmakarens_system.Repositories
                     {
                         var aMaterial = hatCon.Material.ToList().FirstOrDefault(h => h.Id == id);
                         hats.Materials.Add(aMaterial);
+                    }
+                }
+                if(hat.Images != null)
+                {
+                    foreach(var image in hat.Images)
+                    {
+                        hats.Images.Add(image);
                     }
                 }
 
@@ -125,12 +134,12 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.Hats.Where(h => h.OrderId == id).ToList();
+                return hatCon.Hats.Include(h => h.Images).Where(h => h.OrderId == id).ToList();
             }
         }
 
 
-        public void UpdateHat(HatViewModel hat, int[] SelectedStatuses)
+        public void UpdateHat(HatViewModel hat)
         {
             using (var hatCon = new ApplicationDbContext())
             {
@@ -145,13 +154,13 @@ namespace Hattmakarens_system.Repositories
                 existingHat.Price = hat.Price;
                 existingHat.UserId = hat.UserId;
 
-                existingHat.Materials = new List<MaterialModels>();
+                existingHat.Materials = hat.Materials;
 
-                foreach (var materialId in SelectedStatuses)
-                {
-                    var aMaterial = hatCon.Material.Include(m => m.Hats).FirstOrDefault(m => m.Id == materialId);
-                    existingHat.Materials.Add(aMaterial);
-                }
+                //foreach (var materialId in SelectedStatuses)
+                //{
+                //    var aMaterial = hatCon.Material.Include(m => m.Hats).FirstOrDefault(m => m.Id == materialId);
+                //    existingHat.Materials.Add(aMaterial);
+                //}
 
                 hatCon.Entry(existingHat).State = EntityState.Modified;
                 hatCon.SaveChanges();
@@ -182,7 +191,8 @@ namespace Hattmakarens_system.Repositories
                     UserId = model.UserId,
                     ModelID = model.HatModelID,
                     OrderId = orderId,
-                    Materials = model.Materials
+                    Materials = model.Materials,
+                    Images = model.Images
                 };
                 //hatCon.Hats.Add(hat); // Materialet läggs in i material.
                 hatCon.Hats.Attach(hat);

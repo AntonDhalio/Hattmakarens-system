@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace Hattmakarens_system.Controllers
 {
@@ -61,7 +62,6 @@ namespace Hattmakarens_system.Controllers
                     hatmodel.TrådMaterial = TrådMaterial;
                     hatmodel.DekorationMaterial = DekorationMaterial;
                     //hatmodel.IsAdded = false;
-
 
                     var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
 
@@ -207,7 +207,8 @@ namespace Hattmakarens_system.Controllers
                     Description = hatModel.Description,
                     Price = hatModel.Price,
                     OrderId = orderId,
-                    CustomerEmail = customerEmail
+                    CustomerEmail = customerEmail,
+                    Images = hatModel.Images
                 };
                 hatmodelViewModels.Add(newHatmodelViewModel);
             }

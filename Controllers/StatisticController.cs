@@ -21,16 +21,28 @@ namespace Hattmakarens_system.Controllers
         PdfTemplates pdfTemplates = new PdfTemplates();
         public ActionResult Index()
         {
-            return View();
+            var viewModel = new StatisticViewModel();
+            viewModel.customers = StatisticCustomers();
+            viewModel.hatmodels = StatisticHatModels();
+            return View(viewModel);
         }
-        public ActionResult _GetStatistics()
+
+        public ActionResult _GetStatistics(StatisticViewModel viewModel)
         {
-            return View();
+            viewModel.customers = StatisticCustomers();
+            viewModel.hatmodels = StatisticHatModels();
+            ViewBag.Customers = StatisticCustomers();
+            return View(viewModel);
         }
         [HttpPost]
         // GET: Statistic
         public ActionResult GetStatistics(StatisticViewModel viewModel)
         {
+
+            viewModel.customers = StatisticCustomers();
+            viewModel.hatmodels = StatisticHatModels();
+            viewModel.customerId = Request.Form["customerId"];
+            viewModel.hatmodelId = Request.Form["hatmodelId"];
             if (ModelState.IsValid)
             {
                 pdfService.GetStatistics(viewModel);
@@ -56,7 +68,7 @@ namespace Hattmakarens_system.Controllers
             };
 
             pdfTemplates.StatisticsPDF(aViewModel);
-            return View("Index");
+            return new HttpStatusCodeResult(204);
         }
         [HttpPost]
         public ActionResult CountTax(StatisticViewModel viewModel)
@@ -69,6 +81,38 @@ namespace Hattmakarens_system.Controllers
             var xml = new XmlService();
             xml.TaxXml(inTax, taxFromOrdersCount, result, uploadPath);
             return new HttpStatusCodeResult(204);
+        }
+        public List<SelectListItem> StatisticCustomers()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            var custRepo = new CustomerRepository();
+            foreach(var customer in custRepo.GetAllCostumers())
+            {
+                if(!customer.Name.Equals("Kund borttagen"))
+                {
+                    list.Add(new SelectListItem
+                    {
+                        Value = customer.Id.ToString(),
+                        Text = customer.Name
+                    });
+                }
+                
+            }
+            return list;
+        }
+        public List<SelectListItem> StatisticHatModels()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            var modelRepo = new HatmodelRepository();
+            foreach (var hatmodel in modelRepo.GetAllHatmodels())
+            {
+                list.Add(new SelectListItem
+                {
+                    Value = hatmodel.Id.ToString(),
+                    Text = hatmodel.Name
+                });
+            }
+            return list;
         }
     }
 }

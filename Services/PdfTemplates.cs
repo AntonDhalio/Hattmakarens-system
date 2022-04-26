@@ -16,6 +16,7 @@ namespace Hattmakarens_system.Services
         OrderRepository orderRepository = new OrderRepository();
         CustomerRepository customerRepository = new CustomerRepository();
         PdfLabelsViewModel labels = new PdfLabelsViewModel();
+        HatRepository hatRepository = new HatRepository();
 
         //Faktura PDF
         public void InvoicePDF(InvoiceViewModel invoice)
@@ -176,7 +177,7 @@ namespace Hattmakarens_system.Services
             //Vikt
             gfx.DrawString(labels.Weight, contentFontBold, XBrushes.Black,
             180, 570);
-            gfx.DrawString(shipping.Weight.ToString() + "(kg)", contentFont, XBrushes.Black,
+            gfx.DrawString(shipping.Weight + " (kg)", contentFont, XBrushes.Black,
             300, 570);
             //Pris
             gfx.DrawString(labels.Price, contentFontBold, XBrushes.Black,
@@ -186,7 +187,7 @@ namespace Hattmakarens_system.Services
             //Pris
             gfx.DrawString(labels.ShippingCode, contentFontBold, XBrushes.Black,
             180, 610);
-            gfx.DrawString(shipping.ShippingCode.ToString(), contentFont, XBrushes.Black,
+            gfx.DrawString(shipping.ShippingCode, contentFont, XBrushes.Black,
             300, 610);
 
             //Titlar
@@ -223,6 +224,7 @@ namespace Hattmakarens_system.Services
         {
             var order = orderRepository.GetOrder(id);
             var customer = customerRepository.GetCustomer(order.CustomerId);
+            var hats = hatRepository.GetAllHats().FindAll(h => h.OrderId == id);
 
             //Skapandet av dokumentet
             PdfDocument document = new PdfDocument();
@@ -268,7 +270,7 @@ namespace Hattmakarens_system.Services
             gfx.DrawString(labels.CustomerNumber, contentFontBold, XBrushes.Black,
             180, 230);
             gfx.DrawString(customer.Id.ToString(), contentFont, XBrushes.Black,
-            240, 230);
+            265, 230);
 
             //Titlar
             gfx.DrawString(labels.HatName, contentFontBold, XBrushes.Black,
@@ -284,7 +286,7 @@ namespace Hattmakarens_system.Services
 
             int x = 320;
 
-            foreach (var hat in order.Hats)
+            foreach (var hat in hats)
             {
                 gfx.DrawString(hat.Name, contentFont, XBrushes.Black,
                 50, x);

@@ -13,7 +13,7 @@ namespace Hattmakarens_system.Repositories
         {
             using (var hatCon = new ApplicationDbContext())
             {
-                return hatCon.Material.Include(m => m.HatModels).FirstOrDefault(m => m.Id == id);
+                return hatCon.Material.FirstOrDefault(m => m.Id == id);
             }
         }
         public List<MaterialModels> GetAllMaterials()

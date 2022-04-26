@@ -1,0 +1,78 @@
+﻿@model Hattmakarens_system.Models.UpdateUserInfoViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+<h1>Uppdatera användarinformation</h1>
+<hr />
+@if (Model.PasswordIsChanged)
+{
+    <div class="alert alert-success" role="alert">
+        Lösenordet har ändrats!
+    </div>
+}
+@if (Model.UsernameIsChanged)
+{
+    <div class="alert alert-success" role="alert">
+        Användarnamnet har ändrats!
+    </div>
+}
+@using (Html.BeginForm("UpdateUsername", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h3>Ändra användarnamn</h3>
+    <p class="text-danger">@TempData["ErrorMsg"]</p>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CurrentUserName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.CurrentUserName, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.NewUserName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.NewUserName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Ändra användarnamn" name="btnOption" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
+
+@using (Html.BeginForm("UpdatePassword", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h3>Ändra lösenord</h3>
+    @Html.HiddenFor(m => m.CurrentUserName)
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.OldPassword, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.NewPassword, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Ändra lösenord" name="btnOption" class="btn btn-primary" />
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
