@@ -21,6 +21,9 @@
         <th>
             Status
         </th>
+        <th>
+            Bilder
+        </th>
     </tr>
     @if (Model != null)
     {
@@ -30,29 +33,35 @@
             {
                 if (item.ModelID == 1)/// 1 är ID för specialtillverkad hatt
                 {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Size)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Comment)
-                    </td>
-                    <td>
-                         @ViewBag.Users[item.UserId]
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Visa", "ViewHat", "Hat", new { hatId = item.Id }, null)
-                    </td>
-                </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Size)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Price)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Comment)
+    </td>
+    <td>
+        @ViewBag.Users[item.UserId]
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Status)
+    </td>
+    <td>
+        @foreach (var image in item.Images)
+        {
+            <img src="@Url.Content(@image.Path)" alt="Hatmodel picture" class="img-responsive" />
+        }
+    </td>
+    <td>
+        @Html.ActionLink("Visa", "ViewHat", "Hat", new { hatId = item.Id }, null)
+    </td>
+</tr>
                 }
             }
         }

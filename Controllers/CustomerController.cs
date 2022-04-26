@@ -143,10 +143,25 @@ namespace Hattmakarens_system.Controllers
 
         public ActionResult SearchCustomer(string searchString)
         {
-            var customers = customerRepository.GetAllCostumers();
+
+            var customers = new List<CustomerModels>();
+            foreach(var customer in customerRepository.GetAllCostumers())
+            {
+                if(!customer.Name.Equals("Kund borttagen"))
+                {
+                    customers.Add(customer);
+                }
+            }
             if (!String.IsNullOrEmpty(searchString))
             {
-                customers = customerRepository.GetAllCustomersByName(searchString).ToList();
+                customers.Clear();
+                foreach(var customer in customerRepository.GetAllCustomersByName(searchString).ToList())
+                {
+                    if(!customer.Name.Equals("Kund borttagen"))
+                    {
+                        customers.Add(customer);
+                    }
+                } 
             }
             return View(customers);
         }

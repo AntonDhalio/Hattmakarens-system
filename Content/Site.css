@@ -83,4 +83,7 @@ td {
     float: left;
 }
 
+.img-responsive {
+    height: 100px;
+}
 
