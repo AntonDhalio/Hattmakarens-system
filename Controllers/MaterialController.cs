@@ -53,6 +53,9 @@ namespace Hattmakarens_system.Controllers
                     }
                     else
                     {
+
+                        TempData["material"] = matRepo.GetMaterial(matRepo.GetAllMaterials().Max(h => h.Id));
+                        TempData.Keep("material");
                         return RedirectToAction("Hatmodel", "Hatmodel", new { isAdded = false });
                     }
                 }
