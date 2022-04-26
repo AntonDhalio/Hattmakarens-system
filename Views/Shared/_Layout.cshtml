@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Akshar:wght@500&display=swap" rel="stylesheet">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Hattmakaren</title>
@@ -11,28 +12,34 @@
 <body >
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container" id="hideOnRegOrder">
-            <div class="navbar-header">
+            <div class="navbar-header" id="header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <div id="image">
                     @if (Request.IsAuthenticated)
                     {
-                        @Html.ActionLink("Hattmakaren", "ActiveHats", "Hat", null, new { @class = "navbar-brand" })
+                        @*@Html.ActionLink("Hattmakaren", "ActiveHats", "Hat", null, new { @class = "navbar-brand" })*@
+                    <a href='@Url.Action("ActiveHats", "Hat")'>
+                        <img src="~/UploadedImages/Hattmakaren_1_FIX.png" title="logga" alt="" id="logga" />
+                    </a>
+                    
                     }
                     else
                     {
-                        <h4 id="logga">Hattmakaren</h4>
-
+                        @*<h4 id="logga">Hattmakaren</h4>*@
+                        <img src="~/UploadedImages/Hattmakaren_1_FIX.png" title="logga" alt="" id="logga" />
 
                     }
+                </div>
                 @*TA BORT NÄR VI HAR DATA*@
-                @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+                @*@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })*@
             </div>
             @if (Request.IsAuthenticated)
             {
-                <div class="navbar-collapse collapse">
+                <div class="navbar-collapse collapse" id="menu-text">
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Sök", "OrderSearch", "Search")</li>
 
@@ -46,7 +53,7 @@
 
                    @*<li>@Html.ActionLink("Lägg till färg", "AddColor", "Color")</li>*@
 
-                    <li>@Html.ActionLink("Lägg till material", "AddMaterial", "Material", new { IsAdded = false }, null)</li>
+                    @*<li>@Html.ActionLink("Lägg till material", "AddMaterial", "Material", new { IsAdded = false }, null)</li>*@
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -68,5 +75,8 @@
 </html>
 
 <style>
-    #logga { color: gray; margin-top: 15%; }
+    #logga { width: 100%; height: 100%; }
+    #image{width: 80px; height: 100%; padding-top: 1%;}
+    #header{width: 100px}
+    #menu-text{font-family:'Akshar', sans-serif; font-size: 120%}
 </style>
