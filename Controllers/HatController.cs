@@ -137,14 +137,15 @@ namespace Hattmakarens_system.Controllers
         }
 
         // GET: Hat/Create
-        public ActionResult CreateStored(int orderId, string customerEmail, string hatModelName)
+        public ActionResult CreateStored(int orderId, string customerEmail, string hatModelName, ICollection<ImageModels> images)
         {
 
             HatViewModel model = new HatViewModel()
             {
                 OrderId = orderId,
                 CustomerEmail = customerEmail,
-                HatModelName = hatModelName
+                HatModelName = hatModelName,
+                //Images = images
             };
             if (hatModelName != null)
             {
@@ -190,12 +191,7 @@ namespace Hattmakarens_system.Controllers
                 model.HatModelName = hatModel.Name;
                 model.HatModelID = hatModel.Id;
                 model.HatModelDescription = hatModel.Description;
-                model.Images = new List<ImageModels>();
-                //model.Images = hatModel.Images;
-                foreach(var image in hatModel.Images)
-                {
-                    model.Images.Add(image);
-                }
+                model.Images = hatModel.Images;
                 TempData["hat"] = model;
                 TempData.Keep("hat");
             }
@@ -205,12 +201,14 @@ namespace Hattmakarens_system.Controllers
 
         // POST: Hat/Create
         [HttpPost]
-        public ActionResult CreateStored(HatViewModel model)
+        public ActionResult CreateStored(HatViewModel model, HttpPostedFileBase[] file)
         {
+            
             try
             {
                 if (ModelState.IsValid)
                 {
+                    var tempHat = (HatViewModel)TempData.Peek("hat");
                     OrderModel order = (OrderModel)TempData.Peek("order");
                     HatViewModel hat = new HatViewModel()
                     {
@@ -223,8 +221,24 @@ namespace Hattmakarens_system.Controllers
                         UserId = model.UserId,
                         UserName = userRepository.GetUser(model.UserId).Name,
                         Materials = new List<MaterialModels>(),
-                        Images = model.Images
+                        Images = tempHat.Images
                     };
+                    if(file != null)
+                    {
+                        var path = Server.MapPath(@"~\NewFolder1");
+                        var images = new Service.Image().AddImages(file, path);
+
+
+                        foreach (var item in images)
+                        {
+                            var imgRepo = new ImageRepository();
+                            imgRepo.SaveImage(item);
+                        }
+                        foreach (var image in images)
+                        {
+                            hat.Images.Add(image);
+                        }
+                    }
                     var hatModel = hatModelRepository.GetHatmodel(model.HatModelID);
                     hat.HatModelName = hatModel.Name;
                     hat.HatModelDescription = hatModel.Description;

@@ -20,8 +20,6 @@ namespace Hattmakarens_system.Service
                 foreach (var item in files)
                 {
                     string filename = Path.GetFileName(item.FileName);
-                    //string imagePath = Path.Combine(Server.MapPath("~/NewFolder1"), filename);
-
                     string imagePath = Path.Combine(path, filename);
                     item.SaveAs(imagePath);
                     var image = new ImageModels

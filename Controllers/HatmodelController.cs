@@ -49,7 +49,7 @@ namespace Hattmakarens_system.Controllers
         }
 
         [HttpPost]
-        public ActionResult Hatmodel(HatmodelViewModel hatmodel, HttpPostedFileBase file, string submitBtn) 
+        public ActionResult Hatmodel(HatmodelViewModel hatmodel, HttpPostedFileBase[] file, string submitBtn) 
         {
             switch (submitBtn)
             {
@@ -81,15 +81,12 @@ namespace Hattmakarens_system.Controllers
                                 };
                                 if (file != null)
                                 {
-                                    string filename = Path.GetFileName(file.FileName);
-                                    string imagePath = Path.Combine(Server.MapPath("~/Images"), filename);
-                                    var image = new ImageModels
+                                    var path = Server.MapPath(@"~\NewFolder1");
+                                    var images = new Service.Image().AddImages(file, path);
+                                    foreach(var image in images)
                                     {
-                                        Path = imagePath,
-                                        HatModels = new List<HatModels>()
-                                    };
-                                    var imgRepo = new ImageRepository();
-                                    newHatmodel.Images.Add(imgRepo.SaveImage(image));
+                                        newHatmodel.Images.Add(image);
+                                    }
                                 }
                                 using (var context = new ApplicationDbContext())
                                 {

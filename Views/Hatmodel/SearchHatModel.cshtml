@@ -55,7 +55,7 @@
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
-                        <input type="button" class="btn btn-primary" value="Välj lagrad hatt" onclick="location.href = '@Url.Action("CreateStored", "Hat", new { OrderId = item.OrderId, customerEmail = item.CustomerEmail, hatModelName = item.Name })'" />
+                        <input type="button" class="btn btn-primary" value="Välj lagrad hatt" onclick="location.href = '@Url.Action("CreateStored", "Hat", new { OrderId = item.OrderId, customerEmail = item.CustomerEmail, hatModelName = item.Name, images = item.Images })'" />
                     </td>
                 </tr>
                 }
