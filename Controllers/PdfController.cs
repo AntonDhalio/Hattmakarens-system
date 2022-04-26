@@ -15,11 +15,10 @@ namespace Hattmakarens_system.Controllers
         PdfTemplates pdfTemplates = new PdfTemplates();
 
         // PRINT: Invoice
-        public ActionResult Invoice(InvoiceViewModel invoice, int id)
+        public ActionResult Invoice(InvoiceViewModel invoice, int id, DateTime DueDate)
         {
+            invoice.DueDate = DueDate;
             invoice.Languages = PopulateLangList();
-            
-
             if (ModelState.IsValid)
             {
                 pdfService.PrintInvoice(invoice, id);

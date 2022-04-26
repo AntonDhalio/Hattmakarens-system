@@ -36,13 +36,15 @@ namespace Hattmakarens_system.Controllers
         }
         [HttpPost]
         // GET: Statistic
-        public ActionResult GetStatistics(StatisticViewModel viewModel)
+        public ActionResult GetStatistics(StatisticViewModel viewModel, DateTime fromDate, DateTime toDate)
         {
 
             viewModel.customers = StatisticCustomers();
             viewModel.hatmodels = StatisticHatModels();
             viewModel.customerId = Request.Form["customerId"];
             viewModel.hatmodelId = Request.Form["hatmodelId"];
+            viewModel.fromDate = fromDate;
+            viewModel.toDate = toDate;
             if (ModelState.IsValid)
             {
                 pdfService.GetStatistics(viewModel);

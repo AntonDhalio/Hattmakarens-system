@@ -24,11 +24,13 @@
                     <thead><tr><td><b>Från</b></td><td style="padding-left: 20px;"><b>Till</b></td></tr></thead>
                     <tbody>
                         <tr>
-                            <td>@Html.EditorFor(m => m.fromDate,  new { htmlAttributes = new { @class = "datepicker" } }) 
+                            <td>
+                            <input type="date" asp-for="fromDate" name="fromDate" />
                                 @Html.ValidationMessageFor(m => m.fromDate, "", new { @class = "text-danger" })</td>
                             <td style="padding-left: 20px;">
-                                @Html.EditorFor(m => m.toDate, new { htmlAttributes = new { @class = "datepicker" } }) 
-                                @Html.ValidationMessageFor(m => m.toDate, "", new { @class = "text-danger" })</td>
+                                <input type="date" asp-for="toDate" name="toDate" />
+                                @Html.ValidationMessageFor(m => m.toDate, "", new { @class = "text-danger" })
+                            </td>
                         </tr>
                     </tbody>
                 </table>
