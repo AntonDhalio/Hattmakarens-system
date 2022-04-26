@@ -72,5 +72,19 @@ namespace Hattmakarens_system.Repositories
                 return hatCon.HatModels.Include(h => h.Images).FirstOrDefault(h => h.Name == hatModelName);
             }
         }
+
+        public bool ExistingHatModelName(string hatModelName)
+        {
+            bool existingHatModelName = false;
+            var hatModels = GetAllHatmodels();
+            foreach (var hatModel in hatModels)
+            {
+                if (hatModel.Name.Equals(hatModelName))
+                {
+                    existingHatModelName = true;
+                }
+            }
+            return existingHatModelName;
+        }
     }
 }
