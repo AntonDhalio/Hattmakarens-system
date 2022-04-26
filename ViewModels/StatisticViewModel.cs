@@ -15,11 +15,11 @@ namespace Hattmakarens_system.ViewModels
         public string Language { get; set; }    
         public List<OrderModels> orders { get; set; }
         public String time { get; set; }
-        [Required]
+        //[Required]
         [DataType(DataType.Date)]
         [DisplayName("Från-datum")]
         public DateTime fromDate { get; set; }
-        [Required]
+        //[Required]
         [DataType(DataType.Date)]
         [DisplayName("Till-datum")]
         public DateTime toDate { get; set; }
@@ -28,8 +28,6 @@ namespace Hattmakarens_system.ViewModels
         public int totalHatsCount { get; set; }
         [DisplayName("Ange total inköpsmoms:")]
         public double purchasedTax { get; set; }
-
-
 
         public List<SelectListItem> customers { get; set; }
         public string customerId { get; set; }
