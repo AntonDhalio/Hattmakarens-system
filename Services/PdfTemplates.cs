@@ -148,12 +148,12 @@ namespace Hattmakarens_system.Services
             gfx.DrawString(labels.Customer, contentFontBold, XBrushes.Black,
             180, 170);
             gfx.DrawString(shipping.Customer.Name, contentFont, XBrushes.Black,
-            240, 170);
+            300, 170);
             //Adress
             gfx.DrawString(labels.Address, contentFontBold, XBrushes.Black,
             180, 190);
             gfx.DrawString(shipping.Customer.Adress, contentFont, XBrushes.Black,
-            240, 190);
+            300, 190);
 
             //Företagsinfo
             gfx.DrawString(labels.From, contentFontItalic, XBrushes.Black,
@@ -162,14 +162,14 @@ namespace Hattmakarens_system.Services
             gfx.DrawString(labels.Company, contentFontBold, XBrushes.Black,
             180, 370);
             gfx.DrawString("Hattmakaren AB", contentFont, XBrushes.Black,
-            240, 370);
+            300, 370);
             //Adress
             gfx.DrawString(labels.Address, contentFontBold, XBrushes.Black,
             180, 390);
             gfx.DrawString("Hattmakargatan 32", contentFont, XBrushes.Black,
-            240, 390);
+            300, 390);
             gfx.DrawString("702-19 ÖREBRO", contentFont, XBrushes.Black,
-            240, 410);
+            300, 410);
 
             //Paketinfo
             gfx.DrawString(labels.Content, contentFontItalic, XBrushes.Black,
