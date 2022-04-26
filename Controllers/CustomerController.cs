@@ -23,8 +23,6 @@ namespace Hattmakarens_system.Controllers
         [HttpPost]
         public ActionResult AddCustomer(CostumerViewModel customerViewModel)
         {
-            //try
-            //{
             if (customerRepository.ExistingCustomerEmail(customerViewModel.Email) == false)
             {
                 if (ModelState.IsValid)
@@ -52,11 +50,6 @@ namespace Hattmakarens_system.Controllers
                 ViewBag.Message = "Det finns redan en kund med denna E-post!";
                 return View(customerViewModel);
             }
-        //}
-            //catch
-            //{
-            //    return View("Error");
-            //}
         }
         public ActionResult ChangeCustomer(int id)
         {

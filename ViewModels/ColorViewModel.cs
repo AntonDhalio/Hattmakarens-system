@@ -13,6 +13,5 @@ namespace Hattmakarens_system.ViewModels
         public int Id { get; set; }
         [DisplayName("Färgnamn")]
         public string Name { get; set; }
-        //public virtual ICollection<MaterialModels> Material { get; set; }
     }
 }

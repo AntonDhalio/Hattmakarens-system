@@ -25,13 +25,10 @@
                     <tbody>
                         <tr>
                             <td>
-                            @*<input type="date" asp-for="fromDate" name="fromDate" />*@
                             @Html.EditorFor(m => m.fromDate, new { htmlAttributes = new { @class = "datepicker" } })
-                                @*@Html.ValidationMessageFor(m => m.fromDate, "", new { @class = "text-danger" })*@</td>
+                            </td>
                             <td style="padding-left: 20px;">
-                                @*<input type="date" asp-for="toDate" name="toDate" />*@
                                 @Html.EditorFor(m => m.toDate, new { htmlAttributes = new { @class = "datepicker" } })
-                                @*@Html.ValidationMessageFor(m => m.toDate, "", new { @class = "text-danger" })*@
                             </td>
                         </tr>
                     </tbody>

@@ -28,22 +28,6 @@ namespace Hattmakarens_system.Repositories
                     Include(o => o.User).ToList();
             }
         }
-        //public OrderModels SaveOrder(OrderModels order)
-        //{
-        //    using (var hatCon = new ApplicationDbContext())
-        //    {
-        //        if (order.Id != 0)
-        //        {
-        //            hatCon.Entry(order).State = EntityState.Modified;
-        //        }
-        //        else
-        //        {
-        //            hatCon.Order.Add(order);
-        //        }
-        //        hatCon.SaveChanges();
-        //        return order;
-        //    }
-        //}
 
         public void DeleteOrder(int id)
         {
@@ -58,15 +42,6 @@ namespace Hattmakarens_system.Repositories
             }
         }
 
-        //public void OrderAddHat(HatViewModel model)
-        //{
-        //    using (var hatCon = new ApplicationDbContext())
-        //    {
-        //        int id = model.OrderId;
-        //        var order = hatCon.Order.FirstOrDefault(o => o.Id == id);
-        //        hatCon.SaveChanges();
-        //    }
-        //}
         public OrderModel GetOrderViewModel(int? id, string customerEmail)
         {
             CustomerRepository customerRepository = new CustomerRepository();

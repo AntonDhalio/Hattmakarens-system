@@ -65,7 +65,6 @@
                         <input type="button" value="Uppdatera beställning" class="btn btn-success" onclick="location.href = '@Url.Action("ModifyOrder", "Order", new { id = Model.Id })'" />
                         <input type="button" value="Skapa faktura" class="btn btn-success" onclick="location.href = '@Url.Action("Invoice", "Pdf", new { id = Model.Id, DueDate = DateTime.Now })'" />
                         <input type="button" value="Skapa fraktsedel" class="btn btn-success" onclick="location.href = '@Url.Action("Shipping", "Pdf", new { id = Model.Id })'" />
-                        @*<input type="button" class="btn" value="Registrera beställning " onclick="location.href = '@Url.Action("CreateOrderAdd", "Order", new { id = Model.Id, comment = Model.Comment, priority = Model.Priority })'" />*@
                         <input type="button" value="Skriv ut beställning" class="btn btn-success" onclick="location.href = '@Url.Action("Order", "Pdf", new { id = Model.Id })'" />
                     </div>
                 </div>

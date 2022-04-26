@@ -15,11 +15,11 @@ namespace Hattmakarens_system.ViewModels
         public string Language { get; set; }    
         public List<OrderModels> orders { get; set; }
         public String time { get; set; }
-        //[Required]
+
         [DataType(DataType.Date)]
         [DisplayName("Från-datum")]
         public DateTime fromDate { get; set; }
-        //[Required]
+
         [DataType(DataType.Date)]
         [DisplayName("Till-datum")]
         public DateTime toDate { get; set; }

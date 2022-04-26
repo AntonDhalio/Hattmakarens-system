@@ -45,7 +45,6 @@
                         @Html.DisplayFor(modelItem => item.Price)
                     </td>
                     <td>
-                        @*Html.DisplayFor(modelItem => item.Path)*@
                         @foreach(var image in item.Images)
                         {
                         <img src="@Url.Content(@image.Path)" alt="Hatmodel picture" class="img-responsive" />

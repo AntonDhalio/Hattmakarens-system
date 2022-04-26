@@ -106,7 +106,6 @@ namespace Hattmakarens_system.Controllers
                         searchList.Add(customer);
                     }
                 }
-                //searchList = customerList;
             }
             else
             {
@@ -117,19 +116,6 @@ namespace Hattmakarens_system.Controllers
                         searchList.Add(customer);
                     }
                 }
-                //foreach (var customer in customerList)
-                //{
-                //    if (customer.Email.ToLower().Contains(searchString.ToLower()))
-                //    {
-                //        foreach(var item in searchList)
-                //        {
-                //            if(item.Id != customer.Id)
-                //            {
-                //                searchList.Add(customer);
-                //            } 
-                //        }
-                //    }
-                //}
             }
             
             ViewBag.ViewBagList = searchList;

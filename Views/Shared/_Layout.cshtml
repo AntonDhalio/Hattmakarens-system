@@ -21,7 +21,6 @@
                 <div id="image">
                     @if (Request.IsAuthenticated)
                     {
-                        @*@Html.ActionLink("Hattmakaren", "ActiveHats", "Hat", null, new { @class = "navbar-brand" })*@
                     <a href='@Url.Action("ActiveHats", "Hat")'>
                         <img src="~/UploadedImages/Hattmakaren_1_FIX.png" title="logga" alt="" id="logga" />
                     </a>
@@ -29,7 +28,6 @@
                     }
                     else
                     {
-                        @*<h4 id="logga">Hattmakaren</h4>*@
                         <img src="~/UploadedImages/Hattmakaren_1_FIX.png" title="logga" alt="" id="logga" />
 
                     }
@@ -41,17 +39,12 @@
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Sök", "OrderSearch", "Search")</li>
 
-                        @*<li>@Html.ActionLink("Customer", "DisplayCustomer", "Customer")</li>*@
-                        @*TA BORT NÄR SEN OCH LÄGG IN PÅ RÄTT STÄLLE*@
                         <li>@Html.ActionLink("Skapa beställning", "CreateOrder", "Order")</li>
 
                         <li>@Html.ActionLink("Se statistik", "Index", "Statistic")</li>
 
                         <li>@Html.ActionLink("Lägg till hattmodell", "Hatmodel", "Hatmodel", new { IsAdded = false }, null)</li>
 
-                        @*<li>@Html.ActionLink("Lägg till färg", "AddColor", "Color")</li>*@
-
-                    @*<li>@Html.ActionLink("Lägg till material", "AddMaterial", "Material", new { IsAdded = false }, null)</li>*@
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

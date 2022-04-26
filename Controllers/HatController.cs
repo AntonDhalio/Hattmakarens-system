@@ -61,25 +61,22 @@ namespace Hattmakarens_system.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    var SelectedStatuses = new int[100];
+                    OrderModel order = (OrderModel)TempData.Peek("order");
+                    HatViewModel hat = new HatViewModel()
+                    {
+                        HatModelID = 1,
+                        Name = model.Name,
+                        Size = model.Size,
+                        Price = model.Price,
+                        Status = "Aktiv",
+                        Comment = model.Comment,
+                        UserId = model.UserId,
+                        UserName = userRepository.GetUser(model.UserId).Name,
+                        Materials = new List<MaterialModels>(),
+                        Images = new List<ImageModels>()
 
-                    //if(PickedMaterials != null)
-                    //{
-                        var SelectedStatuses = new int[100];
-                        OrderModel order = (OrderModel)TempData.Peek("order");
-                        HatViewModel hat = new HatViewModel()
-                        {
-                            HatModelID = 1,
-                            Name = model.Name,
-                            Size = model.Size,
-                            Price = model.Price,
-                            Status = "Aktiv",
-                            Comment = model.Comment,
-                            UserId = model.UserId,
-                            UserName = userRepository.GetUser(model.UserId).Name,
-                            Materials = new List<MaterialModels>(),
-                            Images = new List<ImageModels>()
-
-                        };
+                    };
                     if(file[0] != null)
                     {
                         var path = Server.MapPath(@"~\NewFolder1");
@@ -94,33 +91,18 @@ namespace Hattmakarens_system.Controllers
 
                         hat.Images = images;
                     }
+
+                    var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
                         
-                        //hat.Materials = materialRepository.GetPickedMaterialInHat(hat.HatModelID, PickedMaterials, SelectedStatuses);
+                    hat.Materials = materialRepository.GetMaterialById(valdMaterial);
+                    TempData["hat"] = hat;
+                    TempData.Keep("hat");
 
+                    TygMaterial = new Service.Material().ResetTygList(TygMaterial);
+                    DekorationMaterial = new Service.Material().ResetDecorationList(DekorationMaterial);
+                    TrådMaterial = new Service.Material().ResetTradList(TrådMaterial);
 
-                        var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
-                        
-                        hat.Materials = materialRepository.GetMaterialById(valdMaterial);
-                        //TempData["valdaMaterial"] = materialRepository.GetMaterialById(valdMaterial);
-                        //TempData.Keep("valdaMaterial");
-                        TempData["hat"] = hat;
-                        TempData.Keep("hat");
-
-                        //hatRepository.CreateHat(model, valdMaterial);
-
-                        TygMaterial = new Service.Material().ResetTygList(TygMaterial);
-                        DekorationMaterial = new Service.Material().ResetDecorationList(DekorationMaterial);
-                        TrådMaterial = new Service.Material().ResetTradList(TrådMaterial);
-
-                        return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = model.CustomerEmail });
-                    //}
-                    //else
-                    //{
-                        //TempData["message"] = "Fältet Material saknas";
-                        //ViewBag.MaterialsToPickFrom = new Service.Material().GetSelectListMaterials();
-                        //ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
-                        //return View(model);
-                    //}
+                    return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = model.CustomerEmail });
                 }
                 else
                 {
@@ -145,7 +127,6 @@ namespace Hattmakarens_system.Controllers
                 OrderId = orderId,
                 CustomerEmail = customerEmail,
                 HatModelName = hatModelName,
-                //Images = images
             };
             if (hatModelName != null)
             {
@@ -245,7 +226,6 @@ namespace Hattmakarens_system.Controllers
                     
                     var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
                     hat.Materials = materialRepository.GetMaterialById(valdMaterial);
-                    //hatRepository.CreateHat(model, valdMaterial);
 
                     TempData["hat"] = hat;
                     TempData.Keep("hat");
@@ -375,29 +355,6 @@ namespace Hattmakarens_system.Controllers
             var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
             hat.Materials = materialRepository.GetMaterialById(valdMaterial);
 
-            //model.Statuses = new List<SelectListItem>();
-            //foreach (var material in materialRepository.GetAllMaterials())
-            //{
-            //    var listItem = new SelectListItem()
-            //    {
-            //        Value = material.Id.ToString(),
-            //        Text = material.Name + ", " + material.Color.Name + ", " + material.Type
-            //    };
-            //    model.Statuses.Add(listItem);
-            //}
-            //var SelectedMaterialsId = new List<int>();
-            //foreach (var materialId in materialRepository.GetMaterialInHat(hatId))
-            //{
-            //    SelectedMaterialsId.Add(materialId);
-            //}
-            //model.SelectedStatuses = new int[100];
-
-            //int count = 0;
-            //foreach (var id in SelectedMaterialsId)
-            //{
-            //    model.SelectedStatuses[count] = id;
-            //    count++;
-            //}
             ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
             ViewBag.StatusesToPickFrom = hatRepository.StatusesToDropDownList();
             return View(model);
@@ -425,14 +382,6 @@ namespace Hattmakarens_system.Controllers
         {
             try
             {
-                //HatViewModel hat = new HatViewModel();
-                //foreach(HatViewModel item in (List<HatViewModel>)TempData.Peek("listOfHats"))
-                //{
-                //    if(item.Id == id)
-                //    {
-                //        hat = item;
-                //    }
-                //}
                 List<HatViewModel> listOfHats = new List<HatViewModel>();
                 foreach (HatViewModel hat in (List<HatViewModel>)TempData.Peek("listOfHats"))
                 {
@@ -451,31 +400,6 @@ namespace Hattmakarens_system.Controllers
                 return View();
             }
         }
-
-        // POST: Hat/Delete/5
-        //[HttpPost]
-        //public ActionResult DeleteInRegOrder(HatViewModel model)
-        //{
-        //    try
-        //    {
-        //        List<HatViewModel> listOfHats = new List<HatViewModel>();
-        //        foreach(HatViewModel hat in (List<HatViewModel>)TempData.Peek("listOfHats"))
-        //        {
-        //            if(hat.Id != model.Id)
-        //            {
-        //                listOfHats.Add(hat);
-        //            }
-        //        }
-        //        TempData["listOfHats"] = listOfHats;
-        //        TempData.Keep("listOfHats");
-        //        OrderModel currentOrder = (OrderModel)TempData.Peek("order");
-        //        return RedirectToAction("CreateOrder", "Order", new { customerEmail = currentOrder.CustomerEmail });
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
 
         public ActionResult Delete(int orderId, int hatId)
         {

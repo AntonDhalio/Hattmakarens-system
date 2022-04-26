@@ -51,8 +51,6 @@
                         }
                   </td>
                     <td>
-
-                        @*@Html.ActionLink("Ta bort", "DeleteInRegOrder", "Hat", new { id = item.Id}, null)*@
                         @Html.ActionLink("Ta bort", "DeleteInRegOrder", "Hat", new { id = item.Id },
                      new { onclick = "return confirm('Är du säker på att du vill ta bort den här hatten?');" })
 
