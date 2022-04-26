@@ -15,13 +15,11 @@ namespace Hattmakarens_system.Service
         public List<ImageModels> AddImages(HttpPostedFileBase[] files, string path)
         {
             List<ImageModels> images = new List<ImageModels>();
-            if (files.Length > 0)
+            if (files[0] != null)
             {
                 foreach (var item in files)
                 {
                     string filename = Path.GetFileName(item.FileName);
-                    //string imagePath = Path.Combine(Server.MapPath("~/NewFolder1"), filename);
-
                     string imagePath = Path.Combine(path, filename);
                     item.SaveAs(imagePath);
                     var image = new ImageModels
