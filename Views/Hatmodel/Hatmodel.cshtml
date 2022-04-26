@@ -48,22 +48,15 @@
                         {
                             if (material.State == true)
                             {
-                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId Badge" style="background-color: @material.Name;" onclick="CheckMaterial(@material.MaterialId)">
-                                    <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
-                                </label>
-
-                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId NoBadge" style="background-color: @material.Name; display: none;" onclick="CheckMaterial(@material.MaterialId)">
-                                    <input type="checkbox" checked autocomplete="off"> @material.MaterialName
+                                
+                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick="CheckMaterial(@material.MaterialId)">
+                                    <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span id="@("spanMaterial" + material.MaterialId.ToString())" class="glyphicon glyphicon-ok" style="display: block;"></span>
                                 </label>
                             }
                             else
                             {
-                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId Badge" style="background-color: @material.Name; display: none;" onclick="CheckMaterial(@material.MaterialId)">
-                                    <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span class="badge badge-primary"> <img src="@Href("~/Img/icons8-done-24.png")" style="width: 12px; height: 12px;" /> </span>
-                                </label>
-
-                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId NoBadge" style="background-color: @material.Name;" onclick="CheckMaterial(@material.MaterialId)">
-                                    <input type="checkbox" checked autocomplete="off"> @material.MaterialName
+                                <label class="btn btn-secondary" type="submit" value="@material.MaterialId" id="@material.MaterialId" style="background-color: @material.Name;" onclick="CheckMaterial(@material.MaterialId)">
+                                    <input type="checkbox" checked autocomplete="off"> @material.MaterialName <span id="@("spanMaterial " + material.MaterialId.ToString())" class="glyphicon glyphicon-ok" style="display: none;"></span>
                                 </label>
                             }
                         }
@@ -174,9 +167,10 @@
             dataType: "json",
             data: {
                 Id: id
-            }
+            }            
         })
-        document.getElementById(id + "Badge").style.display = 'block';
-        document.getElementById(id + "NoBadge").style.display = 'none';
+        //document.getElementById(spanMaterial).style.display = 'block';
+        $('#spanMaterial' + id.ToString()).show()
+
     }
 </script>
