@@ -1,5 +1,6 @@
 ﻿using Hattmakarens_system.Services;
 using Hattmakarens_system.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -50,27 +51,34 @@ namespace Hattmakarens_system.Controllers
             return RedirectToAction("ViewOrder", "Order", new { Id = id });
         }
 
+        public GoogleLanguages GoogleLangList()
+        {
+            string json = new System.Net.WebClient().DownloadString("https://raw.githubusercontent.com/itsecurityco/to-google-translate/master/supported_languages.json");
+            GoogleLanguages languages = JsonConvert.DeserializeObject<GoogleLanguages>(json);
+            return languages;
+        }
+
         public List<SelectListItem> PopulateLangList()
         {
             List<SelectListItem> languages = new List<SelectListItem>();
-            var cu = CultureInfo.GetCultures(CultureTypes.NeutralCultures);
+            var googlelist = GoogleLangList();
 
-            foreach (CultureInfo cul in cu)
+            foreach (var language in googlelist.text)
             {
-                if (cul.TwoLetterISOLanguageName == "sv")
+                if (language.code.Equals("sv"))
                 {
                     languages.Add(new SelectListItem
                     {
-                        Value = cul.TwoLetterISOLanguageName,
-                        Text = cul.EnglishName,
+                        Value = language.code,
+                        Text = language.language,
                         Selected = true
                     });
                 }
-                new SelectListItem { Value = cul.TwoLetterISOLanguageName, Text = cul.EnglishName };
+                new SelectListItem { Value = language.code, Text = language.language };
                 languages.Add(new SelectListItem
                 {
-                    Value = cul.TwoLetterISOLanguageName,
-                    Text = cul.EnglishName
+                    Value = language.code,
+                    Text = language.language
                 });
             }
 
