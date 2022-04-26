@@ -53,22 +53,6 @@ namespace Hattmakarens_system.Repositories
                 return hatCon.Hats.Include(h => h.Order).Include(h => h.User).ToList();
             }
         }
-        //public Hats SaveHats(Hats hat)
-        //{
-        //    using (var hatCon = new ApplicationDbContext())
-        //    {
-        //        if (hat.Id != 0)
-        //        {
-        //            hatCon.Entry(hat).State = EntityState.Modified;
-        //        }
-        //        else
-        //        {
-        //            hatCon.Hats.Add(hat);
-        //        }
-        //        hatCon.SaveChanges();
-        //        return hat;
-        //    }
-        //}
 
         public Hats CreateHat(HatViewModel hat, List<int> valdMaterial)
         {
@@ -156,12 +140,6 @@ namespace Hattmakarens_system.Repositories
 
                 existingHat.Materials = hat.Materials;
 
-                //foreach (var materialId in SelectedStatuses)
-                //{
-                //    var aMaterial = hatCon.Material.Include(m => m.Hats).FirstOrDefault(m => m.Id == materialId);
-                //    existingHat.Materials.Add(aMaterial);
-                //}
-
                 hatCon.Entry(existingHat).State = EntityState.Modified;
                 hatCon.SaveChanges();
             }
@@ -194,7 +172,6 @@ namespace Hattmakarens_system.Repositories
                     Materials = model.Materials,
                     Images = model.Images
                 };
-                //hatCon.Hats.Add(hat); // Materialet läggs in i material.
                 hatCon.Hats.Attach(hat);
                 hatCon.Entry(hat).State = EntityState.Added;
                 hatCon.SaveChanges();
