@@ -124,7 +124,9 @@ namespace Hattmakarens_system.Controllers
                                     {
                                         newHatmodel.Material.Add(MaterialRepository.GetMaterial(Id));
                                     }
-                                    context.HatModels.Add(newHatmodel);
+                                    //context.HatModels.Add(newHatmodel);
+                                    context.HatModels.Attach(newHatmodel);
+                                    context.Entry(newHatmodel).State = EntityState.Added;
                                     context.SaveChanges();
                                     TygMaterial = new Service.Material().ResetTygList(TygMaterial);
                                     DekorationMaterial = new Service.Material().ResetDecorationList(DekorationMaterial);
