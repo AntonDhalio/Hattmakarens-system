@@ -22,7 +22,7 @@ namespace Hattmakarens_system.Controllers
         static List<ColorMaterialViewModel> TygMaterial = new Service.Material().GetTyg();
         static List<ColorMaterialViewModel> DekorationMaterial = new Service.Material().GetDecoration();
         static List<ColorMaterialViewModel> TrådMaterial = new Service.Material().GetTrad();
-
+        static bool ModelHasBeenRead = true;
 
         // GET: Hat
         public ActionResult Index()
@@ -151,36 +151,40 @@ namespace Hattmakarens_system.Controllers
             {
                 model.HatModelName = hatModelName;
                 model = new Service.Material().SetMaterials(model);
-                var SelectedMaterialsId = materialRepository.GetMaterialInHatmodel(hatModelName);
                 model.TygMaterial = TygMaterial;
                 model.DekorationMaterial = DekorationMaterial;
                 model.TrådMaterial = TrådMaterial;
-                
-
-                foreach (var id in SelectedMaterialsId)                   
+                if (ModelHasBeenRead == true)
                 {
-                    foreach (var material in model.TygMaterial)
+                    var SelectedMaterialsId = materialRepository.GetMaterialInHatmodel(hatModelName);
+
+                    foreach (var id in SelectedMaterialsId)
                     {
-                        if(material.MaterialId == id)
+                        foreach (var material in model.TygMaterial)
                         {
-                            material.State = true;
+                            if (material.MaterialId == id)
+                            {
+                                material.State = true;
+                            }
+                        }
+                        foreach (var material in model.DekorationMaterial)
+                        {
+                            if (material.MaterialId == id)
+                            {
+                                material.State = true;
+                            }
+                        }
+                        foreach (var material in model.TrådMaterial)
+                        {
+                            if (material.MaterialId == id)
+                            {
+                                material.State = true;
+                            }
                         }
                     }
-                    foreach (var material in model.DekorationMaterial)
-                    {
-                        if (material.MaterialId == id)
-                        {
-                            material.State = true;
-                        }
-                    }
-                    foreach (var material in model.TrådMaterial)
-                    {
-                        if (material.MaterialId == id)
-                        {
-                            material.State = true;
-                        }
-                    }
+                    ModelHasBeenRead = false;
                 }
+              
                 
                 var hatModel = hatModelRepository.GetHatmodelByName(hatModelName);
                 model.Price = hatModel.Price;
@@ -248,6 +252,7 @@ namespace Hattmakarens_system.Controllers
                     TygMaterial = new Service.Material().ResetTygList(TygMaterial);
                     DekorationMaterial = new Service.Material().ResetDecorationList(DekorationMaterial);
                     TrådMaterial = new Service.Material().ResetTradList(TrådMaterial);
+                    ModelHasBeenRead = true;
 
                     return RedirectToAction("CreateOrder", "Order", new { currentOrderId = model.OrderId, customerEmail = model.CustomerEmail });
                 }
@@ -317,6 +322,33 @@ namespace Hattmakarens_system.Controllers
             return RedirectToAction("CreateSpec", new { orderId, customerEmail});
         }
 
+        public ActionResult PickMaterialModify(int hatId, int Id)
+        {
+            foreach (var item in TygMaterial)
+            {
+                if (item.MaterialId.Equals(Id))
+                {
+                    item.State = !item.State;
+                }
+            }
+            foreach (var item in DekorationMaterial)
+            {
+                if (item.MaterialId.Equals(Id))
+                {
+                    item.State = !item.State;
+                }
+            }
+            foreach (var item in TrådMaterial)
+            {
+                if (item.MaterialId.Equals(Id))
+                {
+                    item.State = !item.State;
+                }
+            }
+
+            return RedirectToAction("Edit", new { hatId });
+        }
+
         // GET: Hat/Edit/5
         public ActionResult Edit(int hatId)
         {
@@ -336,30 +368,36 @@ namespace Hattmakarens_system.Controllers
             TempData.Keep("orderId");
             model.HatModelName = hatModelRepository.GetHatmodel(hat.ModelID).Name;
             model.HatModelDescription = hatModelRepository.GetHatmodel(hat.ModelID).Description;
+            model.TygMaterial = TygMaterial;
+            model.DekorationMaterial = DekorationMaterial;
+            model.TrådMaterial = TrådMaterial;
 
-            model.Statuses = new List<SelectListItem>();
-            foreach (var material in materialRepository.GetAllMaterials())
-            {
-                var listItem = new SelectListItem()
-                {
-                    Value = material.Id.ToString(),
-                    Text = material.Name + ", " + material.Color.Name + ", " + material.Type
-                };
-                model.Statuses.Add(listItem);
-            }
-            var SelectedMaterialsId = new List<int>();
-            foreach (var materialId in materialRepository.GetMaterialInHat(hatId))
-            {
-                SelectedMaterialsId.Add(materialId);
-            }
-            model.SelectedStatuses = new int[100];
+            var valdMaterial = TygMaterial.Union(DekorationMaterial).Union(TrådMaterial).Where(s => s.State.Equals(true)).Select(s => s.MaterialId).ToList();
+            hat.Materials = materialRepository.GetMaterialById(valdMaterial);
 
-            int count = 0;
-            foreach (var id in SelectedMaterialsId)
-            {
-                model.SelectedStatuses[count] = id;
-                count++;
-            }
+            //model.Statuses = new List<SelectListItem>();
+            //foreach (var material in materialRepository.GetAllMaterials())
+            //{
+            //    var listItem = new SelectListItem()
+            //    {
+            //        Value = material.Id.ToString(),
+            //        Text = material.Name + ", " + material.Color.Name + ", " + material.Type
+            //    };
+            //    model.Statuses.Add(listItem);
+            //}
+            //var SelectedMaterialsId = new List<int>();
+            //foreach (var materialId in materialRepository.GetMaterialInHat(hatId))
+            //{
+            //    SelectedMaterialsId.Add(materialId);
+            //}
+            //model.SelectedStatuses = new int[100];
+
+            //int count = 0;
+            //foreach (var id in SelectedMaterialsId)
+            //{
+            //    model.SelectedStatuses[count] = id;
+            //    count++;
+            //}
             ViewBag.UsersToPickFrom = userRepository.UsersToDropDownList();
             ViewBag.StatusesToPickFrom = hatRepository.StatusesToDropDownList();
             return View(model);
@@ -367,11 +405,12 @@ namespace Hattmakarens_system.Controllers
 
         // POST: Hat/Edit/5
         [HttpPost]
-        public ActionResult Edit(HatViewModel model, int[] SelectedStatuses)
+        public ActionResult Edit(HatViewModel model)
         {
             try
             {
-                hatRepository.UpdateHat(model, SelectedStatuses);
+
+                hatRepository.UpdateHat(model);
                 orderRepository.UpdateOrderPrice((int)TempData.Peek("orderId"));
                 return RedirectToAction("ModifyOrder", "Order", new { Id = (int)TempData.Peek("orderId")});
             }
@@ -481,7 +520,7 @@ namespace Hattmakarens_system.Controllers
             var sortedOrderList = allOrders.OrderBy(h => h.Priority==false).ToList();
             foreach (var order in sortedOrderList)
             {
-                if (order.Status.Equals("Aktiv"))
+                if (order.Status != null && order.Status.Equals("Aktiv"))
                 {
                     viewModel.Orders.Add(order);
                 }

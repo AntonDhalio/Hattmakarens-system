@@ -5,6 +5,28 @@ using Microsoft.Owin.Security;
 
 namespace Hattmakarens_system.Models
 {
+    public class UpdateUserInfoViewModel
+    {
+        [Display(Name = "Användarnamn")]
+        public string CurrentUserName { get; set; }
+        [Display(Name = "Nytt användarnamn")]
+        public string NewUserName { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Nuvarande Lösenord")]
+        public string OldPassword { get; set; }
+        [Required]
+        [StringLength(100, ErrorMessage = "Lösenordet {0} måste vara {2} tecken långt.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Nytt lösenord")]
+        public string NewPassword { get; set; }
+        [DataType(DataType.Password)]
+        [Display(Name = "Bekräfta nytt lösenord")]
+        [Compare("NewPassword", ErrorMessage = "Nya lösenordet och det bekräftade lösenordet överensstämmer inte.")]
+        public string ConfirmPassword { get; set; }
+        public bool PasswordIsChanged { get; set; }
+        public bool UsernameIsChanged { get; set; }
+    }
     public class IndexViewModel
     {
         public bool HasPassword { get; set; }

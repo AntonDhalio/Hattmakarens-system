@@ -14,7 +14,7 @@ namespace Hattmakarens_system.Controllers
     {
         // GET: Material
         public ActionResult AddMaterial(bool isAdded)
-        {
+        {  
             var model = new MaterialViewModel()
             {
                 IsAdded = isAdded
@@ -47,7 +47,14 @@ namespace Hattmakarens_system.Controllers
                         ColorId = colorId
                     };
                     matRepo.SaveMaterial(material);
-                    return RedirectToAction("AddMaterial", "Material", new { IsAdded = true });
+                    if(TempData.Peek("hatmodel") == null)
+                    {
+                        return RedirectToAction("AddMaterial", "Material", new { IsAdded = true });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Hatmodel", "Hatmodel", new { isAdded = false });
+                    }
                 }
                 else
                 {

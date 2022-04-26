@@ -37,13 +37,14 @@ namespace Hattmakarens_system.ViewModels
         public CustomerModels Customer { get; set; }
         public int OrderId { get; set; }
         [Required]
+        [RegularExpression(@"^[0-9]\d*(\.\d+)?$", ErrorMessage = "Fältet får endast innehålla siffror")]
         [Display(Name = "Vikt  (kg)")]
-        public double? Weight { get; set; }
+        public string Weight { get; set; }
         [Required]
         [MinLength(8, ErrorMessage = "Koden måste innehålla 8 siffror")]
         [StringLength(8, ErrorMessage = "Koden måste innehålla 8 siffror")]
         [Display(Name = "Kod (8 siffror)")]
-        public int? ShippingCode { get; set; }
+        public string ShippingCode { get; set; }
 
     }
 

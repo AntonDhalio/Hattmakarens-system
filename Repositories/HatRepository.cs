@@ -139,7 +139,7 @@ namespace Hattmakarens_system.Repositories
         }
 
 
-        public void UpdateHat(HatViewModel hat, int[] SelectedStatuses)
+        public void UpdateHat(HatViewModel hat)
         {
             using (var hatCon = new ApplicationDbContext())
             {
@@ -154,13 +154,13 @@ namespace Hattmakarens_system.Repositories
                 existingHat.Price = hat.Price;
                 existingHat.UserId = hat.UserId;
 
-                existingHat.Materials = new List<MaterialModels>();
+                existingHat.Materials = hat.Materials;
 
-                foreach (var materialId in SelectedStatuses)
-                {
-                    var aMaterial = hatCon.Material.Include(m => m.Hats).FirstOrDefault(m => m.Id == materialId);
-                    existingHat.Materials.Add(aMaterial);
-                }
+                //foreach (var materialId in SelectedStatuses)
+                //{
+                //    var aMaterial = hatCon.Material.Include(m => m.Hats).FirstOrDefault(m => m.Id == materialId);
+                //    existingHat.Materials.Add(aMaterial);
+                //}
 
                 hatCon.Entry(existingHat).State = EntityState.Modified;
                 hatCon.SaveChanges();

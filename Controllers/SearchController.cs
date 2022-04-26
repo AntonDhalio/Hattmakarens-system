@@ -99,7 +99,14 @@ namespace Hattmakarens_system.Controllers
             var searchList = new List<CustomerModels>();
             if (searchString.Equals(""))
             {
-                searchList = customerList;
+                foreach(var customer in customerList)
+                {
+                    if(!customer.Name.Equals("Kund borttagen"))
+                    {
+                        searchList.Add(customer);
+                    }
+                }
+                //searchList = customerList;
             }
             else
             {
