@@ -1097,12 +1097,12 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #337ab7;
-  text-decoration: none;
+    color: #545454 !important;
+    text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: #23527c;
+    color: black !important;
   text-decoration: underline;
 }
 a:focus {
@@ -4665,8 +4665,8 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   color: #ccc;
 }
 .navbar-inverse {
-  background-color: #222;
-  border-color: #080808;
+    background-color: #c8beb8;
+    border-color: #c8beb8;
 }
 .navbar-inverse .navbar-brand {
   color: #9d9d9d;
