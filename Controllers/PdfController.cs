@@ -22,6 +22,7 @@ namespace Hattmakarens_system.Controllers
             if (ModelState.IsValid)
             {
                 pdfService.PrintInvoice(invoice, id);
+                return RedirectToAction("ViewOrder", "Order", new { Id = id });
             }
 
             ModelState.Clear();
@@ -36,15 +37,17 @@ namespace Hattmakarens_system.Controllers
             if (ModelState.IsValid)
             {
                 pdfService.PrintShipping(shipping, id);
+                return RedirectToAction("ViewOrder", "Order", new { Id = id });
             }
 
             ModelState.Clear();
             return View(shipping);
         }
 
-        public void Order(int id)
+        public ActionResult Order(int id)
         {
             pdfTemplates.OrderPDF(id);
+            return RedirectToAction("ViewOrder", "Order", new { Id = id });
         }
 
         public List<SelectListItem> PopulateLangList()
