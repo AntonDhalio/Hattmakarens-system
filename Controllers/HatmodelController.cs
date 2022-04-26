@@ -79,7 +79,7 @@ namespace Hattmakarens_system.Controllers
                                     Material = new List<MaterialModels>(),
                                     Images = new List<ImageModels>()
                                 };
-                                if (file != null)
+                                if (file[0] != null)
                                 {
                                     var path = Server.MapPath(@"~\NewFolder1");
                                     var images = new Service.Image().AddImages(file, path);

@@ -15,7 +15,7 @@ namespace Hattmakarens_system.Service
         public List<ImageModels> AddImages(HttpPostedFileBase[] files, string path)
         {
             List<ImageModels> images = new List<ImageModels>();
-            if (files.Length > 0)
+            if (files[0] != null)
             {
                 foreach (var item in files)
                 {

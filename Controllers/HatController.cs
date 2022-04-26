@@ -80,7 +80,7 @@ namespace Hattmakarens_system.Controllers
                             Images = new List<ImageModels>()
 
                         };
-                    if(file != null)
+                    if(file[0] != null)
                     {
                         var path = Server.MapPath(@"~\NewFolder1");
                         var images = new Service.Image().AddImages(file, path);
@@ -223,7 +223,7 @@ namespace Hattmakarens_system.Controllers
                         Materials = new List<MaterialModels>(),
                         Images = tempHat.Images
                     };
-                    if(file != null)
+                    if(file[0] != null)
                     {
                         var path = Server.MapPath(@"~\NewFolder1");
                         var images = new Service.Image().AddImages(file, path);
